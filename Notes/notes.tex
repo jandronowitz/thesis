@@ -1,0 +1,79 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}[margin=1in]
+\usepackage{amsmath}
+
+\title{thesis notes}
+\author{julia andronowitz }
+\date{2022-2023}
+
+\begin{document}
+
+\maketitle
+
+\section{To Do}
+
+\begin{itemize}
+    \item calibration and regression-like problems
+    \item looking for outliers
+    \item compare R and SAS SVM modules
+    \item e1071 documentation?
+\end{itemize}
+
+done
+\begin{itemize}
+    \item find certain situations where SVM is applied
+    \item give concrete examples
+    \item start out by talking about machine learning in general
+    \item analogy w 2-d for equation of a line to generalize to multidimensional
+    \item classification v regression
+    \item explain how i made graph
+    \item terminology in introduction (features, etc.)
+    \item replace remaining photos with better quality
+    \item rename accordingly
+\end{itemize}
+
+\section{Introductory Notes}
+
+\begin{itemize}
+    \item optimal margin: gap between points on each side have smallest distance from separating line; this is what the SVM calculates
+    \item linearly separable means there is a separating hyperplane where those values above are positive and below negative
+    \item N x k data matrix and N x 1 vector Y that classifies the two species
+    \item hyperplane given by $$f(x)=w \cdot x +b = 0$$
+    \item the vector $w$ is the normal vector to the hyperplane (so wx1 - wx2 = 0)
+    \item the distance from a point to the hyperplane is \begin{align*}
+        D &= \frac{f(p)}{||w||} \\
+        &= ||(p-x_1)||\cos{\theta} \\
+        &= \frac{w \cdot (p-x_1)}{||w||}\\
+        &=\frac{w \cdot p - w \cdot x_1}{||w||} \\
+        &= \frac{wp + b}{||w||} \\
+        &= \frac{f(p)}{||w||}
+    \end{align*}
+    \item linearly separable if $max w \cdot x _{x \in A^_}< min w \cdot x_{x \in A^+}$
+    \item $B^-$ is the max value of the minimums (those above the hyperplane)
+    \item $B^+$ min value of the positives (below the hyperplane)
+    \item supporting hyperplane: every point is on one side and you can't move it any further over otherwise that point will be on the wrong side
+    \item geometric margin: the perpendicular distance between the two supporting hyperplanes
+\end{itemize}
+
+\textbf{notes on 3094 book}
+\begin{itemize}
+    \item maximal margin classifier: separates two distinct classes
+    \item support vector classifier / soft margin classifier: separates most data points according to a margin
+    \item makes use of slack variables, epsilons that allow some points to be on the wrong side; if $\epsilon=0$ it's on the right side of the margin, $\epsilon>0$ wrong side of margin and $\epsilon>1$ wrong side of hyperplane
+    \item For C > 0 no more than C observations can be on the wrong side of the hyperplane, because if an observation
+is on the wrong side of the hyperplane then ϵi > 1, and (9.15) requires
+that sum of n
+i=1 ϵi ≤ C. As the budget C increases, we become more tolerant of
+violations to the margin, and so the margin will widen. Conversely, as C
+decreases, we become less tolerant of violations to the margin and so the
+margin narrows.
+    \item support vectors: points that lie on the wrong side of the margin; these are the only observations that affect the classifier
+\end{itemize}
+
+\begin{itemize}
+    \item SKILEARN alphas are the same as his lambdas
+    \item 
+\end{itemize}
+
+\end{document}
