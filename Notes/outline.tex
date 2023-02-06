@@ -1,0 +1,92 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}[margin=1in]
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{shapes, backgrounds}
+  \usetikzlibrary{positioning}
+  \usetikzlibrary{tikzmark}
+  \usetikzlibrary{arrows}
+  \usetikzlibrary{calc}
+\usepackage{natbib}
+
+\usepackage{changepage}
+\usepackage{pgfplots}
+
+\title{\textbf{CLASSIFICATION METHODS FOR SUPPORT VECTOR MACHINES}}
+\author{\textbf{JULIA ANDRONOWITZ} \\ B.S., Mathematics}
+\date{May 2023}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\begin{adjustwidth}{0.5in}{0.5in}
+\begin{abstract}
+    The purpose of this thesis is to give an introduction to the concept of Support Vector Machines in Machine Learning. We will first outline the idea of classification, including the maximal margin classifier and support vector classifier. Examples of each will be given using programming languages such as R and Python. Then, we will move onto support vector machines and the use of kernels with example data. Finally, we will implement the techniques previously described in a real dataset.
+\end{abstract}
+\end{adjustwidth}
+
+\vspace{175pt}
+
+\begin{center}
+    University of Connecticut \\ Department of Mathematics \\ Advisor: Dr. Jeremy Teitlebaum
+\end{center}
+
+\newpage
+
+\section*{INTRODUCTION}
+\begin{itemize}
+    \item overview of type of data used in classification problems
+    \item gene expression and cancer prediction in \citet{introstatlearning}
+    \end{itemize}
+
+\section*{HYPERPLANES}
+\begin{itemize}
+    \item separating line in R2
+    \item planes and higher dimensional spaces
+\end{itemize}
+
+
+\section*{MAXIMAL MARGIN CLASSIFIER}
+\begin{itemize}
+    \item linearly separably data
+    \item use of hyperplanes
+\end{itemize}
+
+
+\section*{SUPPORT VECTOR CLASSIFIER}
+\begin{itemize}
+    \item soft margin classifier
+    \item introduction of costs/penalties
+\end{itemize}
+
+\section*{SUPPORT VECTOR MACHINES}
+\begin{itemize}
+    \item non-linear decision boundaries
+    \item use of kernels
+    \item multi-class data
+\end{itemize}
+
+\section*{EXAMPLE}
+\begin{itemize}
+    \item penguin/iris dataset: well-known example
+    \item possible example with real implications
+\end{itemize}
+
+\section*{ANALYSIS OF R AND PYTHON SVM MODULES AND DOCUMENTATION}
+
+\begin{itemize}
+    \item supporting documentation for each
+    \item ease of use
+    \item notes on function parameters
+\end{itemize}
+
+\newpage
+\thispagestyle{empty}
+
+\bibliography{references}
+\bibliographystyle{chicago}
+
+\end{document}

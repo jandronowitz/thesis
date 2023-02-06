@@ -23,6 +23,8 @@
 \usepackage{subcaption}
 \usepackage{float}
 \usepackage{physics}
+\usetikzlibrary{plotmarks}
+\usepackage{pgfplots}
 
 \newcommand{\R}{\mathbb{R}}
 
@@ -124,7 +126,6 @@ Now, we plot the function. The \textbf{abline} functions add lines at $x=0$ and 
 \end{center}
 \end{figure}
 
-
 We see that there is a clear separation between the data points and a hyperplane that bisects the data. The equation of the hyperplane in this example is defined by $y=-x$. In the form $f(x)=\beta_0 + \beta \cdot x$, we have $f(x)=0$, $\beta_0=0$, and $\beta=(1,1)$ to give $0=0+x_1+x_2$ or $x_1=-x_2$.
 
 Notice that we can rotate the line slightly in either direction and still have separating hyperplane. So long as the line does not pass through the points that the gray line intersects, there exist infinitely many such separating hyperplanes. An example is shown in red in Figure ~\ref{fig04}.
@@ -181,7 +182,7 @@ In this example, we see one set of points is to the left of the hyperplane while
 
 \section*{MAXIMAL MARGIN CLASSIFIER}
 
-The use of hyperplanes to distinguish between two classes is central to the maximal margin classifier. Also called the optimal margin classifier, this method aims to find the separating hyperplane that maximizes the distance between the two sets of points. That is, if the plane were to rotate slightly in either direction, it would be closer to the set of data points.
+The use of hyperplanes to distinguish between two classes is central to the maximal margin classifier. Also called the optimal margin classifier, this method aims to find the separating hyperplane that maximizes the distance between the two sets of points. That is, if the plane were to rotate slightly in either direction, it would be closer to the set of data points. Our depiction of the maximal margin classifier draws upon those presented in \cite{introstatlearning} and \cite{teitelbaum2021svmnotes}.
 
 In the above example, we can classify each set of points to determine what side of the hyperplane they lie on. So, if $y_i=1$ then $0>\beta_0 + \beta \cdot x$ and if $y_i=-1$ then $0<\beta_0 + \beta \cdot x$. Each $y_i$ becomes the class label for that observation. Class labels are the identifiers for the data points and distinguish which class the observation belongs to. Introducing the following starred lines to our code produces colors in the graph according to the respective group:
 
@@ -200,43 +201,32 @@ In the above example, we can classify each set of points to determine what side 
 \end{minted}
 
 The fifth line assigns a vector of 200 negative ones followed by 200 positive ones to the variable $y$. Combined with the adjusted plot function containing the color option $(3-y)$, the first 200 points are plotted blue and the last 200 points are plotted red. This gives out two groups shown in Figure ~\ref{fig05}.
-
 \begin{figure}
     \centering
     \includegraphics[width=5.5in]{fig05.png}
     \caption{Randomly Generated Data with Associated Class Label Coloring}
     \label{fig05}
 \end{figure}
-
-At this point, we know that points with $0>\beta_0 + \beta \cdot x$ will lie on one side of the hyperplane while the points $0<\beta_0 + \beta \cdot x$ lie on the other. Now that we have class labels, we see that points with $0<\beta_0 + \beta \cdot x$ have a class label $y_i$ of 1 while points with $0>\beta_0 + \beta \cdot x$ have a class label $y_i=-1$. Let those in the first class belong to the set $A^+$ and those in the second set belong to $A^-$, where $p \in A^+$ and $q \in A^-$. Combining these two constraints, we can produce one inequality such that
-
+We need to find the closest blue and red points such that shifting the hyperplane in any such way results in a smaller margin for either group. These points are known as the support vectors, as they are the only points that end up formulating the hyperplane. At this point, we know that points with $0>\beta_0 + \beta \cdot x$ will lie on one side of the hyperplane and have a class label $y_i$ of 1, while the points $0<\beta_0 + \beta \cdot x$ lie on the other and have a class label $y_i=-1$. Combining these two constraints, we can produce one inequality that correctly classifies each point
 $$y_i(\beta_0+\beta_1x_{i1}+...+\beta_px_{ip})>0$$
-
-The smallest such perpendicular distance from each observation to the hyperplane is known as the margin. Thus, we have the basic idea for the maximal margin classifier. We aim to maximize the margin $M$ to find the best separating hyperplane given by
-
-$$y_i(\beta_0+\beta_1x_{i1}+...+\beta_px_{ip}) \ge M$$ 
-
-We need to find the closest blue and red points such that shifting the hyperplane in any such way results in a smaller margin for either group. These points are known as the support vectors, as they are the only points that end up formulating the hyperplane. To do this, we must calculate the distance from the point to the plane. Suppose we look at a few points with a separating hyperplane of $0=\beta_0+\beta_1x_1+\beta_2x_2$.
-
 \begin{figure}[h]
     \centering
-    \label{supportvectors}
 \begin{tikzpicture}[scale=1.5]
-    \begin{axis}
-            grid=both,
-            axis equal,
-            axis line style = [<->]
-        ]
+    \begin{axis}[
+        xticklabel=\empty,
+        yticklabel=\empty
+    ]
         \addplot[<->,domain=-10:10,samples=100]({x},{-x});
     \end{axis}
     \draw (1,5) node[right] {$0=\beta_0+\beta_1x_1+\beta_2x_2$};
     \draw (5.7, 4.055) node[left] {$\theta$};
     \draw (5.1,3.255) node[right] {$\vec{n}$};
-    \draw (4,4) node[above] {$v$};
+    \draw (4,4) node[above] {$\vec{v}$};
     \draw (2.05,3.25) node[above] {($b_1,b_2$)};
-
+    \draw (5.9,4.155) node[right] {($a_1,a_2$)};
+    
     \draw[fill] (4, 2.355) circle [radius = .05 cm];
-    \draw[fill=blue] (6,4.355) circle [radius = .05 cm] node[right] {($a_1,a_2$)};
+    \draw[fill=blue] (6,4.355) circle [radius = .05 cm];
     \draw[fill=blue] (6.4, 5) circle [radius = .05 cm];
     \draw[fill=blue] (6, 5.3) circle [radius = .05 cm];
     \draw[fill=blue] (5.6, 5.1) circle [radius = .05 cm];
@@ -249,22 +239,35 @@ We need to find the closest blue and red points such that shifting the hyperplan
     \draw (4,2.755) edge (3.8,2.555);
 \end{tikzpicture}
     \caption{Diagram of Hyperplane and Support Vector}
+    \label{supportvectors}
 \end{figure}
 
-The perpendicular distance $\vec{n}$ from the point $(a_1,a_2)$ to the line can be written as $v\cos{\theta}$. This is equivalent to the dot product of $v$ and $\vec{n}$. We can find $\vec{n}$ by computing the normal vector to the line. 
-
-$\expval{\beta_1, \beta_2}$, . By restricting the normal vector to a unit vector, we can feasibly find the points with the greatest margin. The unit vector $\vec{u}$ is calculated by dividing the vector by the norm $\frac{n}{||n||}$. This is equivalent to $$\frac{n}{\sqrt{\beta_1^2+\beta_2^2}}$$ So, by ensuring $\beta_1^2+\beta_2^2=1$ we confine the perpendicular distance to a unit vector. We can see how this translates to the hyperplane by taking the dot product of a point and $\vec{n}$
+Suppose we look at a few points with a separating hyperplane of $0=f(x_1,x_2)=\beta_0+\beta_1x_1+\beta_2x_2$, pictured in Figure ~\ref{supportvectors}. We assume the point $(a_1,a_2)$ in the set of the positive class labels is the closest point to the set of points with a negative class label. Then, to compute the perpendicular distance $d$ from the point $(a_1,a_2)$ to $f(x_1,x_2)=0$, we first find a normal vector to $f$. Through calculus, the gradient of the hyperplane calculated by $(dx_1,dx_2)$ gives the normal vector $\vec{n}=\expval{\beta_1, \beta_2}$ to $f$. Let $(b_1,b_2)$ be any point on the hyperplane. Then $\vec{v}=(a_1-b_1,a_2-b_2)$. The distance $d$ equals $||\vec{v}|| \cos{\theta}$ through trigonometry. Then we have
 \begin{align*}
-    (a_1-b_1,a_2-b_2) \cdot \expval{\beta_1,\beta_2} &= \beta_1a_1-\beta_1b_1+\beta_2a_2-\beta_2b_2 \\
-    &= \beta_1a_1+\beta_2a_2-(\beta_1b_1+\beta_2b_2)
+    \vec{v} \cdot \vec{n}&=||\vec{v}|| ||\vec{n}|| \cos{\theta} \\
+    \vec{v} \cdot \vec{n}&= d \cdot ||\vec{n}|| \\
+    d &= \frac{\vec{v} \cdot \vec{n}}{||\vec{n}||} \\
+    &= \frac{(a_1-b_1,a_2-b_2) \cdot \expval{\beta_1,\beta_2}}{\sqrt{\beta_1^2+\beta_2^2}} \\
+    &=\frac{\beta_1a_1-\beta_1b_1+\beta_2a_2-\beta_2b_2}{\sqrt{\beta_1^2+\beta_2^2}} \\
+    &= \frac{\beta_1a_1+\beta_2a_2-(\beta_1b_1+\beta_2b_2)}{\sqrt{\beta_1^2+\beta_2^2}}
 \end{align*}
-Since $(b_1,b_2)$ lies on the hyperplane, $\beta_1b_1+\beta_2b_2=0$ and we are left with
+Since $(b_1,b_2)$ lies on the hyperplane, we have $\beta_0+\beta_1b_1+\beta_2b_2=0$ and $\beta_1b_1+\beta_2b_2=-\beta_0$. Thus,
 \begin{align*}
-    &=\beta_1a_1+\beta_2a_2 + \beta_0
+    d&= \frac{\beta_1a_1+\beta_2a_2-(\beta_1b_1+\beta_2b_2)}{\sqrt{\beta_1^2+\beta_2^2}} \\
+    &= \frac{\beta_1a_1+\beta_2a_2-(-\beta_0)}{\sqrt{\beta_1^2+\beta_2^2}} \\
+    &= \frac{\beta_1a_1+\beta_2a_2+\beta_0}{\sqrt{\beta_1^2+\beta_2^2}}
 \end{align*}
-Thus, the hyperplane of the maximal margin classifier is given by
 
-$$y_i(\beta_0+\beta_1x_{i1}+...+\beta_px_{ip}) \ge M$$ 
+Note that the numerator is exactly the equation $f$. In fact, there exist infinitely many such functions, as we could simply multiply $f$ by a constant. Suppose we have the equivalent hyperplane $ 0=C\beta_1a_1+C\beta_2a_2+C\beta_0$ for any $C \in \mathbb{R}$. Then,
+\begin{align*}
+    d&= \frac{C\beta_1a_1+C\beta_2a_2+C\beta_0}{\sqrt{(C\beta_1)^2+(C\beta_2)^2}} \\
+    &=\frac{C(\beta_1a_1+\beta_2a_2+\beta_0)}{\sqrt{C^2(\beta_1^2+\beta_2^2)}} \\
+    &=\frac{C(\beta_1a_1+\beta_2a_2+\beta_0)}{C\sqrt{\beta_1^2+\beta_2^2}} \\
+    &=\frac{\beta_1a_1+\beta_2a_2+\beta_0}{\sqrt{\beta_1^2+\beta_2^2}} \\
+\end{align*}
+Notice that we are left with the same distance $d$, even with a different equation for the hyperplane. By imposing the condition $\beta_1^2+\beta_2^2=1$, we restrict the above to just one possible hyperplane. So, we are left with $$d=\frac{f(a_1,a_2)}{\sqrt{\beta_1^2+\beta_2^2}}$$ We aim to find the greatest distance, or margin, by maximizing the coefficients to the function $f$ of the closest point(s) to the hyperplane. Thus, we have the basic idea for the maximal margin classifier. We seek to maximize the margin $M$ to find the best separating hyperplane given by
+
+$$y_i(\beta_0+\beta_1x_{i1}+...+\beta_px_{ip}) \ge M$$
 
 provided that
 
@@ -327,7 +330,7 @@ To find the equation of the line, we use the hyperplane function as outlined in 
 \end{minted}
 In this function, \textbf{P} is the \textbf{svm} function which we labeled \textit{svmfit}. The \textbf{data} is our dataframe containing the observations and class labels. \textbf{x} is the column vector of observations. We set \textbf{z}=0 for now, but this will later be shown to move the hyperplane vertically by a set constant. 
 
-Inside the function, the \textbf{alphas} are assigned to the coefficients of the hyperplane and multiplied by negative one. The \textbf{svs} variable takes the index of the support vectors and finds the exact point values in the data. \textbf{c} refers to the intercept and can be adjusted by the variable \textbf{z}. The variables \textbf{a} and \textbf{b} take the $x$ and $y$ coordinates, respectively, of the support vectors and multiply by their corresponding coefficient, as calculated by taking the transpose of the \textbf{alphas} variable, then summed. In Python, the \textbf{hyperplane} function looks slightly different due to the differences in the corresponding module, but the concept remains the same.
+Inside the function, the \textbf{alphas} are assigned to the coefficients of the hyperplane and multiplied by negative one. The \textbf{svs} variable takes the index of the support vectors and finds the exact point values in the data. \textbf{c} refers to the intercept and can be adjusted by the variable \textbf{z}. The variables \textbf{a} and \textbf{b} take the $x$ and $y$ coordinates, respectively, of the support vectors and multiply by their corresponding coefficient, as calculated by taking the transpose of the \textbf{alphas} variable, then summed. In Python, the \textbf{hyperplane} function looks slightly different due to the differences in the corresponding module, but the concept remains the same \cite{teitelbaum2021svm}.
 
 \begin{minted}{Python}
     def hyperplane(P,x,z=0):
@@ -365,6 +368,8 @@ The $R$ code for the plot referenced in Figure ~\ref{fig08} is below and pulls i
 figure of non-linearly separable data
 
 figure of data with soft margin
+
+What happens when data is not linearly separable? This occurs when the two groups of data have overlapping points. In this case, we cannot form a separating hyperplane as some points will be classified on the wrong side of the line. For non-linearly separable data, we introduce the support vector classifier. This classification method is also known as the soft-margin classifier since some points will not be classified on the correct side of the hyperplane. We will introduce the topic of costs, which essentially allow a certain number of observations to be classified incorrectly, then discuss the code in $R$ and Python.
 
 \section*{SUPPORT VECTOR MACHINES}
 \begin{itemize}
