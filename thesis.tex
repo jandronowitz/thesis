@@ -25,6 +25,7 @@
 \usepackage{physics}
 \usetikzlibrary{plotmarks}
 \usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 
 \newcommand{\R}{\mathbb{R}}
 
@@ -72,7 +73,7 @@ In contrast, supervised learning uses data that is well-labeled to teach our mod
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}}
+    \begin{tabular}{p{1.6cm}p{1.6cm}p{1.6cm}p{1.6cm}p{1.7cm}p{1.7cm}p{1.7cm}}
          Culmen Length & Culmen Depth & Flipper Length & Body Mass & Delta 15 N & Delta 13 C & Species \\
          (mm) & (mm) & (mm) & (g) & (o/oo) & (o/oo) \\
          \hline
@@ -404,6 +405,6 @@ Support vector machines have also been used in multi-class lung cancer classific
 \thispagestyle{empty}
 
 \bibliography{References/References}
-\bibliographystyle{plain}
+\bibliographystyle{chicago}
 
 \end{document}
