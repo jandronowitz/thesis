@@ -11,3 +11,11 @@ notes.fdb_latexmk
 notes.fls
 notes.log
 notes.synctex
+
+.aux
+.log
+.fdb_latexmk
+.bbl
+.blg
+.fls
+.synctex
