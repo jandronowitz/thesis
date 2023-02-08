@@ -12,10 +12,10 @@ notes.fls
 notes.log
 notes.synctex
 
-.aux
-.log
-.fdb_latexmk
-.bbl
-.blg
-.fls
-.synctex
+outline.aux
+outline.log
+outline.fdb_latexmk
+outline.bbl
+outline.blg
+outline.fls
+outline.synctex
