@@ -39,7 +39,7 @@ done
     \item optimal margin: gap between points on each side have smallest distance from separating line; this is what the SVM calculates
     \item linearly separable means there is a separating hyperplane where those values above are positive and below negative
     \item N x k data matrix and N x 1 vector Y that classifies the two species
-    \item hyperplane given by $$f(x)=w \cdot x +b = 0$$
+    \item hyperplane given by \[ f(x)=w \cdot x +b = 0 \]
     \item the vector $w$ is the normal vector to the hyperplane (so wx1 - wx2 = 0)
     \item the distance from a point to the hyperplane is \begin{align*}
         D &= \frac{f(p)}{||w||} \\
@@ -49,7 +49,7 @@ done
         &= \frac{wp + b}{||w||} \\
         &= \frac{f(p)}{||w||}
     \end{align*}
-   % \item linearly separable if $max w \cdot x _{x \in A^_}< min w \cdot x_{x \in A^+}$
+    % \item linearly separable if $ \max w \cdot x _{x \in A^_}< \min w \cdot x_{x \in A^+}$
     \item $B^-$ is the max value of the minimums (those above the hyperplane)
     \item $B^+$ min value of the positives (below the hyperplane)
     \item supporting hyperplane: every point is on one side and you can't move it any further over otherwise that point will be on the wrong side
