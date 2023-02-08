@@ -2,10 +2,10 @@
 \parskip=\bigskipamount
 \parindent=0pt
 
-\usepackage [autostyle, english = american]{csquotes}
-\MakeOuterQuote{"}
-
 \usepackage[utf8]{inputenc}
+
+\usepackage [autostyle, english = american]{csquotes}
+
 \usepackage{geometry}[margin=1in]
 \usepackage{amsmath, amssymb}
 \usepackage{tikz}
@@ -59,7 +59,7 @@ Machine learning algorithms fall into one of two categories: supervised or unsup
 
 \begin{figure}[h]
     \centering
-    \includegraphics[height=2in]{clustering_v_association.png}
+    \includegraphics[height=2in]{Figures/clustering_v_association.png}
     \captionsetup[subfigure]{labelformat=empty}
     \begin{subfigure}[]{0.5\textwidth}
          \centering
@@ -72,7 +72,7 @@ In contrast, supervised learning uses data that is well-labeled to teach our mod
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{p{1.8cm}p{1.8cm}p{1.8cm}p{1.8cm}p{1.8cm}p{1.8cm}p{1.8cm}}
+    \begin{tabular}{p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}}
          Culmen Length & Culmen Depth & Flipper Length & Body Mass & Delta 15 N & Delta 13 C & Species \\
          (mm) & (mm) & (mm) & (g) & (o/oo) & (o/oo) \\
          \hline
@@ -120,7 +120,7 @@ Now, we plot the function. The \textbf{abline} functions add lines at $x=0$ and 
 
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=5.5in]{fig02.png}
+\includegraphics[width=5.5in]{Figures/mmc_separating_hyperplane.png}
 \caption{Randomly Generated Clustered Data \\ with Separating Hyperplane in $\R^2$}
 \label{fig01}
 \end{center}
@@ -132,7 +132,7 @@ Notice that we can rotate the line slightly in either direction and still have s
 
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=5.5in]{fig03.png}
+\includegraphics[width=5.5in]{Figures/mmc_multiple_hyperplanes.png}
 \caption{Randomly Generated Clustered Data with Multiple \\ Hyperplanes in $R^2$}
 \label{fig04}
 \end{center}
@@ -173,7 +173,7 @@ The output is shown in Figure ~\ref{fig02}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics{fig04.png}
+    \includegraphics{Figures/randomly_generated_R3.png}
     \caption{Randomly Generated Clustered Data \\ with Separating Hyperplane in $\R^3$}
     \label{fig02}
 \end{figure}
@@ -203,7 +203,7 @@ In the above example, we can classify each set of points to determine what side 
 The fifth line assigns a vector of 200 negative ones followed by 200 positive ones to the variable $y$. Combined with the adjusted plot function containing the color option $(3-y)$, the first 200 points are plotted blue and the last 200 points are plotted red. This gives out two groups shown in Figure ~\ref{fig05}.
 \begin{figure}
     \centering
-    \includegraphics[width=5.5in]{fig05.png}
+    \includegraphics[width=5.5in]{Figures/fig05.png}
     \caption{Randomly Generated Data with Associated Class Label Coloring}
     \label{fig05}
 \end{figure}
@@ -289,7 +289,7 @@ Once downloading the package, we assign the $x$ and $y$ variables to one datafra
 
 \begin{figure}
     \centering
-    \includegraphics[width=5.5in]{fig06.png}
+    \includegraphics[width=5.5in]{Figures/fig06.png}
     \caption{Maximal Margin SVM Module Output in $R$}
     \label{fig06}
 \end{figure}
@@ -303,7 +303,7 @@ As we see, the separating hyperplane is illustrated clearly albeit not pictured 
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=5in]{svmfitoutput.png}
+    \includegraphics[width=5in]{Figures/svmfitoutput.png}
     \caption{Selected Output of SVM Function}
     \label{fig07}
 \end{figure}
@@ -312,7 +312,7 @@ The \textbf{str} function tells us that \textbf{svmfit} is a list of 30 variable
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=5in]{fig08.png}
+    \includegraphics[width=5in]{Figures/fig08.png}
     \caption{Maximal Margin Classifier Output in $R$}
     \label{fig08}
 \end{figure}
@@ -403,7 +403,7 @@ Support vector machines have also been used in multi-class lung cancer classific
 \newpage
 \thispagestyle{empty}
 
-\bibliography{references}
+\bibliography{References/References}
 \bibliographystyle{plain}
 
 \end{document}
