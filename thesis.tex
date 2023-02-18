@@ -15,7 +15,9 @@
   \usetikzlibrary{arrows}
   \usetikzlibrary{calc}
   \usetikzlibrary{plotmarks}
+\usepackage{booktabs}
 \usepackage{natbib}
+\usepackage[colorlinks=true, citecolor=blue]{hyperref}
 \usepackage{listings}
 \usepackage[outputdir=out,cache=false]{minted}
 \usepackage{changepage}
@@ -488,11 +490,18 @@ subject to the conditions on \(\beta\) and \(\epsilon\). We could also solve thi
 
 \[ \min ||\beta|| \text{ subject to }
     \begin{cases}
-        &y_i(x_i^T\beta + \beta_0) \ge 1 - \epsilon_i \forall i, \\ & \epsilon_i \ge 0, \sum \epsilon_i \le C, C \in \R 
+        &y_i(\beta x_i + \beta_0) \ge 1 - \epsilon_i \forall i, \\ & \epsilon_i \ge 0, \sum \epsilon_i \le C, C \in \R 
     \end{cases}
 \]
 
-shouldn't that be opposite? larger cost means larger c so sum of $\epsilon$s can be greater so there can be more slack variables? look at page 389 for explanation
+which is equivalent to
+
+\[
+    \begin{cases}
+        & \min_{\beta,\beta_0} \frac{1}{2} ||\beta||^2 + C \sum_{i=1}^{N} \epsilon_i \\
+        & \text{subject to} y_i(\beta_i x_i+\beta_0) \ge 1 - \epsilon_i, \epsilon_i \ge 0
+    \end{cases}
+\]
 
 talk about how to test our model with prediction accuracy
 
@@ -505,8 +514,6 @@ code for python?
 dual problem family of lines in the $\beta$ space, all must lie on the right side of the line and we try to find the point closest to the origin
 
 experiment with values of C and sum of slack variables; show on graph? trade-off between the two; $slack = 1-y_i(f(x_i))$
-
-minimize $||\beta^2|| + C \sum \epsilon_i$ subject to $y_i(\beta_ix_i+b) \ge 1- \epsilon_i$ and $\epsilon_i \ge 0$
 
 \section{SUPPORT VECTOR MACHINE}
 \begin{itemize}
