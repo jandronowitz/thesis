@@ -14,17 +14,18 @@
   \usetikzlibrary{tikzmark}
   \usetikzlibrary{arrows}
   \usetikzlibrary{calc}
+  \usetikzlibrary{plotmarks}
 \usepackage{natbib}
 \usepackage{listings}
-\usepackage{minted}
+\usepackage[outputdir=out,cache=false]{minted}
 \usepackage{changepage}
 \usepackage{pgfplots}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{float}
 \usepackage{physics}
-\usetikzlibrary{plotmarks}
 \usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 
 \newcommand{\R}{\mathbb{R}}
 
@@ -68,7 +69,7 @@ Machine learning algorithms fall into one of two categories: supervised or unsup
     \label{fig1}
 \end{figure}
 
-In contrast, supervised learning uses data that is well-labeled to teach our model and either infer or predict. Inference problems aim for a better understanding of the relationship between the response variable and the features. On the other hand, prediction problems relate to developing a model that accurately fits the response variable to the predictors. Each observation in a data set has associated predictors and a response variable. Predictors are the input variables and can go by a variety of names such as variables, independent variables or features \cite{introstatlearning}. Predictors usually correspond to the variables $x_1,x_2,...,x_n$ where each $x_n$ is an input variable. The response variable is the dependent variable or what we are trying to measure, usually denoted as $y$. Let's take a look at some penguin data, shown in Table ~\ref{tab1}.
+In contrast, supervised learning uses data that is well-labeled to teach our model and either infer or predict. Inference problems aim for a better understanding of the relationship between the response variable and the features. On the other hand, prediction problems relate to developing a model that accurately fits the response variable to the predictors. Each observation in a data set has associated predictors and a response variable. Predictors are the input variables and can go by a variety of names such as variables, independent variables or features \cite{introstatlearning}. Predictors usually correspond to the variables $x_1,x_2,...,x_n$ where each $x_n$ is an input variable. The response variable is the dependent variable or what we are trying to measure, usually denoted as $y$. Let's take a look at some penguin data, shown in Table ~\ref{table_penguin_data}.
 
 \begin{table}[h]
     \centering
@@ -84,7 +85,7 @@ In contrast, supervised learning uses data that is well-labeled to teach our mod
          42.5 & 20.7 & 197 & 4500 & 8.67538 & -25.13993 & Adelie
     \end{tabular}
     \caption{Penguin Data}
-    \label{tab1}
+    \label{table_penguin_data}
 \end{table}
 
 In this example, the culmen length, culmen depth, flipper length, body mass, Delta 15 N and Delta 13 C are the predictors. Based on these variables, we want the model to predict which species the penguin is. So, each body measurement is a predictor and the species is the response variable. In supervised learning, we often have training and testing groups for our data. Training and test groups are a common practice in machine learning to both classify existing data points and assess the underlying accuracy of the model on known data. Training data is data used to teach our model how to estimate the response variable. Once the model is trained, we can apply the algorithm to the testing data which the model has not previously seen. Since we already have the response variable for this set in the original data, we can compare the model's predicted $y$-values, denoted $\hat y$, with the actual $y$-values. In machine learning, it is common to see the data split into about 80\% training and 20\% testing data, but these values can be manually specified in the code \cite{trainingvtest}. Suppose we collect the data for the ten students at the end of the year. Then, we have all their test scores for the year. We take 8 students and train the model based on these observations. Then, we use the remaining two students as the test set. 
