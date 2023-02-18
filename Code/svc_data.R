@@ -2,6 +2,7 @@
 # Classification Methods Using Support Vector Machines
 # Support Vector Classifier
 
+
 # loading svm library (run first line if not installed)
 # install.packages("e1071")
 library(e1071)
