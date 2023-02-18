@@ -7,7 +7,7 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}[margin=1in]
-\usepackage{amsmath, amssymb}
+\usepackage{amsmath, amssymb, amsfonts}
 \usepackage{tikz}
 \usetikzlibrary{shapes, backgrounds}
   \usetikzlibrary{positioning}
@@ -20,12 +20,11 @@
 \usepackage[outputdir=out,cache=false]{minted}
 \usepackage{changepage}
 \usepackage{pgfplots}
+  \pgfplotsset{compat=1.18}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{float}
 \usepackage{physics}
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.18}
 
 \newcommand{\R}{\mathbb{R}}
 
@@ -60,7 +59,7 @@ Machine learning algorithms fall into one of two categories: supervised or unsup
 
 \begin{figure}[h]
     \centering
-    \includegraphics[height=2in]{Figures/clustering_v_association.png}
+    \includegraphics[height=2in,natheight=480,natwidth=1400]{Figures/clustering_v_association.png}
     \captionsetup[subfigure]{labelformat=empty}
     \begin{subfigure}[]{0.5\textwidth}
          \centering
@@ -309,13 +308,13 @@ As we see, the separating hyperplane is illustrated clearly albeit not pictured 
     \label{fig_mmc_selected_output}
 \end{figure}
 
-The \textbf{str} function tells us that \textbf{svmfit} is a list of 30 variables, some of which we defined in the function and others that were calculated. Particularly of interest are the \textbf{index}, \textbf{rho}, and \textbf{coefs} variables, which give the output in Figure ~\ref{fig_mmc_selected_output}. The \textbf{rho} variable is the intercept of the separating hyperplane, and the \textbf{coefs} variable is an array of the coefficients of the supporting vectors. The \textbf{index} variable tells us the indices of the observations that the classifier depends on, or the support vectors. In this case, it is data points 92 and 309. If we were to rotate the hyperplane in any direction, the margin from these two points to the black line would inevitably become smaller. Visually, we can see these two points as those that the supporting hyperplanes pass through in Figure ~\ref{mmc_graph}.
+The \textbf{str} function tells us that \textbf{svmfit} is a list of 30 variables, some of which we defined in the function and others that were calculated. Particularly of interest are the \textbf{index}, \textbf{rho}, and \textbf{coefs} variables, which give the output in Figure ~\ref{fig_mmc_selected_output}. The \textbf{rho} variable is the intercept of the separating hyperplane, and the \textbf{coefs} variable is an array of the coefficients of the supporting vectors. The \textbf{index} variable tells us the indices of the observations that the classifier depends on, or the support vectors. In this case, it is data points 92 and 309. If we were to rotate the hyperplane in any direction, the margin from these two points to the black line would inevitably become smaller. Visually, we can see these two points as those that the supporting hyperplanes pass through in Figure ~\ref{fig_mmc_graph}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=5in]{Figures/mmc_graph.png}
     \caption{Maximal Margin Classifier Output in $R$}
-    \label{mmc_graph}
+    \label{fig_mmc_graph}
 \end{figure}
 
 To find the equation of the line, we use the hyperplane function as outlined in \cite{teitelbaum2021svm}:
@@ -344,7 +343,7 @@ Inside the function, the \textbf{alphas} are assigned to the coefficients of the
     return (-c-a*x)/b
 \end{minted}
 
-The $R$ code for the plot referenced in Figure ~\ref{mmc_graph} is below and pulls information from the \textbf{hyperplane} function.
+The $R$ code for the plot referenced in Figure ~\ref{fig_mmc_graph} is below and pulls information from the \textbf{hyperplane} function.
 
 \begin{minted}[breaklines]{R}
     plt0 <- hyperplane(svmfit,dat,x,0)
@@ -408,7 +407,7 @@ y_i(\beta_0+\beta_1x_{i1}+...+\beta_px_{ip}) \ge M(1-\epsilon_i)
 
 provided that
 
-\begin{equation}\label{sumofsquares}
+\begin{equation}\label{sum_of_squares}
 \sum_{j=1}^{p} \beta^2_j=1
 \end{equation}
 
@@ -480,7 +479,18 @@ Let us look at what happens with different values of the cost variable.
             # results in 20 support vectors
 \end{minted}
 
-We see that as the cost increases, there are fewer support vectors. That is, fewer observations are classified incorrectly.
+We see that as the cost increases, there are fewer support vectors. That is, fewer observations are classified incorrectly. Shouldn't it be the opposite? We see in ~\ref{slackvariables} that the sum of the slack variables has to be less than or equal to the cost. A higher cost allows for greater slack variables, meaning more observations can lie outside the margin. This discrepancy lies in the underlying code. In both the R and Python modules for the support vector machine, the cost is inversely proportional to the \(C\) we defined in ~\ref{slackvariables}.
+
+The difference is a reference to the "dual problem", as there are two approaches to solving this problem. One approach, which we have previously outlined, fixes the variable \(C\) and the sum of \(\beta_j^2\) in order to minimize the margin. We are left with solving \[
+    y_i(\beta_0+\beta_1x_{i1}+...+\beta_px_{ip}) \ge M(1-\epsilon_i)
+    \]
+subject to the conditions on \(\beta\) and \(\epsilon\). We could also solve this problem by switching our conditions and minimization as outlined in \cite{esl2}. If we fix the margin to be 1, we aim to minimize \(||\beta||\). The new problem becomes 
+
+\[ \min ||\beta|| \text{ subject to }
+    \begin{cases}
+        &y_i(x_i^T\beta + \beta_0) \ge 1 - \epsilon_i \forall i, \\ & \epsilon_i \ge 0, \sum \epsilon_i \le C, C \in \R 
+    \end{cases}
+\]
 
 shouldn't that be opposite? larger cost means larger c so sum of $\epsilon$s can be greater so there can be more slack variables? look at page 389 for explanation
 
