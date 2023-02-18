@@ -2,10 +2,10 @@
 \parskip=\bigskipamount
 \parindent=0pt
 
-\usepackage[utf8]{inputenc}
-
 \usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
 
+\usepackage[utf8]{inputenc}
 \usepackage{geometry}[margin=1in]
 \usepackage{amsmath, amssymb}
 \usepackage{tikz}
@@ -25,7 +25,6 @@
 \usepackage{physics}
 \usetikzlibrary{plotmarks}
 \usepackage{pgfplots}
-\pgfplotsset{compat=1.18}
 
 \newcommand{\R}{\mathbb{R}}
 
@@ -52,7 +51,7 @@
 
 \newpage
 
-\section*{INTRODUCTION}
+\section{INTRODUCTION}
 
 The first discoveries regarding machine learning date back to the 1950s. Known as the "Turing Test", mathematician Alan Turing attempted to discern if a computer could fool a human into thinking it is also a human \cite{mlhistory}. In the years to follow, computer codes turned into learning programs that evolved the more times the code was run. In 1957, the first neural network was created which simulated a human brain's thought process. Ten years later, a basic pattern recognition algorithm was created called the "nearest neighbor" algorithm. Come the 1990's, accessibility to computers and advances in computers has exponentially increased. Scientists begin using a data-driven approach as large amounts of data are available, which allows computer algorithms to analyze data and learn from their results. Fast forward a few decades and we now have deep learning, survival analysis, and unsupervised learning.
 
@@ -73,7 +72,7 @@ In contrast, supervised learning uses data that is well-labeled to teach our mod
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{p{1.6cm}p{1.6cm}p{1.6cm}p{1.6cm}p{1.7cm}p{1.7cm}p{1.7cm}}
+    \begin{tabular}{p{1.8cm}p{1.8cm}p{1.8cm}p{1.8cm}p{1.8cm}p{1.8cm}p{1.8cm}}
          Culmen Length & Culmen Depth & Flipper Length & Body Mass & Delta 15 N & Delta 13 C & Species \\
          (mm) & (mm) & (mm) & (g) & (o/oo) & (o/oo) \\
          \hline
@@ -94,7 +93,7 @@ Supervised learning can be categorized into either regression or classification 
 
 Developed in the 1990s, support vector machines are an approach to classification problems now widely used among data scientists. In the following paper, we will discuss what a support vector machine is, how one can be implemented among a data set and practical applications of SVMs.
 
-\section*{HYPERPLANES}
+\section{HYPERPLANES}
 
 We first begin by defining a hyperplane. Specifically, a hyperplane is "a flat affine subspace of dimension $p-1$" in a $p$-dimensional space \cite{introstatlearning}. In the two-dimensional space, a hyperplane looks like a straight line bisecting the data points into two distinct groups. We call this data linearly separable, as the data can be separated into two distinct groups by the hyperplane. In three dimensions, we see the formation of a plane. In higher dimensions, it can be hard to visualize the hyperplane, but the concept still applies.
 
@@ -102,7 +101,7 @@ Mathematically, a hyperplane in $\R^2$ is the equation $0=\beta_0+\beta_1x_1+\be
 
 To examine a hyperplane in two dimensions, we generate two distinct groups of data using \textit{R}.
 
-\begin{minted}{R}
+\begin{minted}[breaklines]{R}
     n <- 200
     x1 <- matrix(rnorm(n*2, 1,0.3), ncol=2)
     x2 <- matrix(rnorm(n*2,-1,0.3), ncol=2)
@@ -111,37 +110,37 @@ To examine a hyperplane in two dimensions, we generate two distinct groups of da
 
 We first set $n=200$. This will be the length of our data set. Then, we use the function \textbf{rnorm} to generate a set of data points from the normal distribution with mean 1 and standard deviation 0.3. The matrix function transforms the 400 randomly generated points into a [200 x 2] matrix. The same is done for a second group, instead with mean $-1$ and standard deviation 0.3. The \textbf{rbind} function combines these two groups into one vector, namely $x$.
 
-\begin{minted}{R}
+\begin{minted}[breaklines]{R}
     plot(x,xlab="",ylab="")
     abline(h=0,v=0,col="gray",lty="dotted")
     abline(a=0,b=-1,col="black",lty="dashed")
 \end{minted}
 
-Now, we plot the function. The \textbf{abline} functions add lines at $x=0$ and $y=0$ as well as add one such separating hyperplane. Figure ~\ref{fig01} shows the output.
+Now, we plot the function. The \textbf{abline} functions add lines at $x=0$ and $y=0$ as well as add one such separating hyperplane. Figure ~\ref{fig_mmc_separating_hyperplane} shows the output.
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[width=5.5in]{Figures/mmc_separating_hyperplane.png}
 \caption{Randomly Generated Clustered Data \\ with Separating Hyperplane in $\R^2$}
-\label{fig01}
+\label{fig_mmc_separating_hyperplane}
 \end{center}
 \end{figure}
 
 We see that there is a clear separation between the data points and a hyperplane that bisects the data. The equation of the hyperplane in this example is defined by $y=-x$. In the form $f(x)=\beta_0 + \beta \cdot x$, we have $f(x)=0$, $\beta_0=0$, and $\beta=(1,1)$ to give $0=0+x_1+x_2$ or $x_1=-x_2$.
 
-Notice that we can rotate the line slightly in either direction and still have separating hyperplane. So long as the line does not pass through the points that the gray line intersects, there exist infinitely many such separating hyperplanes. An example is shown in red in Figure ~\ref{fig04}.
+Notice that we can rotate the line slightly in either direction and still have separating hyperplane. So long as the line does not pass through the points that the gray line intersects, there exist infinitely many such separating hyperplanes. An example is shown in red in Figure ~\ref{fig_mmc_multiple_hyperplanes}.
 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[width=5.5in]{Figures/mmc_multiple_hyperplanes.png}
 \caption{Randomly Generated Clustered Data with Multiple \\ Hyperplanes in $R^2$}
-\label{fig04}
+\label{fig_mmc_multiple_hyperplanes}
 \end{center}
 \end{figure}
 
 Similarly, in a three-dimensional space the hyperplane partitions the data. A plane separates the set into two distinct groups. An example can be generated with Python. 
 
-\begin{minted}{R}
+\begin{minted}[breaklines]{R}
     data1a = np.random.normal(-1,0.3,size=(10,1))
     data1b = np.random.normal(-0.5,0.3,size=(10,1))
     data1c = np.random.normal(0,0.1,size=(10,1))
@@ -153,7 +152,7 @@ Similarly, in a three-dimensional space the hyperplane partitions the data. A pl
 
 These functions set up our two data sets. The $a, b, c$ values correspond to the $x,y,z$ coordinates for each set. A randomly generated sample from the normal distribution is used. We then create the graph by setting up the axes and writing the equation for the hyperplane that will bisect the data before plotting the points.
 
-\begin{minted}{python}
+\begin{minted}[breaklines]{python}
     x = np.linspace(-1, 1, 10)
     y = np.linspace(-1, 1, 10)
 
@@ -170,24 +169,24 @@ These functions set up our two data sets. The $a, b, c$ values correspond to the
     plt.show()
 \end{minted}
 
-The output is shown in Figure ~\ref{fig02}.
+The output is shown in Figure ~\ref{fig_randomly_generated_R3}.
 
 \begin{figure}[H]
     \centering
     \includegraphics{Figures/randomly_generated_R3.png}
     \caption{Randomly Generated Clustered Data \\ with Separating Hyperplane in $\R^3$}
-    \label{fig02}
+    \label{fig_randomly_generated_R3}
 \end{figure}
 
-In this example, we see one set of points is to the left of the hyperplane while the other lies on the right. The equation of the hyperplane is $z = x + 0.15y$. In the form $f(x)=\beta_0 + \beta \cdot x$, we have $f(x)=0$, $\beta_0=0$, and $\beta=(1,0.15,-1)$ to give $0=0+x_1+0.15x_2-x_3$ or $x_3=x_1+0.15x_2$. Like in the two-dimensional case, there is an infinite number of separating hyperplanes in three dimensions. By slightly rotating the plane shown in Figure ~\ref{fig02} in either direction, we can visualize the concept of numerous other planes that would bisect the same data set.
+In this example, we see one set of points is to the left of the hyperplane while the other lies on the right. The equation of the hyperplane is $z = x + 0.15y$. In the form $f(x)=\beta_0 + \beta \cdot x$, we have $f(x)=0$, $\beta_0=0$, and $\beta=(1,0.15,-1)$ to give $0=0+x_1+0.15x_2-x_3$ or $x_3=x_1+0.15x_2$. Like in the two-dimensional case, there is an infinite number of separating hyperplanes in three dimensions. By slightly rotating the plane shown in Figure ~\ref{fig_randomly_generated_R3} in either direction, we can visualize the concept of numerous other planes that would bisect the same data set.
 
-\section*{MAXIMAL MARGIN CLASSIFIER}
+\section{MAXIMAL MARGIN CLASSIFIER}
 
 The use of hyperplanes to distinguish between two classes is central to the maximal margin classifier. Also called the optimal margin classifier, this method aims to find the separating hyperplane that maximizes the distance between the two sets of points. That is, if the plane were to rotate slightly in either direction, it would be closer to the set of data points. Our depiction of the maximal margin classifier draws upon those presented in \cite{introstatlearning} and \cite{teitelbaum2021svmnotes}.
 
 In the above example, we can classify each set of points to determine what side of the hyperplane they lie on. So, if $y_i=1$ then $0>\beta_0 + \beta \cdot x$ and if $y_i=-1$ then $0<\beta_0 + \beta \cdot x$. Each $y_i$ becomes the class label for that observation. Class labels are the identifiers for the data points and distinguish which class the observation belongs to. Introducing the following starred lines to our code produces colors in the graph according to the respective group:
 
-\begin{minted}{R}
+\begin{minted}[breaklines]{R}
     n <- 200
 
     x1 <- matrix(rnorm(n*2, 1,0.3), ncol=2)
@@ -201,12 +200,12 @@ In the above example, we can classify each set of points to determine what side 
     abline(a=0,b=-1,col="black",lty="dashed")
 \end{minted}
 
-The fifth line assigns a vector of 200 negative ones followed by 200 positive ones to the variable $y$. Combined with the adjusted plot function containing the color option $(3-y)$, the first 200 points are plotted blue and the last 200 points are plotted red. This gives out two groups shown in Figure ~\ref{fig05}.
+The fifth line assigns a vector of 200 negative ones followed by 200 positive ones to the variable $y$. Combined with the adjusted plot function containing the color option $(3-y)$, the first 200 points are plotted blue and the last 200 points are plotted red. This gives out two groups shown in Figure ~\ref{fig_mmc_hyperplane_w_labels}.
 \begin{figure}
     \centering
-    \includegraphics[width=5.5in]{Figures/fig05.png}
+    \includegraphics[width=5.5in]{Figures/mmc_hyperplane_w_labels.png}
     \caption{Randomly Generated Data with Associated Class Label Coloring}
-    \label{fig05}
+    \label{fig_mmc_hyperplane_w_labels}
 \end{figure}
 We need to find the closest blue and red points such that shifting the hyperplane in any such way results in a smaller margin for either group. These points are known as the support vectors, as they are the only points that end up formulating the hyperplane. At this point, we know that points with $0>\beta_0 + \beta \cdot x$ will lie on one side of the hyperplane and have a class label $y_i$ of 1, while the points $0<\beta_0 + \beta \cdot x$ lie on the other and have a class label $y_i=-1$. Combining these two constraints, we can produce one inequality that correctly classifies each point
 $$y_i(\beta_0+\beta_1x_{i1}+...+\beta_px_{ip})>0$$
@@ -278,7 +277,7 @@ provided that
 
 Though the maximal margin classifier is not a support vector machine quite yet, we may use the SVM module in the "e1071" library in $R$ to determine the equation of the line.
 
-\begin{minted}{R}
+\begin{minted}[breaklines]{R}
     library(e1071)
     dat <- data.frame (x = x, y = as.factor (y))
     svmfit <- svm ( y~., data = dat , kernel="linear", cost = 1000, 
@@ -286,40 +285,40 @@ Though the maximal margin classifier is not a support vector machine quite yet, 
     plot(svmfit,dat)
 \end{minted}
 
-Once downloading the package, we assign the $x$ and $y$ variables to one dataframe. We convert the $y$ variable into a factor since class label is a binary value. In the \textbf{svm} function, the dataframe we just defined is the basis of the calculations. We assign the kernel as linear with a cost of 1000, though other options exist for non-separable data and non-linear decision boundaries which we will get to in later pages. We plot the function and see the output in Figure ~\ref{fig06}.
+Once downloading the package, we assign the $x$ and $y$ variables to one dataframe. We convert the $y$ variable into a factor since class label is a binary value. In the \textbf{svm} function, the dataframe we just defined is the basis of the calculations. We assign the kernel as linear with a cost of 1000, though other options exist for non-separable data and non-linear decision boundaries which we will get to in later pages. We plot the function and see the output in Figure ~\ref{fig_mmc_module_output}.
 
 \begin{figure}
     \centering
-    \includegraphics[width=5.5in]{Figures/fig06.png}
+    \includegraphics[width=5.5in]{Figures/mmc_module_output.png}
     \caption{Maximal Margin SVM Module Output in $R$}
-    \label{fig06}
+    \label{fig_mmc_module_output}
 \end{figure}
 As we see, the separating hyperplane is illustrated clearly albeit not pictured exactly linear. Details of the \textbf{svm} function can be found using the following:
-\begin{minted}{R}
+\begin{minted}[breaklines]{R}
     summary(svmfit)
     svmfit$index
     svmfit$rho
     svmfit$coefs
 \end{minted}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=5in]{Figures/svmfitoutput.png}
+    \includegraphics[width=5in]{Figures/mmc_selected_output.png}
     \caption{Selected Output of SVM Function}
-    \label{fig07}
+    \label{fig_mmc_selected_output}
 \end{figure}
 
-The \textbf{str} function tells us that \textbf{svmfit} is a list of 30 variables, some of which we defined in the function and others that were calculated. Particularly of interest are the \textbf{index}, \textbf{rho}, and \textbf{coefs} variables, which give the output in Figure ~\ref{fig07}. The \textbf{rho} variable is the intercept of the separating hyperplane, and the \textbf{coefs} variable is an array of the coefficients of the supporting vectors. The \textbf{index} variable tells us the indices of the observations that the classifier depends on, or the support vectors. In this case, it is data points 92 and 309. If we were to rotate the hyperplane in any direction, the margin from these two points to the black line would inevitably become smaller. Visually, we can see these two points as those that the supporting hyperplanes pass through in Figure ~\ref{fig08}.
+The \textbf{str} function tells us that \textbf{svmfit} is a list of 30 variables, some of which we defined in the function and others that were calculated. Particularly of interest are the \textbf{index}, \textbf{rho}, and \textbf{coefs} variables, which give the output in Figure ~\ref{fig_mmc_selected_output}. The \textbf{rho} variable is the intercept of the separating hyperplane, and the \textbf{coefs} variable is an array of the coefficients of the supporting vectors. The \textbf{index} variable tells us the indices of the observations that the classifier depends on, or the support vectors. In this case, it is data points 92 and 309. If we were to rotate the hyperplane in any direction, the margin from these two points to the black line would inevitably become smaller. Visually, we can see these two points as those that the supporting hyperplanes pass through in Figure ~\ref{mmc_graph}.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=5in]{Figures/fig08.png}
+    \includegraphics[width=5in]{Figures/mmc_graph.png}
     \caption{Maximal Margin Classifier Output in $R$}
-    \label{fig08}
+    \label{mmc_graph}
 \end{figure}
 
 To find the equation of the line, we use the hyperplane function as outlined in \cite{teitelbaum2021svm}:
-\begin{minted}{R}
+\begin{minted}[breaklines]{R}
     hyperplane <- function(P,data,x,z=0) {
       alphas <- -1*P$coefs
       svs <- data[P$index,]
@@ -333,10 +332,9 @@ In this function, \textbf{P} is the \textbf{svm} function which we labeled \text
 
 Inside the function, the \textbf{alphas} are assigned to the coefficients of the hyperplane and multiplied by negative one. The \textbf{svs} variable takes the index of the support vectors and finds the exact point values in the data. \textbf{c} refers to the intercept and can be adjusted by the variable \textbf{z}. The variables \textbf{a} and \textbf{b} take the $x$ and $y$ coordinates, respectively, of the support vectors and multiply by their corresponding coefficient, as calculated by taking the transpose of the \textbf{alphas} variable, then summed. In Python, the \textbf{hyperplane} function looks slightly different due to the differences in the corresponding module, but the concept remains the same \cite{teitelbaum2021svm}.
 
-\begin{minted}{Python}
+\begin{minted}[breaklines]{Python}
     def hyperplane(P,x,z=0):
-    """Given an SVC object P and an array of vectors x, computes the 
-        hyperplane wx+b=z"""
+    """Given an SVC object P and an array of vectors x, computes the hyperplane wx+b=z"""
     alphas = P.dual_coef_
     svs = P.support_vectors_
     c = P.intercept_[0]-z
@@ -345,9 +343,9 @@ Inside the function, the \textbf{alphas} are assigned to the coefficients of the
     return (-c-a*x)/b
 \end{minted}
 
-The $R$ code for the plot referenced in Figure ~\ref{fig08} is below and pulls information from the \textbf{hyperplane} function.
+The $R$ code for the plot referenced in Figure ~\ref{mmc_graph} is below and pulls information from the \textbf{hyperplane} function.
 
-\begin{minted}{R}
+\begin{minted}[breaklines]{R}
     plt0 <- hyperplane(svmfit,dat,x,0)
     plt1 <- hyperplane(svmfit,dat,x,1)
     plt2 <- hyperplane(svmfit,dat,x,-1)
@@ -358,34 +356,161 @@ The $R$ code for the plot referenced in Figure ~\ref{fig08} is below and pulls i
     lines(x,plt2,col='gray',lty='dashed')
 \end{minted}
 
-\section*{SUPPORT VECTOR CLASSIFIER}
-\begin{itemize}
-    \item soft margin classifier
-    \item introduction of costs/penalties
-    \item non-linearly separable example
-    \item svm module code
-\end{itemize}
+\section{SUPPORT VECTOR CLASSIFIER}
 
-figure of non-linearly separable data
+What happens when data is not linearly separable? This occurs when the two groups of data have overlapping points. In this case, we cannot form a separating hyperplane as some points will be classified on the wrong side of the line. For non-linearly separable data, we introduce the support vector classifier. Much like the maximal margin classifier, we form a hyperplane between the groups of points in a data set. This classification method is also known as the soft-margin classifier since some points will not be classified on the correct side of the hyperplane unlike the maximal margin classifier. We will introduce the topic of costs, which essentially allow a certain number of observations to be classified incorrectly, then discuss the code in $R$ and Python.
 
-figure of data with soft margin
+The following code in $R$ can be used to plot non-linearly separable data with randomly generated points, shown in Figure ~\ref{fig_svc_randomly_generated_points}. We use the \textbf{set.seed()} function to replicate the randomly generated data. The process is the same as with linearly separable data, except we now narrow the gap between the means of the two groups which allows some overlap. Notice that we can no longer draw a straight line bisecting the two groups.
 
-What happens when data is not linearly separable? This occurs when the two groups of data have overlapping points. In this case, we cannot form a separating hyperplane as some points will be classified on the wrong side of the line. For non-linearly separable data, we introduce the support vector classifier. This classification method is also known as the soft-margin classifier since some points will not be classified on the correct side of the hyperplane. We will introduce the topic of costs, which essentially allow a certain number of observations to be classified incorrectly, then discuss the code in $R$ and Python.
+\begin{minted}[breaklines]{R}
+    # setting initial number of observations
+    n <- 200
+    
+    # calculating x-variable using two randomly generated sets with overlap
+    set.seed(100)
+    svcdatax1 <- matrix(rnorm(n*2, 0.5,0.3), ncol=2)
+    svcdatax2 <- matrix(rnorm(n*2,-0.5,0.3), ncol=2)
+    svcdatax <- rbind(svcdatax1,svcdatax2)
+    
+    # assigning labels to both classes
+    svcdatay <- c(rep(-1,n), rep(1,n))
+    
+    # plotting the data
+    plot(svcdatax, col=(3-svcdatay),xlab="",ylab="",pch=16)
+\end{minted}
 
-\section*{SUPPORT VECTOR MACHINES}
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{Figures/svc_randomly_generated_points.png}
+    \caption{Randomly Generated Non-Linearly Separable Data}
+    \label{fig_svc_randomly_generated_points}
+\end{figure}
+
+We can add a line to visualize a possible hyperplane by running the following line of code after we have constructed the graph.
+
+\begin{minted}[breaklines]{R}
+    abline(0,-1,col="gray",lty="dashed")
+\end{minted}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{Figures/svc_randomly_generated_w_line.png}
+    \caption{Randomly Generated Non-Linearly Separable Data With Line}
+    \label{fig_svc_randomly_generated_w_line}
+\end{figure}
+
+As we can see, there is no possible linear hyperplane that separates the data. Some blue points are intermingled with the red and vice versa. To still construct a machine that attempts to classify the data, we introduce the topic of costs. In the maximal margin classifier, we aimed to find the greatest distance (margin) between the closest points of the two sets. Since there is no concrete margin in non-linearly separable data, we must introduce what is called a slack variable, denoted as $\epsilon_i$ for each observation $x_i$. For variables that are correctly classified, the corresponding observation's slack variable is 0. For points that are incorrectly classified, the slack variable takes on a value greater than 0 and incurs some cost for the maximization function. Since the slack variable is essentially a measure of how far a point lies on the wrong side of the margin, we constrict the sum of all slack variables to be less than a specified cost $C$. As we will see later, a user-defined cost can result in over- or under-fitting of the model. For a support vector classifier, our new maximization problem becomes
+
+\[
+y_i(\beta_0+\beta_1x_{i1}+...+\beta_px_{ip}) \ge M(1-\epsilon_i)
+\]
+
+provided that
+
+\begin{equation}\label{sumofsquares}
+\sum_{j=1}^{p} \beta^2_j=1
+\end{equation}
+
+\begin{equation}\label{slackvariables}
+\sum_{i=1}^{n} \epsilon_i \le C, \epsilon_i \ge 0
+\end{equation}
+
+Using the same \textbf{svm} module as in the maximal margin classifier, we can find the best hyperplane to classify the data given a specified cost, in this case a value of 1000.
+
+\begin{minted}[breaklines]{R}
+    # creating data frame 
+    svcdata <- data.frame (x = svcdatax, y = factor(svcdatay))
+    
+    # computing svm function
+    svmfit <- svm (y~., data = svcdata , kernel="linear", cost = 1000, scale = FALSE)
+    
+    # looking at statistics
+    summary(svmfit)
+    svmfit$index
+    svmfit$rho
+    svmfit$coefs
+    
+    # plotting svm function graph
+    plot(svmfit,svcdata)
+    
+    # calculating the hyperplane and supporting hyperplanes
+    plt0 <- hyperplane(svmfit,svcdata,svcdatax,0)
+    plt1 <- hyperplane(svmfit,svcdata,svcdatax,1)
+    plt2 <- hyperplane(svmfit,svcdata,svcdatax,-1)
+    
+    # plotting the data with hyperplanes
+    plot(svcdatax,col=(3-svcdatay),xlab="",ylab="",pch=16)
+    lines(svcdatax,plt0,col='black')
+    lines(svcdatax,plt1,col='gray')
+    lines(svcdatax,plt2,col='gray')
+    
+\end{minted}
+
+This produces the result in Figure ~\ref{fig_svc_data_w_hyperplanes}, graphically representing observations with slack variables greater than zero. Red points either inside the margin illustrated with the gray supporting hyperplanes or on the right side of the black hyperplane will have non-zero slack variables. Similarly, blue points inside the margin or on the left side of the hyperplane will have non-zero slack variables.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=5in]{Figures/svc_data_w_hyperplanes.png}
+    \caption{Randomly Generated Non-Linearly Separable Data With Line}
+    \label{fig_svc_data_w_hyperplanes}
+\end{figure}
+
+Let us look at what happens with different values of the cost variable.
+
+\begin{minted}[breaklines]{R}
+    # using cost of 1
+    svmfit1 <- svm (y~., data = svcdata , kernel="linear", cost = 1, scale = FALSE)
+    summary(svmfit1)
+        # results in 36 support vectors
+    
+    # using cost of 100
+    svmfit100 <- svm (y~., data = svcdata , kernel="linear", cost = 100, scale = FALSE)
+    summary(svmfit100)
+        # results in 21 support vectors
+        
+    # using cost of 1000
+    svmfit1000 <- svm (y~., data = svcdata , kernel="linear", cost = 1000, scale = FALSE)
+    summary(svmfit1000)
+        # results in 20 support vectors
+    
+    # using cost of 10000
+    svmfit10000 <- svm (y~., data = svcdata , kernel="linear", cost = 10000, scale = FALSE)
+    summary(svmfit10000)
+            # results in 20 support vectors
+\end{minted}
+
+We see that as the cost increases, there are fewer support vectors. That is, fewer observations are classified incorrectly.
+
+shouldn't that be opposite? larger cost means larger c so sum of $\epsilon$s can be greater so there can be more slack variables? look at page 389 for explanation
+
+talk about how to test our model with prediction accuracy
+
+overfitting vs underfitting in choosing cost
+
+finding best cost through code function in e1071
+
+code for python?
+
+dual problem family of lines in the $\beta$ space, all must lie on the right side of the line and we try to find the point closest to the origin
+
+experiment with values of C and sum of slack variables; show on graph? trade-off between the two; $slack = 1-y_i(f(x_i))$
+
+minimize $||\beta^2|| + C \sum \epsilon_i$ subject to $y_i(\beta_ix_i+b) \ge 1- \epsilon_i$ and $\epsilon_i \ge 0$
+
+\section{SUPPORT VECTOR MACHINE}
 \begin{itemize}
     \item non-linear decision boundaries
     \item use of kernels
     \item multi-class data
 \end{itemize}
 
-\section*{EXAMPLE}
+\section{EXAMPLE}
 \begin{itemize}
     \item penguin/iris dataset: well-known example
     \item possible example with real implications
 \end{itemize}
 
-\section*{APPLICATIONS}
+\section{APPLICATIONS}
 
 One such example, as presented in \textit{Intro to Statistical Learning with Applications in R} \citep{introstatlearning} is the use of support vector machines in genetic expression data. The \textit{Khan} dataset in the $ISLR2$ package of $R$ contains expression measurements for 2,308 genes from tissue samples of patients with one of four types of small round blue cell tumors. The data is then split up into training and test groups. There are 63 observations in the training set and 20 observations in the test set. It is not feasible to visually plot the data on a graph, as there is a very large number of features relative to the number of observations. However, due to the large number of features, it is easy to find a linearly separating hyperplane that predicts the type of cell tumor. As such, the SVM approach outlined in the textbook yields no data points that are misclassified in the training set and two test set errors. In this case, a support vector machine was used to classify and predict cancer types based on gene expression data.
 
@@ -393,7 +518,7 @@ In fact, SVMs are a popular choice in machine learning approaches to detecting c
 
 Support vector machines have also been used in multi-class lung cancer classification \cite{lungcancer}.
 
-\section*{ANALYSIS OF R AND PYTHON SVM MODULES AND DOCUMENTATION}
+\section{ANALYSIS OF R AND PYTHON SVM MODULES AND DOCUMENTATION}
 
 \begin{itemize}
     \item supporting documentation for each
@@ -404,7 +529,7 @@ Support vector machines have also been used in multi-class lung cancer classific
 \newpage
 \thispagestyle{empty}
 
-\bibliography{References/References}
+\bibliography{references}
 \bibliographystyle{plain}
 
 \end{document}
