@@ -83,3 +83,11 @@ summary(svmfit10000)
 
 
 help(svm)
+
+
+#calculating sum of slack variables
+sum(1 - svcdata[svmfit$index,]$x.1*svmfit$coefs + svmfit$rho)
+sum(1 - svcdata[svmfit100$index,]$x.1*svmfit100$coefs + svmfit100$rho)
+sum(1 - svcdata[svmfit1000$index,]$x.1*svmfit1000$coefs + svmfit1000$rho)
+sum(1 - svcdata[svmfit10000$index,]$x.1*svmfit10000$coefs + svmfit10000$rho)
+
