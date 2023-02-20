@@ -1,11 +1,10 @@
 \documentclass[12pt]{article}
 \parskip=\bigskipamount
 \parindent=0pt
+\usepackage[utf8]{inputenc}
 
 \usepackage [autostyle, english = american]{csquotes}
-\MakeOuterQuote{"}
 
-\usepackage[utf8]{inputenc}
 \usepackage{geometry}[margin=1in]
 \usepackage{amsmath, amssymb, amsfonts}
 \usepackage{tikz}
@@ -74,7 +73,7 @@ In contrast, supervised learning uses data that is well-labeled to teach our mod
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{p{1.8cm}p{1.8cm}p{1.8cm}p{1.8cm}p{1.8cm}p{1.8cm}p{1.8cm}}
+    \begin{tabular}{p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}}
          Culmen Length & Culmen Depth & Flipper Length & Body Mass & Delta 15 N & Delta 13 C & Species \\
          (mm) & (mm) & (mm) & (g) & (o/oo) & (o/oo) \\
          \hline
@@ -516,11 +515,45 @@ dual problem family of lines in the $\beta$ space, all must lie on the right sid
 experiment with values of C and sum of slack variables; show on graph? trade-off between the two; $slack = 1-y_i(f(x_i))$
 
 \section{SUPPORT VECTOR MACHINE}
-\begin{itemize}
-    \item non-linear decision boundaries
-    \item use of kernels
-    \item multi-class data
-\end{itemize}
+
+A support vector machine is used when there is multi-class data. In this case, a linear classifying hyperplane is inappropriate. We can create randomly generated multi-class data with the following code:
+
+\begin{minted}[breaklines]{R}
+    # setting initial number of observations in each set
+    n <- 200
+
+    # calculating x-variable using two randomly generated sets with overlap
+    set.seed(1000)
+
+    svmdatax1a <- matrix(rnorm(n, 0.25,0.3), ncol=1)
+    svmdatax1b <- matrix(rnorm(n,0.75,0.3), ncol=1)
+    svmdatax1 <- cbind(svmdatax1a,svmdatax1b)
+
+    svmdatax2 <- matrix(rnorm(n*2,-0.5,0.4), ncol=2)
+
+    svmdatax3a <- matrix(rnorm(n,1.5,0.3), ncol=1)
+    svmdatax3b <- matrix(rnorm(n,1,0.3), ncol=1)
+    svmdatax3 <- cbind(svmdatax3a,svmdatax3b)
+
+    svmdatax <- rbind(svmdatax1,svmdatax2,svmdatax3)
+
+    # assigning labels to both classes
+    svmdatay <- c(rep(1,n), rep(2,n), rep(3,n))
+
+    # plotting the data
+    plot(svmdatax, col=(3-svmdatay),xlab="",ylab="",pch=16)
+\end{minted}
+
+Data can look like that in Figure ~\ref{fig_svm_randomly_generated_data}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{Figures/svm_randomly_generated_data.png}
+    \caption{Randomly Generated Multi-Class Data}
+    \label{fig_svm_randomly_generated_data}
+\end{figure}
+
+We use the same approach as the support vector classifier, yet with a non-linear boundary.
 
 \section{EXAMPLE}
 \begin{itemize}
