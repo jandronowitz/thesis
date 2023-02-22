@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{data1a} \PYG{o}{=} \PYG{n+nf}{np.random.normal}\PYG{p}{(}\PYG{l+m}{\PYGZhy{}1}\PYG{p}{,}\PYG{l+m}{0.3}\PYG{p}{,}\PYG{n}{size}\PYG{o}{=}\PYG{p}{(}\PYG{l+m}{10}\PYG{p}{,}\PYG{l+m}{1}\PYG{p}{))}
+    \PYG{n}{data1b} \PYG{o}{=} \PYG{n+nf}{np.random.normal}\PYG{p}{(}\PYG{l+m}{\PYGZhy{}0.5}\PYG{p}{,}\PYG{l+m}{0.3}\PYG{p}{,}\PYG{n}{size}\PYG{o}{=}\PYG{p}{(}\PYG{l+m}{10}\PYG{p}{,}\PYG{l+m}{1}\PYG{p}{))}
+    \PYG{n}{data1c} \PYG{o}{=} \PYG{n+nf}{np.random.normal}\PYG{p}{(}\PYG{l+m}{0}\PYG{p}{,}\PYG{l+m}{0.1}\PYG{p}{,}\PYG{n}{size}\PYG{o}{=}\PYG{p}{(}\PYG{l+m}{10}\PYG{p}{,}\PYG{l+m}{1}\PYG{p}{))}
+
+    \PYG{n}{data2a} \PYG{o}{=} \PYG{n+nf}{np.random.normal}\PYG{p}{(}\PYG{l+m}{1}\PYG{p}{,}\PYG{l+m}{0.3}\PYG{p}{,}\PYG{n}{size}\PYG{o}{=}\PYG{p}{(}\PYG{l+m}{10}\PYG{p}{,}\PYG{l+m}{1}\PYG{p}{))}
+    \PYG{n}{data2b} \PYG{o}{=} \PYG{n+nf}{np.random.normal}\PYG{p}{(}\PYG{l+m}{0.5}\PYG{p}{,}\PYG{l+m}{0.3}\PYG{p}{,}\PYG{n}{size}\PYG{o}{=}\PYG{p}{(}\PYG{l+m}{10}\PYG{p}{,}\PYG{l+m}{1}\PYG{p}{))}
+    \PYG{n}{data2c} \PYG{o}{=} \PYG{n+nf}{np.random.normal}\PYG{p}{(}\PYG{l+m}{0}\PYG{p}{,}\PYG{l+m}{0.1}\PYG{p}{,}\PYG{n}{size}\PYG{o}{=}\PYG{p}{(}\PYG{l+m}{10}\PYG{p}{,}\PYG{l+m}{1}\PYG{p}{))}
+\end{Verbatim}

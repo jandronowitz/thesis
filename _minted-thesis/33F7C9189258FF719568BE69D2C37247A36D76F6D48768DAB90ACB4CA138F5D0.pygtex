@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{n} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{l+m}{200}
+    \PYG{n}{x1} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{matrix}\PYG{p}{(}\PYG{n+nf}{rnorm}\PYG{p}{(}\PYG{n}{n}\PYG{o}{*}\PYG{l+m}{2}\PYG{p}{,} \PYG{l+m}{1}\PYG{p}{,}\PYG{l+m}{0.3}\PYG{p}{),} \PYG{n}{ncol}\PYG{o}{=}\PYG{l+m}{2}\PYG{p}{)}
+    \PYG{n}{x2} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{matrix}\PYG{p}{(}\PYG{n+nf}{rnorm}\PYG{p}{(}\PYG{n}{n}\PYG{o}{*}\PYG{l+m}{2}\PYG{p}{,}\PYG{l+m}{\PYGZhy{}1}\PYG{p}{,}\PYG{l+m}{0.3}\PYG{p}{),} \PYG{n}{ncol}\PYG{o}{=}\PYG{l+m}{2}\PYG{p}{)}
+    \PYG{n}{x} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{rbind}\PYG{p}{(}\PYG{n}{x1}\PYG{p}{,}\PYG{n}{x2}\PYG{p}{)}
+\end{Verbatim}

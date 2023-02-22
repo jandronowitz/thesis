@@ -1,0 +1,27 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} creating data frame}
+    \PYG{n}{svcdata} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{data.frame }\PYG{p}{(}\PYG{n}{x} \PYG{o}{=} \PYG{n}{svcdatax}\PYG{p}{,} \PYG{n}{y} \PYG{o}{=} \PYG{n+nf}{factor}\PYG{p}{(}\PYG{n}{svcdatay}\PYG{p}{))}
+
+    \PYG{c+c1}{\PYGZsh{} computing svm function}
+    \PYG{n}{svmfit} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{svm }\PYG{p}{(}\PYG{n}{y}\PYG{o}{\PYGZti{}}\PYG{n}{.}\PYG{p}{,} \PYG{n}{data} \PYG{o}{=} \PYG{n}{svcdata} \PYG{p}{,} \PYG{n}{kernel}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}linear\PYGZdq{}}\PYG{p}{,} \PYG{n}{cost} \PYG{o}{=} \PYG{l+m}{1000}\PYG{p}{,} \PYG{n}{scale} \PYG{o}{=} \PYG{k+kc}{FALSE}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} looking at statistics}
+    \PYG{n+nf}{summary}\PYG{p}{(}\PYG{n}{svmfit}\PYG{p}{)}
+    \PYG{n}{svmfit}\PYG{o}{\PYGZdl{}}\PYG{n}{index}
+    \PYG{n}{svmfit}\PYG{o}{\PYGZdl{}}\PYG{n}{rho}
+    \PYG{n}{svmfit}\PYG{o}{\PYGZdl{}}\PYG{n}{coefs}
+
+    \PYG{c+c1}{\PYGZsh{} plotting svm function graph}
+    \PYG{n+nf}{plot}\PYG{p}{(}\PYG{n}{svmfit}\PYG{p}{,}\PYG{n}{svcdata}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} calculating the hyperplane and supporting hyperplanes}
+    \PYG{n}{plt0} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{hyperplane}\PYG{p}{(}\PYG{n}{svmfit}\PYG{p}{,}\PYG{n}{svcdata}\PYG{p}{,}\PYG{n}{svcdatax}\PYG{p}{,}\PYG{l+m}{0}\PYG{p}{)}
+    \PYG{n}{plt1} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{hyperplane}\PYG{p}{(}\PYG{n}{svmfit}\PYG{p}{,}\PYG{n}{svcdata}\PYG{p}{,}\PYG{n}{svcdatax}\PYG{p}{,}\PYG{l+m}{1}\PYG{p}{)}
+    \PYG{n}{plt2} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{hyperplane}\PYG{p}{(}\PYG{n}{svmfit}\PYG{p}{,}\PYG{n}{svcdata}\PYG{p}{,}\PYG{n}{svcdatax}\PYG{p}{,}\PYG{l+m}{\PYGZhy{}1}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} plotting the data with hyperplanes}
+    \PYG{n+nf}{plot}\PYG{p}{(}\PYG{n}{svcdatax}\PYG{p}{,}\PYG{n}{col}\PYG{o}{=}\PYG{p}{(}\PYG{l+m}{3}\PYG{o}{\PYGZhy{}}\PYG{n}{svcdatay}\PYG{p}{),}\PYG{n}{xlab}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}\PYGZdq{}}\PYG{p}{,}\PYG{n}{ylab}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}\PYGZdq{}}\PYG{p}{,}\PYG{n}{pch}\PYG{o}{=}\PYG{l+m}{16}\PYG{p}{)}
+    \PYG{n+nf}{lines}\PYG{p}{(}\PYG{n}{svcdatax}\PYG{p}{,}\PYG{n}{plt0}\PYG{p}{,}\PYG{n}{col}\PYG{o}{=}\PYG{l+s}{\PYGZsq{}black\PYGZsq{}}\PYG{p}{)}
+    \PYG{n+nf}{lines}\PYG{p}{(}\PYG{n}{svcdatax}\PYG{p}{,}\PYG{n}{plt1}\PYG{p}{,}\PYG{n}{col}\PYG{o}{=}\PYG{l+s}{\PYGZsq{}gray\PYGZsq{}}\PYG{p}{)}
+    \PYG{n+nf}{lines}\PYG{p}{(}\PYG{n}{svcdatax}\PYG{p}{,}\PYG{n}{plt2}\PYG{p}{,}\PYG{n}{col}\PYG{o}{=}\PYG{l+s}{\PYGZsq{}gray\PYGZsq{}}\PYG{p}{)}
+\end{Verbatim}

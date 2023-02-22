@@ -16,16 +16,17 @@
   \usetikzlibrary{plotmarks}
 \usepackage{booktabs}
 \usepackage{natbib}
+\bibliographystyle{plain}
 \usepackage[colorlinks=true, citecolor=blue]{hyperref}
 \usepackage{listings}
-\usepackage[outputdir=out,cache=false]{minted}
+\usepackage{minted}
 \usepackage{changepage}
 \usepackage{pgfplots}
-  \pgfplotsset{compat=1.18}
+  \pgfplotsset{compat=1.16}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{float}
-\usepackage{physics}
+%\usepackage{physics}
 
 \newcommand{\R}{\mathbb{R}}
 
@@ -39,9 +40,9 @@
 \thispagestyle{empty}
 
 \begin{adjustwidth}{0.5in}{0.5in}
-\begin{abstract}
-    The purpose of this thesis is to give an introduction to the concept of Support Vector Machines in Machine Learning. We will first outline the idea of classification, including the maximal margin classifier and the support vector classifier. Examples of each will be given using programming languages such as R and Python. Then, we will move onto support vector machines and the use of kernels with example data. We will implement the techniques previously described in a real data set and finish by discussing applications of SVMs and examining the documentation of the support vector machine modules in R and Python.
-\end{abstract}
+    \begin{abstract}
+        The purpose of this thesis is to give an introduction to the concept of Support Vector Machines in Machine Learning. We will first outline the idea of classification, including the maximal margin classifier and the support vector classifier. Examples of each will be given using programming languages such as R and Python. Then, we will move onto support vector machines and the use of kernels with example data. We will implement the techniques previously described in a real data set and finish by discussing applications of SVMs and examining the documentation of the support vector machine modules in R and Python.
+    \end{abstract}
 \end{adjustwidth}
 
 \vfill
@@ -63,9 +64,9 @@ Machine learning algorithms fall into one of two categories: supervised or unsup
     \includegraphics[height=2in]{Figures/clustering_v_association.png}
     \captionsetup[subfigure]{labelformat=empty}
     \begin{subfigure}[]{0.5\textwidth}
-         \centering
-         \caption{Source: Data Driven Investor}
-     \end{subfigure}
+        \centering
+        \caption{Source: Data Driven Investor}
+    \end{subfigure}
     \label{fig1}
 \end{figure}
 
@@ -74,21 +75,21 @@ In contrast, supervised learning uses data that is well-labeled to teach our mod
 \begin{table}[h]
     \centering
     \begin{tabular}{p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}p{1.7cm}}
-         Culmen Length & Culmen Depth & Flipper Length & Body Mass & Delta 15 N & Delta 13 C & Species \\
-         (mm) & (mm) & (mm) & (g) & (o/oo) & (o/oo) \\
-         \hline
-         50.2 & 18.7 & 198 & 3775 & 9.39305 & -24.25255 & Gentoo \\
-         39.5 & 17.4 & 186 & 3800 & 8.94956 & -24.69454 & Adelie \\
-         44.9 & 13.8 & 212 & 4750 & 8.11238 & -26.20372 & Chinstrap \\
-         52.2 & 17.1 & 228 & 5400 & 8.36701 & -25.89834 & Chinstrap \\
-         50.8 & 19 & 210 & 4100 & 9.98044 & -24.68741 & Gentoo \\
-         42.5 & 20.7 & 197 & 4500 & 8.67538 & -25.13993 & Adelie
+        Culmen Length & Culmen Depth & Flipper Length & Body Mass & Delta 15 N & Delta 13 C & Species   \\
+        (mm)          & (mm)         & (mm)           & (g)       & (o/oo)     & (o/oo)                 \\
+        \hline
+        50.2          & 18.7         & 198            & 3775      & 9.39305    & -24.25255  & Gentoo    \\
+        39.5          & 17.4         & 186            & 3800      & 8.94956    & -24.69454  & Adelie    \\
+        44.9          & 13.8         & 212            & 4750      & 8.11238    & -26.20372  & Chinstrap \\
+        52.2          & 17.1         & 228            & 5400      & 8.36701    & -25.89834  & Chinstrap \\
+        50.8          & 19           & 210            & 4100      & 9.98044    & -24.68741  & Gentoo    \\
+        42.5          & 20.7         & 197            & 4500      & 8.67538    & -25.13993  & Adelie
     \end{tabular}
     \caption{Penguin Data}
     \label{table_penguin_data}
 \end{table}
 
-In this example, the culmen length, culmen depth, flipper length, body mass, Delta 15 N and Delta 13 C are the predictors. Based on these variables, we want the model to predict which species the penguin is. So, each body measurement is a predictor and the species is the response variable. In supervised learning, we often have training and testing groups for our data. Training and test groups are a common practice in machine learning to both classify existing data points and assess the underlying accuracy of the model on known data. Training data is data used to teach our model how to estimate the response variable. Once the model is trained, we can apply the algorithm to the testing data which the model has not previously seen. Since we already have the response variable for this set in the original data, we can compare the model's predicted $y$-values, denoted $\hat y$, with the actual $y$-values. In machine learning, it is common to see the data split into about 80\% training and 20\% testing data, but these values can be manually specified in the code \cite{trainingvtest}. Suppose we collect the data for the ten students at the end of the year. Then, we have all their test scores for the year. We take 8 students and train the model based on these observations. Then, we use the remaining two students as the test set. 
+In this example, the culmen length, culmen depth, flipper length, body mass, Delta 15 N and Delta 13 C are the predictors. Based on these variables, we want the model to predict which species the penguin is. So, each body measurement is a predictor and the species is the response variable. In supervised learning, we often have training and testing groups for our data. Training and test groups are a common practice in machine learning to both classify existing data points and assess the underlying accuracy of the model on known data. Training data is data used to teach our model how to estimate the response variable. Once the model is trained, we can apply the algorithm to the testing data which the model has not previously seen. Since we already have the response variable for this set in the original data, we can compare the model's predicted $y$-values, denoted $\hat y$, with the actual $y$-values. In machine learning, it is common to see the data split into about 80\% training and 20\% testing data, but these values can be manually specified in the code \cite{trainingvtest}. Suppose we collect the data for the ten students at the end of the year. Then, we have all their test scores for the year. We take 8 students and train the model based on these observations. Then, we use the remaining two students as the test set.
 
 Supervised learning can be categorized into either regression or classification problems. Generally, this has to do with the fact that data is either qualitative (categorical) or quantitative (numerical). Regression typically uses a quantitative response variable. In regression, we aim to create a model that uses features to accurately predict the response variable. We may want to see how a population's access to clean drinking water impacts their average life expectancy. Linear regression can be used in this case to see whether a correlation between the two variables exist and how strong that correlation is. We can also look at how accurate the model is at predicting the response variable as well as investigate whether the relationship is linear or non-linear. On the other hand, classification is common with a quantitative response variable. In these types of problems, the data is grouped into specific categories based on the given features. The model then is able to predict the category of an unknown data point. Similarly, we can also use tools to predict the accuracy of the model and determine if the relationship is linear or non-linear.
 
@@ -120,11 +121,11 @@ We first set $n=200$. This will be the length of our data set. Then, we use the 
 Now, we plot the function. The \textbf{abline} functions add lines at $x=0$ and $y=0$ as well as add one such separating hyperplane. Figure ~\ref{fig_mmc_separating_hyperplane} shows the output.
 
 \begin{figure}[H]
-\begin{center}
-\includegraphics[width=5.5in]{Figures/mmc_separating_hyperplane.png}
-\caption{Randomly Generated Clustered Data \\ with Separating Hyperplane in $\R^2$}
-\label{fig_mmc_separating_hyperplane}
-\end{center}
+    \begin{center}
+        \includegraphics[width=5.5in]{Figures/mmc_separating_hyperplane.png}
+        \caption{Randomly Generated Clustered Data \\ with Separating Hyperplane in $\R^2$}
+        \label{fig_mmc_separating_hyperplane}
+    \end{center}
 \end{figure}
 
 We see that there is a clear separation between the data points and a hyperplane that bisects the data. The equation of the hyperplane in this example is defined by $y=-x$. In the form $f(x)=\beta_0 + \beta \cdot x$, we have $f(x)=0$, $\beta_0=0$, and $\beta=(1,1)$ to give $0=0+x_1+x_2$ or $x_1=-x_2$.
@@ -132,14 +133,14 @@ We see that there is a clear separation between the data points and a hyperplane
 Notice that we can rotate the line slightly in either direction and still have separating hyperplane. So long as the line does not pass through the points that the gray line intersects, there exist infinitely many such separating hyperplanes. An example is shown in red in Figure ~\ref{fig_mmc_multiple_hyperplanes}.
 
 \begin{figure}[H]
-\begin{center}
-\includegraphics[width=5.5in]{Figures/mmc_multiple_hyperplanes.png}
-\caption{Randomly Generated Clustered Data with Multiple \\ Hyperplanes in $R^2$}
-\label{fig_mmc_multiple_hyperplanes}
-\end{center}
+    \begin{center}
+        \includegraphics[width=5.5in]{Figures/mmc_multiple_hyperplanes.png}
+        \caption{Randomly Generated Clustered Data with Multiple \\ Hyperplanes in $R^2$}
+        \label{fig_mmc_multiple_hyperplanes}
+    \end{center}
 \end{figure}
 
-Similarly, in a three-dimensional space the hyperplane partitions the data. A plane separates the set into two distinct groups. An example can be generated with Python. 
+Similarly, in a three-dimensional space the hyperplane partitions the data. A plane separates the set into two distinct groups. An example can be generated with Python.
 
 \begin{minted}[breaklines]{R}
     data1a = np.random.normal(-1,0.3,size=(10,1))
@@ -212,59 +213,60 @@ We need to find the closest blue and red points such that shifting the hyperplan
 $$y_i(\beta_0+\beta_1x_{i1}+...+\beta_px_{ip})>0$$
 \begin{figure}[h]
     \centering
-\begin{tikzpicture}[scale=1.5]
-    \begin{axis}[
-        xticklabel=\empty,
-        yticklabel=\empty
-    ]
-        \addplot[<->,domain=-10:10,samples=100]({x},{-x});
-    \end{axis}
-    \draw (1,5) node[right] {$0=\beta_0+\beta_1x_1+\beta_2x_2$};
-    \draw (5.7, 4.055) node[left] {$\theta$};
-    \draw (5.1,3.255) node[right] {$\vec{n}$};
-    \draw (4,4) node[above] {$\vec{v}$};
-    \draw (2.05,3.25) node[above] {($b_1,b_2$)};
-    \draw (5.9,4.155) node[right] {($a_1,a_2$)};
-    
-    \draw[fill] (4, 2.355) circle [radius = .05 cm];
-    \draw[fill=blue] (6,4.355) circle [radius = .05 cm];
-    \draw[fill=blue] (6.4, 5) circle [radius = .05 cm];
-    \draw[fill=blue] (6, 5.3) circle [radius = .05 cm];
-    \draw[fill=blue] (5.6, 5.1) circle [radius = .05 cm];
-    \draw[fill=blue] (5.85, 4.8) circle [radius = .05 cm];
-    
-    \draw[->] (4, 2.355) edge (6,4.355);
-    \draw[->] (4, 2.355) edge (5,3.355);
-    \draw[->] (6,4.355) edge (2.6,3.5);
-    \draw (4.2, 2.555) edge (4, 2.755);
-    \draw (4,2.755) edge (3.8,2.555);
-\end{tikzpicture}
+    \begin{tikzpicture}[scale=1.5]
+        \begin{axis}[
+                xticklabel=\empty,
+                yticklabel=\empty
+            ]
+            \addplot[<->,domain=-10:10,samples=100]({x},{-x});
+        \end{axis}
+        \draw (1,5) node[right] {$0=\beta_0+\beta_1x_1+\beta_2x_2$};
+        \draw (5.7, 4.055) node[left] {$\theta$};
+        \draw (5.1,3.255) node[right] {$\vec{n}$};
+        \draw (4,4) node[above] {$\vec{v}$};
+        \draw (2.05,3.25) node[above] {($b_1,b_2$)};
+        \draw (5.9,4.155) node[right] {($a_1,a_2$)};
+
+        \draw[fill] (4, 2.355) circle [radius = .05 cm];
+        \draw[fill=blue] (6,4.355) circle [radius = .05 cm];
+        \draw[fill=blue] (6.4, 5) circle [radius = .05 cm];
+        \draw[fill=blue] (6, 5.3) circle [radius = .05 cm];
+        \draw[fill=blue] (5.6, 5.1) circle [radius = .05 cm];
+        \draw[fill=blue] (5.85, 4.8) circle [radius = .05 cm];
+
+        \draw[->] (4, 2.355) edge (6,4.355);
+        \draw[->] (4, 2.355) edge (5,3.355);
+        \draw[->] (6,4.355) edge (2.6,3.5);
+        \draw (4.2, 2.555) edge (4, 2.755);
+        \draw (4,2.755) edge (3.8,2.555);
+    \end{tikzpicture}
     \caption{Diagram of Hyperplane and Support Vector}
     \label{supportvectors}
 \end{figure}
 
-Suppose we look at a few points with a separating hyperplane of $0=f(x_1,x_2)=\beta_0+\beta_1x_1+\beta_2x_2$, pictured in Figure ~\ref{supportvectors}. We assume the point $(a_1,a_2)$ in the set of the positive class labels is the closest point to the set of points with a negative class label. Then, to compute the perpendicular distance $d$ from the point $(a_1,a_2)$ to $f(x_1,x_2)=0$, we first find a normal vector to $f$. Through calculus, the gradient of the hyperplane calculated by $(dx_1,dx_2)$ gives the normal vector $\vec{n}=\expval{\beta_1, \beta_2}$ to $f$. Let $(b_1,b_2)$ be any point on the hyperplane. Then $\vec{v}=(a_1-b_1,a_2-b_2)$. The distance $d$ equals $||\vec{v}|| \cos{\theta}$ through trigonometry. Then we have
+Suppose we look at a few points with a separating hyperplane of $0=f(x_1,x_2)=\beta_0+\beta_1x_1+\beta_2x_2$, pictured in Figure ~\ref{supportvectors}. We assume the point $(a_1,a_2)$ in the set of the positive class labels is the closest point to the set of points with a negative class label. Then, to compute the perpendicular distance $d$ from the point $(a_1,a_2)$ to $f(x_1,x_2)=0$, we first find a normal vector to $f$. Through calculus,
+the gradient of the hyperplane calculated by $(dx_1,dx_2)$ gives the normal vector $\vec{n}=\{\beta_1, \beta_2\}$ to $f$. Let $(b_1,b_2)$ be any point on the hyperplane. Then $\vec{v}=(a_1-b_1,a_2-b_2)$. The distance $d$ equals $||\vec{v}|| \cos{\theta}$ through trigonometry. Then we have
 \begin{align*}
-    \vec{v} \cdot \vec{n}&=||\vec{v}|| ||\vec{n}|| \cos{\theta} \\
-    \vec{v} \cdot \vec{n}&= d \cdot ||\vec{n}|| \\
-    d &= \frac{\vec{v} \cdot \vec{n}}{||\vec{n}||} \\
-    &= \frac{(a_1-b_1,a_2-b_2) \cdot \expval{\beta_1,\beta_2}}{\sqrt{\beta_1^2+\beta_2^2}} \\
-    &=\frac{\beta_1a_1-\beta_1b_1+\beta_2a_2-\beta_2b_2}{\sqrt{\beta_1^2+\beta_2^2}} \\
-    &= \frac{\beta_1a_1+\beta_2a_2-(\beta_1b_1+\beta_2b_2)}{\sqrt{\beta_1^2+\beta_2^2}}
+    \vec{v} \cdot \vec{n} & =||\vec{v}|| ||\vec{n}|| \cos{\theta}                                              \\
+    \vec{v} \cdot \vec{n} & = d \cdot ||\vec{n}||                                                              \\
+    d                     & = \frac{\vec{v} \cdot \vec{n}}{||\vec{n}||}                                        \\
+                          & = \frac{(a_1-b_1,a_2-b_2) \cdot \{\beta_1,\beta_2\}}{\sqrt{\beta_1^2+\beta_2^2}}   \\
+                          & =\frac{\beta_1a_1-\beta_1b_1+\beta_2a_2-\beta_2b_2}{\sqrt{\beta_1^2+\beta_2^2}}    \\
+                          & = \frac{\beta_1a_1+\beta_2a_2-(\beta_1b_1+\beta_2b_2)}{\sqrt{\beta_1^2+\beta_2^2}}
 \end{align*}
 Since $(b_1,b_2)$ lies on the hyperplane, we have $\beta_0+\beta_1b_1+\beta_2b_2=0$ and $\beta_1b_1+\beta_2b_2=-\beta_0$. Thus,
 \begin{align*}
-    d&= \frac{\beta_1a_1+\beta_2a_2-(\beta_1b_1+\beta_2b_2)}{\sqrt{\beta_1^2+\beta_2^2}} \\
-    &= \frac{\beta_1a_1+\beta_2a_2-(-\beta_0)}{\sqrt{\beta_1^2+\beta_2^2}} \\
-    &= \frac{\beta_1a_1+\beta_2a_2+\beta_0}{\sqrt{\beta_1^2+\beta_2^2}}
+    d & = \frac{\beta_1a_1+\beta_2a_2-(\beta_1b_1+\beta_2b_2)}{\sqrt{\beta_1^2+\beta_2^2}} \\
+      & = \frac{\beta_1a_1+\beta_2a_2-(-\beta_0)}{\sqrt{\beta_1^2+\beta_2^2}}              \\
+      & = \frac{\beta_1a_1+\beta_2a_2+\beta_0}{\sqrt{\beta_1^2+\beta_2^2}}
 \end{align*}
 
 Note that the numerator is exactly the equation $f$. In fact, there exist infinitely many such functions, as we could simply multiply $f$ by a constant. Suppose we have the equivalent hyperplane $ 0=C\beta_1a_1+C\beta_2a_2+C\beta_0$ for any $C \in \mathbb{R}$. Then,
 \begin{align*}
-    d&= \frac{C\beta_1a_1+C\beta_2a_2+C\beta_0}{\sqrt{(C\beta_1)^2+(C\beta_2)^2}} \\
-    &=\frac{C(\beta_1a_1+\beta_2a_2+\beta_0)}{\sqrt{C^2(\beta_1^2+\beta_2^2)}} \\
-    &=\frac{C(\beta_1a_1+\beta_2a_2+\beta_0)}{C\sqrt{\beta_1^2+\beta_2^2}} \\
-    &=\frac{\beta_1a_1+\beta_2a_2+\beta_0}{\sqrt{\beta_1^2+\beta_2^2}} \\
+    d & = \frac{C\beta_1a_1+C\beta_2a_2+C\beta_0}{\sqrt{(C\beta_1)^2+(C\beta_2)^2}} \\
+      & =\frac{C(\beta_1a_1+\beta_2a_2+\beta_0)}{\sqrt{C^2(\beta_1^2+\beta_2^2)}}   \\
+      & =\frac{C(\beta_1a_1+\beta_2a_2+\beta_0)}{C\sqrt{\beta_1^2+\beta_2^2}}       \\
+      & =\frac{\beta_1a_1+\beta_2a_2+\beta_0}{\sqrt{\beta_1^2+\beta_2^2}}           \\
 \end{align*}
 Notice that we are left with the same distance $d$, even with a different equation for the hyperplane. By imposing the condition $\beta_1^2+\beta_2^2=1$, we restrict the above to just one possible hyperplane. So, we are left with $$d=\frac{f(a_1,a_2)}{\sqrt{\beta_1^2+\beta_2^2}}$$ We aim to find the greatest distance, or margin, by maximizing the coefficients to the function $f$ of the closest point(s) to the hyperplane. Thus, we have the basic idea for the maximal margin classifier. We seek to maximize the margin $M$ to find the best separating hyperplane given by
 
@@ -273,7 +275,7 @@ $$y_i(\beta_0+\beta_1x_{i1}+...+\beta_px_{ip}) \ge M$$
 provided that
 
 \begin{equation}\label{sumofsquares}
-\sum_{j=1}^{p} \beta^2_j=1
+    \sum_{j=1}^{p} \beta^2_j=1
 \end{equation}
 
 Though the maximal margin classifier is not a support vector machine quite yet, we may use the SVM module in the "e1071" library in $R$ to determine the equation of the line.
@@ -329,7 +331,7 @@ To find the equation of the line, we use the hyperplane function as outlined in 
       (-c-a*x)/b
     }
 \end{minted}
-In this function, \textbf{P} is the \textbf{svm} function which we labeled \textit{svmfit}. The \textbf{data} is our dataframe containing the observations and class labels. \textbf{x} is the column vector of observations. We set \textbf{z}=0 for now, but this will later be shown to move the hyperplane vertically by a set constant. 
+In this function, \textbf{P} is the \textbf{svm} function which we labeled \textit{svmfit}. The \textbf{data} is our dataframe containing the observations and class labels. \textbf{x} is the column vector of observations. We set \textbf{z}=0 for now, but this will later be shown to move the hyperplane vertically by a set constant.
 
 Inside the function, the \textbf{alphas} are assigned to the coefficients of the hyperplane and multiplied by negative one. The \textbf{svs} variable takes the index of the support vectors and finds the exact point values in the data. \textbf{c} refers to the intercept and can be adjusted by the variable \textbf{z}. The variables \textbf{a} and \textbf{b} take the $x$ and $y$ coordinates, respectively, of the support vectors and multiply by their corresponding coefficient, as calculated by taking the transpose of the \textbf{alphas} variable, then summed. In Python, the \textbf{hyperplane} function looks slightly different due to the differences in the corresponding module, but the concept remains the same \cite{teitelbaum2021svm}.
 
@@ -403,17 +405,17 @@ We can add a line to visualize a possible hyperplane by running the following li
 As we can see, there is no possible linear hyperplane that separates the data. Some blue points are intermingled with the red and vice versa. To still construct a machine that attempts to classify the data, we introduce the topic of costs. In the maximal margin classifier, we aimed to find the greatest distance (margin) between the closest points of the two sets. Since there is no concrete margin in non-linearly separable data, we must introduce what is called a slack variable, denoted as $\epsilon_i$ for each observation $x_i$. For variables that are correctly classified, the corresponding observation's slack variable is 0. For points that are incorrectly classified, the slack variable takes on a value greater than 0 and incurs some cost for the maximization function. Since the slack variable is essentially a measure of how far a point lies on the wrong side of the margin, we constrict the sum of all slack variables to be less than a specified cost $C$. As we will see later, a user-defined cost can result in over- or under-fitting of the model. For a support vector classifier, our new maximization problem becomes
 
 \[
-y_i(\beta_0+\beta_1x_{i1}+...+\beta_px_{ip}) \ge M(1-\epsilon_i)
+    y_i(\beta_0+\beta_1x_{i1}+...+\beta_px_{ip}) \ge M(1-\epsilon_i)
 \]
 
 provided that
 
 \begin{equation}\label{sum_of_squares}
-\sum_{j=1}^{p} \beta^2_j=1
+    \sum_{j=1}^{p} \beta^2_j=1
 \end{equation}
 
 \begin{equation}\label{slackvariables}
-\sum_{i=1}^{n} \epsilon_i \le C, \epsilon_i \ge 0
+    \sum_{i=1}^{n} \epsilon_i \le C, \epsilon_i \ge 0
 \end{equation}
 
 Using the same \textbf{svm} module as in the maximal margin classifier, we can find the best hyperplane to classify the data given a specified cost, in this case a value of 1000.
@@ -484,12 +486,12 @@ We see that as the cost increases, there are fewer support vectors. That is, few
 
 The difference is a reference to the "dual problem", as there are two approaches to solving this problem. One approach, which we have previously outlined, fixes the variable \(C\) and the sum of \(\beta_j^2\) in order to minimize the margin. We are left with solving \[
     y_i(\beta_0+\beta_1x_{i1}+...+\beta_px_{ip}) \ge M(1-\epsilon_i)
-    \]
-subject to the conditions on \(\beta\) and \(\epsilon\). We could also solve this problem by switching our conditions and minimization as outlined in \cite{esl2}. If we fix the margin to be 1, we aim to minimize \(||\beta||\). The new problem becomes 
+\]
+subject to the conditions on \(\beta\) and \(\epsilon\). We could also solve this problem by switching our conditions and minimization as outlined in \cite{esl2}. If we fix the margin to be 1, we aim to minimize \(||\beta||\). The new problem becomes
 
 \[ \min ||\beta|| \text{ subject to }
     \begin{cases}
-        &y_i(\beta x_i + \beta_0) \ge 1 - \epsilon_i \forall i, \\ & \epsilon_i \ge 0, \sum \epsilon_i \le C, C \in \R 
+         & y_i(\beta x_i + \beta_0) \ge 1 - \epsilon_i \forall i, \\ & \epsilon_i \ge 0, \sum \epsilon_i \le C, C \in \R
     \end{cases}
 \]
 
@@ -497,8 +499,8 @@ which is equivalent to
 
 \[
     \begin{cases}
-        & \min_{\beta,\beta_0} \frac{1}{2} ||\beta||^2 + C \sum_{i=1}^{N} \epsilon_i \\
-        & \text{subject to} y_i(\beta_i x_i^T+\beta_0) \ge 1 - \epsilon_i, \epsilon_i \ge 0
+         & \min_{\beta,\beta_0} \frac{1}{2} ||\beta||^2 + C \sum_{i=1}^{N} \epsilon_i        \\
+         & \text{subject to} y_i(\beta_i x_i^T+\beta_0) \ge 1 - \epsilon_i, \epsilon_i \ge 0
     \end{cases}
 \]
 
@@ -581,6 +583,6 @@ Support vector machines have also been used in multi-class lung cancer classific
 \thispagestyle{empty}
 
 \bibliography{References/References.bib}
-\bibliographystyle{References/plain.bst}
+%\bibliographystyle{References/plain.bst}
 
 \end{document}

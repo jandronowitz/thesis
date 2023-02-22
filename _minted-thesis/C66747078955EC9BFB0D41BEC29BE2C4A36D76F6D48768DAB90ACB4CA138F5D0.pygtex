@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n+nf}{plot}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,}\PYG{n}{xlab}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}\PYGZdq{}}\PYG{p}{,}\PYG{n}{ylab}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}\PYGZdq{}}\PYG{p}{)}
+    \PYG{n+nf}{abline}\PYG{p}{(}\PYG{n}{h}\PYG{o}{=}\PYG{l+m}{0}\PYG{p}{,}\PYG{n}{v}\PYG{o}{=}\PYG{l+m}{0}\PYG{p}{,}\PYG{n}{col}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}gray\PYGZdq{}}\PYG{p}{,}\PYG{n}{lty}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}dotted\PYGZdq{}}\PYG{p}{)}
+    \PYG{n+nf}{abline}\PYG{p}{(}\PYG{n}{a}\PYG{o}{=}\PYG{l+m}{0}\PYG{p}{,}\PYG{n}{b}\PYG{o}{=}\PYG{l+m}{\PYGZhy{}1}\PYG{p}{,}\PYG{n}{col}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}black\PYGZdq{}}\PYG{p}{,}\PYG{n}{lty}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}dashed\PYGZdq{}}\PYG{p}{)}
+\end{Verbatim}

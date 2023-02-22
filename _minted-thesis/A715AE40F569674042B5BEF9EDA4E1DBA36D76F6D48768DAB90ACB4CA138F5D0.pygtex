@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n+nf}{abline}\PYG{p}{(}\PYG{l+m}{0}\PYG{p}{,}\PYG{l+m}{\PYGZhy{}1}\PYG{p}{,}\PYG{n}{col}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}gray\PYGZdq{}}\PYG{p}{,}\PYG{n}{lty}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}dashed\PYGZdq{}}\PYG{p}{)}
+\end{Verbatim}

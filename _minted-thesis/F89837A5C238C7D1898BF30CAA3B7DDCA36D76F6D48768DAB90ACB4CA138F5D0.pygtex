@@ -1,0 +1,25 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} setting initial number of observations in each set}
+    \PYG{n}{n} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{l+m}{200}
+
+    \PYG{c+c1}{\PYGZsh{} calculating x\PYGZhy{}variable using two randomly generated sets with overlap}
+    \PYG{n+nf}{set.seed}\PYG{p}{(}\PYG{l+m}{1000}\PYG{p}{)}
+
+    \PYG{n}{svmdatax1a} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{matrix}\PYG{p}{(}\PYG{n+nf}{rnorm}\PYG{p}{(}\PYG{n}{n}\PYG{p}{,} \PYG{l+m}{0.25}\PYG{p}{,}\PYG{l+m}{0.3}\PYG{p}{),} \PYG{n}{ncol}\PYG{o}{=}\PYG{l+m}{1}\PYG{p}{)}
+    \PYG{n}{svmdatax1b} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{matrix}\PYG{p}{(}\PYG{n+nf}{rnorm}\PYG{p}{(}\PYG{n}{n}\PYG{p}{,}\PYG{l+m}{0.75}\PYG{p}{,}\PYG{l+m}{0.3}\PYG{p}{),} \PYG{n}{ncol}\PYG{o}{=}\PYG{l+m}{1}\PYG{p}{)}
+    \PYG{n}{svmdatax1} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{cbind}\PYG{p}{(}\PYG{n}{svmdatax1a}\PYG{p}{,}\PYG{n}{svmdatax1b}\PYG{p}{)}
+
+    \PYG{n}{svmdatax2} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{matrix}\PYG{p}{(}\PYG{n+nf}{rnorm}\PYG{p}{(}\PYG{n}{n}\PYG{o}{*}\PYG{l+m}{2}\PYG{p}{,}\PYG{l+m}{\PYGZhy{}0.5}\PYG{p}{,}\PYG{l+m}{0.4}\PYG{p}{),} \PYG{n}{ncol}\PYG{o}{=}\PYG{l+m}{2}\PYG{p}{)}
+
+    \PYG{n}{svmdatax3a} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{matrix}\PYG{p}{(}\PYG{n+nf}{rnorm}\PYG{p}{(}\PYG{n}{n}\PYG{p}{,}\PYG{l+m}{1.5}\PYG{p}{,}\PYG{l+m}{0.3}\PYG{p}{),} \PYG{n}{ncol}\PYG{o}{=}\PYG{l+m}{1}\PYG{p}{)}
+    \PYG{n}{svmdatax3b} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{matrix}\PYG{p}{(}\PYG{n+nf}{rnorm}\PYG{p}{(}\PYG{n}{n}\PYG{p}{,}\PYG{l+m}{1}\PYG{p}{,}\PYG{l+m}{0.3}\PYG{p}{),} \PYG{n}{ncol}\PYG{o}{=}\PYG{l+m}{1}\PYG{p}{)}
+    \PYG{n}{svmdatax3} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{cbind}\PYG{p}{(}\PYG{n}{svmdatax3a}\PYG{p}{,}\PYG{n}{svmdatax3b}\PYG{p}{)}
+
+    \PYG{n}{svmdatax} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{rbind}\PYG{p}{(}\PYG{n}{svmdatax1}\PYG{p}{,}\PYG{n}{svmdatax2}\PYG{p}{,}\PYG{n}{svmdatax3}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} assigning labels to both classes}
+    \PYG{n}{svmdatay} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{c}\PYG{p}{(}\PYG{n+nf}{rep}\PYG{p}{(}\PYG{l+m}{1}\PYG{p}{,}\PYG{n}{n}\PYG{p}{),} \PYG{n+nf}{rep}\PYG{p}{(}\PYG{l+m}{2}\PYG{p}{,}\PYG{n}{n}\PYG{p}{),} \PYG{n+nf}{rep}\PYG{p}{(}\PYG{l+m}{3}\PYG{p}{,}\PYG{n}{n}\PYG{p}{))}
+
+    \PYG{c+c1}{\PYGZsh{} plotting the data}
+    \PYG{n+nf}{plot}\PYG{p}{(}\PYG{n}{svmdatax}\PYG{p}{,} \PYG{n}{col}\PYG{o}{=}\PYG{p}{(}\PYG{l+m}{3}\PYG{o}{\PYGZhy{}}\PYG{n}{svmdatay}\PYG{p}{),}\PYG{n}{xlab}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}\PYGZdq{}}\PYG{p}{,}\PYG{n}{ylab}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}\PYGZdq{}}\PYG{p}{,}\PYG{n}{pch}\PYG{o}{=}\PYG{l+m}{16}\PYG{p}{)}
+\end{Verbatim}
