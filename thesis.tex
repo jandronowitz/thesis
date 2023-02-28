@@ -18,7 +18,7 @@
 \usepackage{natbib}
 \usepackage[colorlinks=true, citecolor=blue]{hyperref}
 \usepackage{listings}
-\usepackage[outputdir=out,cache=false]{minted}
+\usepackage{minted}
 \usepackage{changepage}
 \usepackage{pgfplots}
   \pgfplotsset{compat=1.18}
@@ -487,42 +487,55 @@ The difference is a reference to the "dual problem", as there are two approaches
     \]
 subject to the conditions on \(\beta\) and \(\epsilon\). We could also solve this problem by switching our conditions and minimization as outlined in \cite{esl2}. If we fix the margin to be 1, we aim to minimize \(||\beta||\). The new problem becomes 
 
-\[ \min ||\beta|| \text{ subject to }
+\begin{equation} 
+    \min ||\beta|| \text{ subject to }
     \begin{cases}
-        &y_i(\beta x_i + \beta_0) \ge 1 - \epsilon_i \forall i, \\ & \epsilon_i \ge 0, \sum \epsilon_i \le C, C \in \R 
+        &y_i(\beta x_i + \beta_0) \ge 1 - \epsilon_i \forall i, \\ & \epsilon_i \ge 0, \sum \epsilon_i \le \text{constant} 
     \end{cases}
-\]
+    \label{eq_svc_initial}
+\end{equation}
 
 which is equivalent to
 
-\[
+\begin{equation}
     \begin{cases}
         & \min_{\beta,\beta_0} \frac{1}{2} ||\beta||^2 + C \sum_{i=1}^{N} \epsilon_i \\
-        & \text{subject to} y_i(\beta_i x_i^T+\beta_0) \ge 1 - \epsilon_i, \epsilon_i \ge 0
+        & \text{subject to } y_i(\beta_i x_i^T+\beta_0) \ge 1 - \epsilon_i, \epsilon_i \ge 0
     \end{cases}
-\]
+    \label{eq_svc_final}
+\end{equation}
 
-talk about how to test our model with prediction accuracy
+The constant defined in ~\ref{eq_svc_initial} is replaced with the cost parameter of the Lagrange function in ~\ref{eq_svc_final}. This cost parameter is the same as the variable defined in both the $R$ and Python $\textbf{svm}$ modules. How does one go about determining the correct cost though? Luckily, the $\textbf{svm}$ function can be used in a $\textbf{tuning}$ function that tests various costs for the correlating model accuracy. We use the following code to determine the best model:
 
-overfitting vs underfitting in choosing cost
+\begin{minted}[breaklines]{R}
+    # tune the function to find the best model with various costs
+    tune <- tune(svm,y~.,data=svcdata, 
+                 ranges = list(cost = 2^(-2:10)), tunecontrol = tune.control(sampling = "fix"))
+    
+    tune$best.parameters
+      # we see a cost of 0.25 gives the best model
+    tune$best.performance
+      # this is the model error
+\end{minted}
 
-finding best cost through code function in e1071
+Thus, we have produced the best Support Vector Classifier for our data, illustrated in Figure ~\ref{fig_svc_final_model}.
 
-code for python?
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{Figures/svc_final_model.png}
+    \caption{Final SVC Model with \(C = 0.25\)}
+    \label{fig_svc_final_model}
+\end{figure}
 
-dual problem family of lines in the $\beta$ space, all must lie on the right side of the line and we try to find the point closest to the origin
+\section{SUPPORT VECTOR MACHINES}
 
-experiment with values of C and sum of slack variables; show on graph? trade-off between the two; $slack = 1-y_i(f(x_i))$
-
-\section{SUPPORT VECTOR MACHINE}
-
-A support vector machine is used when there is multi-class data. In this case, a linear classifying hyperplane is inappropriate. We can create randomly generated multi-class data with the following code:
+Previously, we have only worked with data involving two classes. The Maximal Margin Classifier is used for linearly separable data, and the Support Vector Classifier is used for non-linearly separable data. When there are more than two classes, a Support Vector Machine is used. A linear hyperplane is not appropriate for multi-class data, so we introduce the concept of a kernel. First, we create randomly generated multi-class data with the following code:
 
 \begin{minted}[breaklines]{R}
     # setting initial number of observations in each set
     n <- 200
 
-    # calculating x-variable using two randomly generated sets with overlap
+    # calculating x-variable using three randomly generated sets with overlap
     set.seed(1000)
 
     svmdatax1a <- matrix(rnorm(n, 0.25,0.3), ncol=1)
@@ -544,7 +557,7 @@ A support vector machine is used when there is multi-class data. In this case, a
     plot(svmdatax, col=(3-svmdatay),xlab="",ylab="",pch=16)
 \end{minted}
 
-Data can look like that in Figure ~\ref{fig_svm_randomly_generated_data}
+Data can look like that in Figure ~\ref{fig_svm_randomly_generated_data}.
 
 \begin{figure}[H]
     \centering
@@ -553,7 +566,9 @@ Data can look like that in Figure ~\ref{fig_svm_randomly_generated_data}
     \label{fig_svm_randomly_generated_data}
 \end{figure}
 
-We use the same approach as the support vector classifier, yet with a non-linear boundary.
+
+
+overfitting vs underfitting in choosing cost
 
 \section{EXAMPLE}
 \begin{itemize}
@@ -563,11 +578,7 @@ We use the same approach as the support vector classifier, yet with a non-linear
 
 \section{APPLICATIONS}
 
-One such example, as presented in \textit{Intro to Statistical Learning with Applications in R} \citep{introstatlearning} is the use of support vector machines in genetic expression data. The \textit{Khan} dataset in the $ISLR2$ package of $R$ contains expression measurements for 2,308 genes from tissue samples of patients with one of four types of small round blue cell tumors. The data is then split up into training and test groups. There are 63 observations in the training set and 20 observations in the test set. It is not feasible to visually plot the data on a graph, as there is a very large number of features relative to the number of observations. However, due to the large number of features, it is easy to find a linearly separating hyperplane that predicts the type of cell tumor. As such, the SVM approach outlined in the textbook yields no data points that are misclassified in the training set and two test set errors. In this case, a support vector machine was used to classify and predict cancer types based on gene expression data.
-
-In fact, SVMs are a popular choice in machine learning approaches to detecting cancer. Several studies have shown SVMs perform with great accuracy. Among those include the prediction of breast cancer using SVM and an extremely randomized trees classifier \cite{breastcancer}
-
-Support vector machines have also been used in multi-class lung cancer classification \cite{lungcancer}.
+One such example, as presented in \textit{Intro to Statistical Learning with Applications in R} \citep{introstatlearning} is the use of support vector machines in genetic expression data. The \textit{Khan} dataset in the $ISLR2$ package of $R$ contains expression measurements for 2,308 genes from tissue samples of patients with one of four types of small round blue cell tumors. The data is then split up into training and test groups. There are 63 observations in the training set and 20 observations in the test set. It is not feasible to visually plot the data on a graph, as there is a very large number of features relative to the number of observations. However, due to the large number of features, it is easy to find a linearly separating hyperplane that predicts the type of cell tumor. As such, the SVM approach outlined in the textbook yields no data points that are misclassified in the training set and two test set errors. In this case, a support vector machine was used to classify and predict cancer types based on gene expression data. In fact, SVMs are a popular choice in machine learning approaches to detecting cancer. Several studies have shown SVMs perform with great accuracy. Among those include the prediction of breast cancer using SVM and an extremely randomized trees classifier \cite{breastcancer}. Support vector machines have also been used in multi-class lung cancer classification \cite{lungcancer}.
 
 \section{ANALYSIS OF R AND PYTHON SVM MODULES AND DOCUMENTATION}
 

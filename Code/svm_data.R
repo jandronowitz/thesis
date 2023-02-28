@@ -15,12 +15,13 @@ hyperplane <- function(P,data,x,z=0) {
   a <- sum(t(alphas)*data[P$index,][1])
   b <- sum(t(alphas)*data[P$index,][2])
   (-c-a*x)/b
+  cat(a,b,c)
 }
 
 # setting initial number of observations in each set
 n <- 200
 
-# calculating x-variable using two randomly generated sets with overlap
+# calculating x-variable using three randomly generated sets with overlap
 set.seed(1000)
 
 svmdatax1a <- matrix(rnorm(n, 0.25,0.3), ncol=1)
@@ -56,5 +57,26 @@ svmfit$coefs
 # plotting svm function graph
 plot(svmfit,svmdata,color.palette = terrain.colors,symbolPalette = c("yellow","red","black"))
 
+# using different costs
+svmfit1 <- svm (y~., data = svmdata , kernel="radial", cost = 1, scale = FALSE)
+svmfit1000000 <- svm (y~., data = svmdata , kernel="radial", cost = 1000000, scale = FALSE)
 
+# plots of different costs
+plot(svmfit1,svmdata,color.palette = terrain.colors,symbolPalette = c("yellow","red","black"))
+plot(svmfit1000000,svmdata,color.palette = terrain.colors,symbolPalette = c("yellow","red","black"))
+
+# looking at how a,b,c values differ 
+hyperplane(svmfit,svmdata,svmdatax)
+hyperplane(svmfit1,svmdata,svmdatax)
+hyperplane(svmfit1000000,svmdata,svmdatax)
+
+# using tune function to find the best model
+tune <- tune(svm,y~.,data=svmdata, 
+     ranges = list(gamma = 2^(-2:10), cost = 2^(-2:10)), tunecontrol = tune.control(sampling = "fix"))
+
+tune$best.parameters
+tune$best.performance
+
+help(tune)
 help(svm)
+
