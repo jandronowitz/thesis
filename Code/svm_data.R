@@ -40,7 +40,7 @@ svmdatax <- rbind(svmdatax1,svmdatax2,svmdatax3)
 svmdatay <- c(rep(1,n), rep(2,n), rep(3,n))
 
 # plotting the data
-plot(svmdatax, col=(3-svmdatay),xlab="",ylab="",pch=16)
+plot(svmdatax, col=(11-svmdatay),xlab="",ylab="",pch=16)
 
 # creating data frame 
 svmdata <- data.frame (x = svmdatax, y = factor(svmdatay))
@@ -55,15 +55,15 @@ svmfit$rho
 svmfit$coefs
 
 # plotting svm function graph
-plot(svmfit,svmdata,color.palette = terrain.colors,symbolPalette = c("yellow","red","black"))
+plot(svmfit,svmdata,color.palette = terrain.colors,symbolPalette = c("red","yellow","black"))
 
 # using different costs
 svmfit1 <- svm (y~., data = svmdata , kernel="radial", cost = 1, scale = FALSE)
 svmfit1000000 <- svm (y~., data = svmdata , kernel="radial", cost = 1000000, scale = FALSE)
 
 # plots of different costs
-plot(svmfit1,svmdata,color.palette = terrain.colors,symbolPalette = c("yellow","red","black"))
-plot(svmfit1000000,svmdata,color.palette = terrain.colors,symbolPalette = c("yellow","red","black"))
+plot(svmfit1,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
+plot(svmfit1000000,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
 
 # looking at how a,b,c values differ 
 hyperplane(svmfit,svmdata,svmdatax)
