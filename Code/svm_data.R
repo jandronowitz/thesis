@@ -46,7 +46,7 @@ plot(svmdatax, col=(11-svmdatay),xlab="",ylab="",pch=16)
 svmdata <- data.frame (x = svmdatax, y = factor(svmdatay))
 
 # computing svm function
-svmfit <- svm (y~., data = svmdata , kernel="radial", cost = 1000, scale = FALSE)
+svmfit <- svm (y~., data = svmdata , kernel="radial", cost = 0.25, gamma=0.5, scale = FALSE)
 
 # looking at statistics
 summary(svmfit)
@@ -76,7 +76,7 @@ tune <- tune(svm,y~.,data=svmdata,
 
 tune$best.parameters
 tune$best.performance
-
+tune$performances
 help(tune)
 help(svm)
 

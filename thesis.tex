@@ -3,8 +3,6 @@
 \parindent=0pt
 \usepackage[utf8]{inputenc}
 
-\usepackage [autostyle, english = american]{csquotes}
-
 \usepackage{geometry}[margin=1in]
 \usepackage{amsmath, amssymb, amsfonts}
 \usepackage{tikz}
@@ -26,6 +24,7 @@
 \usepackage{subcaption}
 \usepackage{float}
 \usepackage{physics}
+\bibliographystyle{plain}
 
 \newcommand{\R}{\mathbb{R}}
 
@@ -505,7 +504,9 @@ which is equivalent to
     \label{eq_svc_final}
 \end{equation}
 
-The constant defined in ~\ref{eq_svc_initial} is replaced with the cost parameter of the Lagrange function in ~\ref{eq_svc_final}. This cost parameter is the same as the variable defined in both the $R$ and Python $\textbf{svm}$ modules. How does one go about determining the correct cost though? Luckily, the $\textbf{svm}$ function can be used in a $\textbf{tuning}$ function that tests various costs for the correlating model accuracy. We use the following code to determine the best model:
+The constant defined in ~\ref{eq_svc_initial} is replaced with the cost parameter of the Lagrange function in ~\ref{eq_svc_final}. This cost parameter is the same as the variable defined in both the $R$ and Python $\textbf{svm}$ modules.
+
+We saw that choosing different costs affects the number of support vectors. A smaller cost results in a lower penalty for each misclassified data point. As such, the resulting margin is large. When the cost is larger, misclassified data points have a bigger impact on the model, so the resulting margin is smaller to minimize these points ~\cite{cost_parameter}. How does one go about determining the correct cost though? Luckily, the $\textbf{svm}$ function can be used in a $\textbf{tuning}$ function that tests various costs for the correlating model accuracy. We use the following code to determine the best model:
 
 \begin{minted}[breaklines]{R}
     # tune the function to find the best model with various costs
@@ -520,7 +521,7 @@ The constant defined in ~\ref{eq_svc_initial} is replaced with the cost paramete
 
 Thus, we have produced the best Support Vector Classifier for our data, illustrated in Figure ~\ref{fig_svc_final_model}.
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=5in]{Figures/svc_final_model.png}
     \caption{Final SVC Model with \(C = 0.25\)}
@@ -554,7 +555,7 @@ Previously, we have only worked with data involving two classes. The Maximal Mar
     svmdatay <- c(rep(1,n), rep(2,n), rep(3,n))
 
     # plotting the data
-    plot(svmdatax, col=(3-svmdatay),xlab="",ylab="",pch=16)
+    plot(svmdatax, col=(11-svmdatay),xlab="",ylab="",pch=16)
 \end{minted}
 
 Data can look like that in Figure ~\ref{fig_svm_randomly_generated_data}.
@@ -566,9 +567,11 @@ Data can look like that in Figure ~\ref{fig_svm_randomly_generated_data}.
     \label{fig_svm_randomly_generated_data}
 \end{figure}
 
+introduce kernel and gamma parameter
 
+code for fitting and tuning svm
 
-overfitting vs underfitting in choosing cost
+graphs
 
 \section{EXAMPLE}
 \begin{itemize}
@@ -592,6 +595,5 @@ One such example, as presented in \textit{Intro to Statistical Learning with App
 \thispagestyle{empty}
 
 \bibliography{References/References.bib}
-\bibliographystyle{References/plain.bst}
 
 \end{document}

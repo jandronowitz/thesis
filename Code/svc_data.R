@@ -64,7 +64,7 @@ lines(svcdatax,plt1,col='gray')
 lines(svcdatax,plt2,col='gray')
 
 # using cost of 1
-svmfit1 <- svm (y~., data = svcdata , kernel="linear", cost = 0.1, scale = FALSE)
+svmfit1 <- svm (y~., data = svcdata , kernel="linear", cost = 0.001, scale = FALSE)
 summary(svmfit1)
   # results in 36 support vectors
 plot(svmfit1,svcdata)
@@ -107,7 +107,10 @@ tune$best.performance
   # this is the model error
 
 # final svc model
-svmfit <- svm (y~., data = svcdata , kernel="linear", cost = 0.25, scale = FALSE)
+svmfit <- svm (y~., data = svcdata , kernel="linear", cost = 0.01, scale = FALSE)
 plot(svmfit,svcdata)
-
+summary((svmfit))
 help(svm)
+hyperplane(svmfit,svcdata,svcdatax)
+hyperplane(svmfit1000,svcdata,svcdatax)
+plot(svmfit1000,svcdata)
