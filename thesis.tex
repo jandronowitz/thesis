@@ -415,6 +415,10 @@ provided that
 \sum_{i=1}^{n} \epsilon_i \le C, \epsilon_i \ge 0
 \end{equation}
 
+Let us introduce the concept of inner products and their role in the support vector classifier as outlined in ~\ref{introstatlearning} and ~\ref{esl2}. The inner products of two vectors is defined as \[ \vec{a,b}=\sum_{i=1}^{r}a_ib_i \] for two \(r\)-vectors \(a\) and \(b\). Following the work produced by ~\ref{introstatlearning}, the support vector classifier can be rewritten as \[f(x) = \beta_0 + \sum_{i=1}^n \alpha_i \vec{x,x_i} \] and the solution revolves around the inner products.
+
+Futhermore, it is known that each \(\alpha_i\) is non-zero for only the support vectors. The support vector classifier is simplified even more, as we can ignore points that are not support vectors. The solution then becomes \[f(x) = \beta_0 + \sum_{i \in S} \alpha_i \vec{x,x_i} \] where \(S\) is the set of indices of the support vectors.
+
 Using the same \textbf{svm} module as in the maximal margin classifier, we can find the best hyperplane to classify the data given a specified cost, in this case a value of 1000.
 
 \begin{minted}[breaklines]{R}
@@ -530,7 +534,22 @@ Thus, we have produced the best Support Vector Classifier for our data, illustra
 
 \section{SUPPORT VECTOR MACHINES}
 
-Previously, we have only worked with data involving two classes. The Maximal Margin Classifier is used for linearly separable data, and the Support Vector Classifier is used for non-linearly separable data. When there are more than two classes, a Support Vector Machine is used. A linear hyperplane is not appropriate for multi-class data, so we introduce the concept of a kernel. First, we create randomly generated multi-class data with the following code:
+Previously, we have only worked with data involving two classes. The Maximal Margin Classifier is used for linearly separable data, and the Support Vector Classifier is used for non-linearly separable data. When there are more than two classes, a Support Vector Machine is used. A linear hyperplane is not appropriate for multi-class data, so we introduce the concept of a kernel.
+
+Recall the inner products from the support vector classifier. The kernel is a generalized representation of the inner product of two observation \[K(x_i,x_i')\] where \(K\) is some function that measures the similarity between two observations ~\ref{introstatlearning}. In the support vector classifier, the kernel is a linear function calculated using Pearson correlation. For non-linear data, this function \(K\) can be replaced with another form. Common quantities include
+
+\begin{centering}
+    \begin{tabular}{c | c}
+        K & form \\
+        \hline \\
+        polynomial & \(1+ \sum_{j=1}^p x_{ij}x{i'j})^d \) \\
+        radial & \(\exp ( - \gamma \sum_{j=1}^p (x_{ij}-x_{i'j})^2) \)
+    \end{tabular}
+\end{centering}
+
+We will focus on the radial kernel. 
+
+First, we create randomly generated multi-class data with the following code:
 
 \begin{minted}[breaklines]{R}
     # setting initial number of observations in each set
