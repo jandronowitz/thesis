@@ -517,7 +517,7 @@ We saw that choosing different costs affects the number of support vectors. A sm
       # this is the model error
 \end{minted}
 
-Thus, we have produced the best Support Vector Classifier for our data, illustrated in Figure ~\ref{fig_svc_final_model}.
+Thus, we have produced the best support vector classifier for our data, illustrated in Figure ~\ref{fig_svc_final_model}.
 
 \begin{figure}[ht]
     \centering
@@ -528,9 +528,9 @@ Thus, we have produced the best Support Vector Classifier for our data, illustra
 
 \section{SUPPORT VECTOR MACHINES}
 
-Previously, we have only worked with data involving two classes. The Maximal Margin Classifier is used for linearly separable data, and the Support Vector Classifier is used for non-linearly separable data. When there are more than two classes, a Support Vector Machine is used. A linear hyperplane is not appropriate for multi-class data, so we introduce the concept of a kernel.
+Previously, we have only worked with data involving two classes. The maximal margin classifier is used for linearly separable data, and the support vector classifier is used for non-linearly separable data. When there are more than two classes, a support vector machine is used. A linear hyperplane is not appropriate for multi-class data, so we introduce the concept of a kernel.
 
-Recall the inner products from the support vector classifier. The kernel is a generalized representation of the inner product of two observation \[K(x_i,x_i')\] where \(K\) is some function that measures the similarity between two observations \citep{introstatlearning}. In the support vector classifier, the kernel is a linear function calculated using Pearson correlation. For non-linear data, this function \(K\) can be replaced with another form. Common quantities include
+Recall the inner products from the support vector classifier. The kernel is a generalized representation of the inner product of two observations \[K(x_i,x_i')\] where \(K\) is some function that measures the similarity between two observations \citep{introstatlearning}. In the support vector classifier, the kernel is a linear function calculated using Pearson correlation. For non-linear data, this function \(K\) can be replaced with another form. Common quantities include
 
 \begin{center}
     \begin{tabular}{c|c}
@@ -546,9 +546,9 @@ Recall the inner products from the support vector classifier. The kernel is a ge
     \end{tabular}
 \end{center}
 
-We will focus on the radial kernel. 
+We will focus on the radial kernel. The radial kernel is a popular first choice as it performs well in multi-class data with a non-linear relationship. In addition to the cost parameter, we now have the gamma parameter. Common choices for the cost parameter range from \(2^{-5}\) to \(2^{15}\) and for the gamma parameters range from \(2^{-15}\) to \(2^{3}\). One can input these ranges into the \textbf{tune} function to determine the best performing values for the model.
 
-First, we create randomly generated multi-class data with the following code:
+To implement this in $R$, we first create randomly generated multi-class data with the following code:
 
 \begin{minted}[breaklines]{R}
     # setting initial number of observations in each set
@@ -584,12 +584,6 @@ Data can look like that in Figure ~\ref{fig_svm_randomly_generated_data}.
     \caption{Randomly Generated Multi-Class Data}
     \label{fig_svm_randomly_generated_data}
 \end{figure}
-
-introduce kernel and gamma parameter
-
-code for fitting and tuning svm
-
-graphs
 
 \section{EXAMPLE}
 \begin{itemize}
