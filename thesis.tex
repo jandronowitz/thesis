@@ -585,9 +585,69 @@ Data can look like that in Figure ~\ref{fig_svm_randomly_generated_data}.
     \label{fig_svm_randomly_generated_data}
 \end{figure}
 
-*** present 3 graphs with different gammas
+What happens if we change the cost for a non-linear dataset? We try below with different values and compare.
 
-*** 3 graphs with different costs
+\begin{minted}[breaklines]{R}
+    # using different costs
+    svmfit.00001 <- svm (y~., data = svmdata , kernel="radial", cost = 0.00001, scale = FALSE)
+    svmfit.001 <- svm (y~., data = svmdata , kernel="radial", cost = 0.001, scale = FALSE)
+    svmfit1 <- svm (y~., data = svmdata , kernel="radial", cost = 1, scale = FALSE)
+    svmfit1000 <- svm (y~., data = svmdata , kernel="radial", cost = 1000, scale = FALSE)
+    svmfit100000 <- svm (y~., data = svmdata , kernel="radial", cost = 100000, scale = FALSE)
+    svmfit10000000 <- svm (y~., data = svmdata , kernel="radial", cost = 10000000, scale = FALSE)
+    
+    # plots of different costs
+    plot(svmfit.00001,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
+    plot(svmfit.001,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
+    plot(svmfit1,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
+    plot(svmfit1000,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
+    plot(svmfit100000,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
+    plot(svmfit10000000,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))    
+\end{minted}
+
+The code produces the graphs in Figure ~\ref{fig_svm_diff_costs}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=2.5in]{Figures/svm.00001.png}
+    \includegraphics[width=2.5in]{Figures/svm.001.png} \\
+    \includegraphics[width=2.5in]{Figures/svm1.png}
+    \includegraphics[width=2.5in]{Figures/svm1000.png} \\
+    \includegraphics[width=2.5in]{Figures/svm100000.png}
+    \includegraphics[width=2.5in]{Figures/svm1000000.png}
+    \caption{Experimentation with Different Costs in Non-Linear Data}
+    \label{fig_svm_diff_costs}
+\end{figure}
+
+What happens if we change the gamma value? We try below with different values and compare.
+
+\begin{minted}[breaklines]{R}
+    # using different gammas
+    svmfit.00001g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 0.00001, scale = FALSE)
+    svmfit.001g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 0.001, scale = FALSE)
+    svmfit1g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 1, scale = FALSE)
+    svmfit1000g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 1000, scale = FALSE)
+    
+    # plots of different gammas
+    plot(svmfit.00001g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
+    plot(svmfit.001g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
+    plot(svmfit1g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
+    plot(svmfit1000g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))    
+\end{minted}
+
+The code produces the graphs in Figure ~\ref{fig_svm_diff_gammas}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=2.5in]{Figures/svmfit.01g.png}
+    \includegraphics[width=2.5in]{Figures/svmfit.1g.png} \\
+    \includegraphics[width=2.5in]{Figures/svmfit1g.png}
+    \includegraphics[width=2.5in]{Figures/svmfit10g.png} \\
+    \includegraphics[width=2.5in]{Figures/svmfit100g.png}
+    \includegraphics[width=2.5in]{Figures/svmfit1000g.png}
+    \caption{Experimentation with Different Gammas in Non-Linear Data}
+    \label{fig_svm_diff_gammas}
+\end{figure}
 
 Using the tuning parameter, we can determine the best values for the gamma and cost parameters.
 

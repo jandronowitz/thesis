@@ -62,15 +62,19 @@ plot(svmfit100000,svmdata,color.palette = terrain.colors,symbolPalette = c("red"
 plot(svmfit10000000,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
 
 # using different gammas
-svmfit.00001g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 0.00001, scale = FALSE)
-svmfit.001g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 0.001, scale = FALSE)
+svmfit.01g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 0.01, scale = FALSE)
+svmfit.1g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 0.1, scale = FALSE)
 svmfit1g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 1, scale = FALSE)
+svmfit10g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 10, scale = FALSE)
+svmfit100g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 100, scale = FALSE)
 svmfit1000g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 1000, scale = FALSE)
 
 # plots of different gammas
-plot(svmfit.00001g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
-plot(svmfit.001g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
+plot(svmfit.01g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
+plot(svmfit.1g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
 plot(svmfit1g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
+plot(svmfit10g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
+plot(svmfit100g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
 plot(svmfit1000g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
 
 # using tune function to find the best model
