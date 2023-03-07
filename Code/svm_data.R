@@ -96,7 +96,7 @@ svmfit$rho
 svmfit$coefs
 
 # plotting svm function graph
-plot(svmfit,svmdata,color.palette = terrain.colors,symbolPalette = c("red","yellow","black"))
+plot(svmfit,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
 
 # looking at how a,b,c values differ 
 hyperplane(svmfit,svmdata,svmdatax)

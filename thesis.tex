@@ -606,7 +606,7 @@ What happens if we change the cost for a non-linear dataset? We try below with d
 \end{minted}
 
 The code produces the graphs in Figure ~\ref{fig_svm_diff_costs}.
-
+*add cost values to graph
 \begin{figure}[ht]
     \centering
     \includegraphics[width=2.5in]{Figures/svm.00001.png}
@@ -636,7 +636,7 @@ What happens if we change the gamma value? We try below with different values an
 \end{minted}
 
 The code produces the graphs in Figure ~\ref{fig_svm_diff_gammas}.
-
+*add gamma values to graph
 \begin{figure}[ht]
     \centering
     \includegraphics[width=2.5in]{Figures/svmfit.01g.png}
@@ -649,7 +649,7 @@ The code produces the graphs in Figure ~\ref{fig_svm_diff_gammas}.
     \label{fig_svm_diff_gammas}
 \end{figure}
 
-Using the tuning parameter, we can determine the best values for the gamma and cost parameters.
+Using the tuning parameter, we can determine the best values for the cost and gamma parameters.
 
 \begin{minted}[breaklines]{R}
     # using tune function to find the best model
@@ -676,8 +676,17 @@ The output is a gamma value of 0.5 and a cost of 0.25. Using these values in the
     svmfit$coefs
 
     # plotting svm function graph
-    plot(svmfit,svmdata,color.palette = terrain.colors,symbolPalette = c("red","yellow","black"))
+    plot(svmfit,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
 \end{minted}
+
+The final model using the best parameters determined by the \textbf{tune} function is presented in Figure ~\ref{fig_final_svm_model}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=5in]{Figures/svm_final_model.png}
+    \caption{Final SVM Model with \(C=0.25\) and \(\gamma = 0.5\)}
+    \label{fig_final_svm_model}
+\end{figure}
 
 \section{EXAMPLE}
 \begin{itemize}
