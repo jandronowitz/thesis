@@ -585,6 +585,10 @@ Data can look like that in Figure ~\ref{fig_svm_randomly_generated_data}.
     \label{fig_svm_randomly_generated_data}
 \end{figure}
 
+*** present 3 graphs with different gammas
+
+*** 3 graphs with different costs
+
 Using the tuning parameter, we can determine the best values for the gamma and cost parameters.
 
 \begin{minted}[breaklines]{R}
@@ -594,6 +598,25 @@ Using the tuning parameter, we can determine the best values for the gamma and c
 
     tune$best.parameters
     tune$best.performance
+\end{minted}
+
+The output is a gamma value of 0.5 and a cost of 0.25. Using these values in the \textbf{svm} function, we have
+
+\begin{minted}[breaklines]{R}
+    # creating data frame 
+    svmdata <- data.frame (x = svmdatax, y = factor(svmdatay))
+
+    # computing svm function
+    svmfit <- svm (y~., data = svmdata , kernel="radial", cost = 0.25, gamma=0.5, scale = FALSE)
+
+    # looking at statistics
+    summary(svmfit)
+    svmfit$index
+    svmfit$rho
+    svmfit$coefs
+
+    # plotting svm function graph
+    plot(svmfit,svmdata,color.palette = terrain.colors,symbolPalette = c("red","yellow","black"))
 \end{minted}
 
 \section{EXAMPLE}

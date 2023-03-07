@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} using tune function to find the best model}
+    \PYG{n}{tune} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{tune}\PYG{p}{(}\PYG{n}{svm}\PYG{p}{,}\PYG{n}{y}\PYG{o}{\PYGZti{}}\PYG{n}{.}\PYG{p}{,}\PYG{n}{data}\PYG{o}{=}\PYG{n}{svmdata}\PYG{p}{,}
+        \PYG{n}{ranges} \PYG{o}{=} \PYG{n+nf}{list}\PYG{p}{(}\PYG{n}{gamma} \PYG{o}{=} \PYG{l+m}{2}\PYG{o}{\PYGZca{}}\PYG{p}{(}\PYG{l+m}{\PYGZhy{}2}\PYG{o}{:}\PYG{l+m}{10}\PYG{p}{),} \PYG{n}{cost} \PYG{o}{=} \PYG{l+m}{2}\PYG{o}{\PYGZca{}}\PYG{p}{(}\PYG{l+m}{\PYGZhy{}2}\PYG{o}{:}\PYG{l+m}{10}\PYG{p}{)),} \PYG{n}{tunecontrol} \PYG{o}{=} \PYG{n+nf}{tune.control}\PYG{p}{(}\PYG{n}{sampling} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}fix\PYGZdq{}}\PYG{p}{))}
+
+    \PYG{n}{tune}\PYG{o}{\PYGZdl{}}\PYG{n}{best.parameters}
+    \PYG{n}{tune}\PYG{o}{\PYGZdl{}}\PYG{n}{best.performance}
+\end{Verbatim}
