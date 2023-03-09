@@ -606,15 +606,20 @@ What happens if we change the cost for a non-linear dataset? We try below with d
 \end{minted}
 
 The code produces the graphs in Figure ~\ref{fig_svm_diff_costs}.
-*add cost values to graph
+
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=2.5in]{Figures/svm.00001.png}
+    \begin{align*}
+    & C=0.00001 & C=0.001 \\
+    & \includegraphics[width=2.5in]{Figures/svm.00001.png} &
     \includegraphics[width=2.5in]{Figures/svm.001.png} \\
-    \includegraphics[width=2.5in]{Figures/svm1.png}
+    & C=1 & C=1000 \\
+    & \includegraphics[width=2.5in]{Figures/svm1.png} &
     \includegraphics[width=2.5in]{Figures/svm1000.png} \\
-    \includegraphics[width=2.5in]{Figures/svm100000.png}
+    & C=100000 & C=10000000 \\
+    & \includegraphics[width=2.5in]{Figures/svm100000.png} &
     \includegraphics[width=2.5in]{Figures/svm1000000.png}
+    \end{align*}
     \caption{Experimentation with Different Costs in Non-Linear Data}
     \label{fig_svm_diff_costs}
 \end{figure}
@@ -636,15 +641,20 @@ What happens if we change the gamma value? We try below with different values an
 \end{minted}
 
 The code produces the graphs in Figure ~\ref{fig_svm_diff_gammas}.
-*add gamma values to graph
+
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=2.5in]{Figures/svmfit.01g.png}
-    \includegraphics[width=2.5in]{Figures/svmfit.1g.png} \\
-    \includegraphics[width=2.5in]{Figures/svmfit1g.png}
-    \includegraphics[width=2.5in]{Figures/svmfit10g.png} \\
-    \includegraphics[width=2.5in]{Figures/svmfit100g.png}
-    \includegraphics[width=2.5in]{Figures/svmfit1000g.png}
+    \begin{align*}
+    & \gamma=0.01 & \gamma=0.1 \\
+    & \includegraphics[width=2.4in]{Figures/svmfit.01g.png} &
+    \includegraphics[width=2.4in]{Figures/svmfit.1g.png} \\
+    & \gamma=1 & \gamma=10 \\
+    & \includegraphics[width=2.4in]{Figures/svmfit1g.png} &
+    \includegraphics[width=2.4in]{Figures/svmfit10g.png} \\
+    & \gamma=100 & \gamma=1000 \\
+    & \includegraphics[width=2.4in]{Figures/svmfit100g.png} &
+    \includegraphics[width=2.4in]{Figures/svmfit1000g.png}
+    \end{align*}
     \caption{Experimentation with Different Gammas in Non-Linear Data}
     \label{fig_svm_diff_gammas}
 \end{figure}
