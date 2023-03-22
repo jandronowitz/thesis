@@ -605,20 +605,20 @@ What happens if we change the cost for a non-linear dataset? We try below with d
     plot(svmfit10000000,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))    
 \end{minted}
 
-The code produces the graphs in Figure ~\ref{fig_svm_diff_costs}.
+The code produces the graphs in Figure ~\ref{fig_svm_diff_costs}. Initially, with a low cost every point is a support vector. In a dataset with 600 observations, 600 support vectors is not ideal. This makes sense, as a smaller cost means a lower penalty for each misclassified data point. As we increase the cost parameter, the number of support vectors decreases because the cost of being misclassified is greater. At the highest cost of 10,000,000 there are only 35 support vectors. We see a trade-off between the number of observations that influence the support vector machine and the associated cost. Zooming in, the support vectors in ~\ref{fig_svm_diff_costs} are labeled with an "x".
 
 \begin{figure}[ht]
     \centering
     \begin{align*}
     & C=0.00001 & C=0.001 \\
-    & \includegraphics[width=2.5in]{Figures/svm.00001.png} &
-    \includegraphics[width=2.5in]{Figures/svm.001.png} \\
+    & \includegraphics[width=3in]{Figures/svm.00001.png} &
+    \includegraphics[width=3in]{Figures/svm.001.png} \\
     & C=1 & C=1000 \\
-    & \includegraphics[width=2.5in]{Figures/svm1.png} &
-    \includegraphics[width=2.5in]{Figures/svm1000.png} \\
+    & \includegraphics[width=3in]{Figures/svm1.png} &
+    \includegraphics[width=3in]{Figures/svm1000.png} \\
     & C=100000 & C=10000000 \\
-    & \includegraphics[width=2.5in]{Figures/svm100000.png} &
-    \includegraphics[width=2.5in]{Figures/svm1000000.png}
+    & \includegraphics[width=3in]{Figures/svm100000.png} &
+    \includegraphics[width=3in]{Figures/svm1000000.png}
     \end{align*}
     \caption{Experimentation with Different Costs in Non-Linear Data}
     \label{fig_svm_diff_costs}
@@ -640,26 +640,26 @@ What happens if we change the gamma value? We try below with different values an
     plot(svmfit1000g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))    
 \end{minted}
 
-The code produces the graphs in Figure ~\ref{fig_svm_diff_gammas}.
+The code produces the graphs in Figure ~\ref{fig_svm_diff_gammas}. From \cite{scikit_rbf_parameters}, the "gamma parameter defines how far the influence of a single training example reaches, with low values meaning ‘far’ and high values meaning ‘close’." With the lowest gamma value of 0.01, the support vector machine mostly consists of straight lines as the influence of individual support vectors reaches farther out. As we increase the gamma value, the machine becomes more specialized to the dataset. We see the gamma value of 1000 yields a model with 600 out of the 600 points being support vectors. Each point has only a small radius of influence, leading to an extremely localized model with margins closely following the class boundaries. Choosing an appropriate gamma value helps protect against under- and over-fitting the model.
 
 \begin{figure}[ht]
     \centering
     \begin{align*}
     & \gamma=0.01 & \gamma=0.1 \\
-    & \includegraphics[width=2.4in]{Figures/svmfit.01g.png} &
-    \includegraphics[width=2.4in]{Figures/svmfit.1g.png} \\
+    & \includegraphics[width=3in]{Figures/svmfit.01g.png} &
+    \includegraphics[width=3in]{Figures/svmfit.1g.png} \\
     & \gamma=1 & \gamma=10 \\
-    & \includegraphics[width=2.4in]{Figures/svmfit1g.png} &
-    \includegraphics[width=2.4in]{Figures/svmfit10g.png} \\
+    & \includegraphics[width=3in]{Figures/svmfit1g.png} &
+    \includegraphics[width=3in]{Figures/svmfit10g.png} \\
     & \gamma=100 & \gamma=1000 \\
-    & \includegraphics[width=2.4in]{Figures/svmfit100g.png} &
-    \includegraphics[width=2.4in]{Figures/svmfit1000g.png}
+    & \includegraphics[width=3in]{Figures/svmfit100g.png} &
+    \includegraphics[width=3in]{Figures/svmfit1000g.png}
     \end{align*}
     \caption{Experimentation with Different Gammas in Non-Linear Data}
     \label{fig_svm_diff_gammas}
 \end{figure}
 
-Using the tuning parameter, we can determine the best values for the cost and gamma parameters.
+Using the tuning parameter, we can determine the best values for the cost and gamma parameters based on the lowest error. This helps increase the accuracy and validity of the model.
 
 \begin{minted}[breaklines]{R}
     # using tune function to find the best model
