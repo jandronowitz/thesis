@@ -12,3 +12,4 @@
 *.dvi
 *.out
 _minted-thesis
+*.ipynb_checkpoints
