@@ -761,7 +761,7 @@ We start with importing the necessary modules and functions, as well as some ini
 \begin{figure}[H]
     \centering
     \includegraphics[width=5in]{Figures/penguins/df.head().png}
-    \caption{df.head()}
+    \caption{Output of df.head() Function}
     \label{fig_df.head()}
 \end{figure}
 
@@ -769,21 +769,21 @@ We start with importing the necessary modules and functions, as well as some ini
     \centering
     \includegraphics[width=3in]{Figures/penguins/df.info().png}
     \includegraphics[width=2in]{Figures/penguins/df.isna().sum().png}
-    \caption{df.info() and df.isna().sum()}
+    \caption{Output of df.info() and df.isna().sum() Functions}
     \label{fig_df.info()_df.isna().sum()}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=5in]{Figures/penguins/rstr(df).png}
-    \caption{rstr(df)}
+    \caption{Output of rstr(df) Function}
     \label{fig_rstr(df)}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=5in]{Figures/penguins/df.describe().png}
-    \caption{df.describe()}
+    \caption{Output of df.describe() Function}
     \label{fig_df.describe()}
 \end{figure}
 
@@ -826,6 +826,8 @@ We then want to create a \textbf{numpy} array of the desired variables which wil
 
 We are then going to plot the raw data points for each set of variables. This will help us determine which predictors will be the most useful in the support vector machine.
 
+FIX THIS ***
+
 \begin{minted}[breaklines]{python3}
     # plot of culmen length and culmen depth
     cl_cd=figure(title='Penguin Data: culmen length vs. culmen depth')
@@ -862,12 +864,12 @@ The associated plots are located in Figure ~\ref{fig_penguins_raw_data_plots}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1.5in]{Figures/penguins/cl_cd.png}
-    \includegraphics[width=1.5in]{Figures/penguins/cl_fl.png}
-    \includegraphics[width=1.5in]{Figures/penguins/cl_bm.png} \\
-    \includegraphics[width=1.5in]{Figures/penguins/cd_fl.png}
-    \includegraphics[width=1.5in]{Figures/penguins/cd_bm.png}
-    \includegraphics[width=1.5in]{Figures/penguins/fl_bm.png}
+    \includegraphics[width=2.5in]{Figures/penguins/cl_cd.png}
+    \includegraphics[width=2.5in]{Figures/penguins/cl_fl.png} \\
+    \includegraphics[width=2.5in]{Figures/penguins/cl_bm.png}
+    \includegraphics[width=2.5in]{Figures/penguins/cd_fl.png} \\
+    \includegraphics[width=2.5in]{Figures/penguins/cd_bm.png}
+    \includegraphics[width=2.5in]{Figures/penguins/fl_bm.png}
     \caption{Raw Data Points of the Penguins Dataset}
     \label{fig_penguins_raw_data_plots}
 \end{figure}
