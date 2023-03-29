@@ -699,10 +699,237 @@ The final model using the best parameters determined by the \textbf{tune} functi
 \end{figure}
 
 \section{EXAMPLE}
-\begin{itemize}
-    \item penguin/iris dataset: well-known example
-    \item possible example with real implications
-\end{itemize}
+
+Let us now look at support vector machines in a real dataset. We will be using what is widely known as the Penguin Dataset, collected by Dr. Kristen Gorman and The Palmer Station, Antarctica LTER. This dataset was originally published in 2014 and includes 7 variables, namely: species, culmen length (mm), culmen depth (mm), flipper length (mm), body mass (g), island, and sex. We transition now into the Python SVM modules from the scikit-learn package to anaylze the Penguin data.
+
+\subsection{DATA EXPLORATION}
+
+We start with importing the necessary modules and functions, as well as some initial data exploration.
+
+\begin{minted}[breaklines]{python3}
+    ### importing modules
+    
+    import numpy as np
+    from numpy.random import default_rng
+    from bokeh.io import output_notebook, show
+    from bokeh.plotting import figure
+    from bokeh.models import CategoricalColorMapper
+    from sklearn.svm import SVC
+    rng = default_rng(5)
+    output_notebook()
+    import pandas as pd
+
+    ### importing functions
+
+    def hyperplane(P,x,z=0):
+        """Given an SVC object P and an array of vectors x, computes the hyperplane wx+b=z"""
+        alphas = P.dual_coef_
+        svs = P.support_vectors_
+        c = P.intercept_[0]-z
+        a = np.sum(alphas.T*svs,axis=0)[0]
+        b = np.sum(alphas.T*svs,axis=0)[1]
+        return (-c-a*x)/b
+
+    def pts(P):
+        """Given an SVC object P, returns the two closest points in the associated reduced convex hulls."""
+        alphas = P.dual_coef_[0]
+        svs = P.support_vectors_
+        plus_indices = np.where(alphas>0)
+        minus_indices = np.where(alphas<=0)
+        alphas = alphas.reshape(-1,1)
+        pluspt = np.sum(alphas[plus_indices]*svs[plus_indices],axis=0)/np.sum(alphas[plus_indices])
+        minuspt = np.sum(alphas[minus_indices]*svs[minus_indices],axis=0)/np.sum(alphas[minus_indices])
+        return pluspt, minuspt
+
+    ### importing dataset
+
+    df = pd.read_csv('/Users/juliaandronowitz/Desktop/thesis/thesis/ Data/penguins_size.csv')
+
+    ### initial exploration of data
+
+    df.head()
+    df.info()
+    df.isna().sum()
+    df.describe()
+
+    ### a user-defined function to view unique values
+
+    def rstr(df): return df.shape, df.apply(lambda x: [x.unique()])
+    rstr(df)
+\end{minted}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=5in]{Figures/penguins/df.head().png}
+    \caption{df.head()}
+    \label{fig_df.head()}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=3in]{Figures/penguins/df.info().png}
+    \includegraphics[width=2in]{Figures/penguins/df.isna().sum().png}
+    \caption{df.info() and df.isna().sum()}
+    \label{fig_df.info()_df.isna().sum()}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=5in]{Figures/penguins/rstr(df).png}
+    \caption{rstr(df)}
+    \label{fig_rstr(df)}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=5in]{Figures/penguins/df.describe().png}
+    \caption{df.describe()}
+    \label{fig_df.describe()}
+\end{figure}
+
+From Figure ~\ref{fig_df.head()}, we can see the general structure of the dataset. In Figure ~\ref{fig_df.info()_df.isna().sum()}, \textbf{df.info()} tells us the name, length, and type of each variable and \textbf{df.isna().sum()} tells us how many missing values are in each variable. Figure ~\ref{fig_rstr(df)} shows us the unique values for each variable, which is useful in finding the species names. They are Adelie, Chinstrap, and Gentoo. Figure ~\ref{fig_df.describe()} describes the basic statistics for the numerical predictors. We see that the data looks clean with no outliers.
+
+\subsection{CLEANING THE DATA}
+
+We first want to drop the missing values. This can be acheived with
+
+\begin{minted}[breaklines]{python3}
+    df = df.dropna()
+\end{minted}
+
+Next, we are going to need labels for each of our penguin species. These labels will be used when we graph the functions. We also want to color these labels accordingly. Red will be Adelie, blue is Chinstrap, and green is Gentoo.
+
+\begin{minted}[breaklines]{python3}
+    labels = []
+    x = 0
+    for i in df['species']:
+        if i == 'Adelie':
+            x = 0
+        elif i == 'Chinstrap':
+            x = 1
+        elif i == 'Gentoo':
+            x = 2
+        labels.append(x)
+    
+    colors = ['red','blue','green']
+    penguin_colors = np.array([colors[i] for i in labels])
+\end{minted}
+
+We then want to create a \textbf{numpy} array of the desired variables which will work with the SVM module. We will be removing the species (the class label), island, and sex predictors.
+
+\begin{minted}[breaklines]{python3}
+    data = df.drop(columns=['species','island','sex'])
+    data = data.to_numpy()
+\end{minted}
+
+\subsection{DATA ANALYSIS}
+
+We are then going to plot the raw data points for each set of variables. This will help us determine which predictors will be the most useful in the support vector machine.
+
+\begin{minted}[breaklines]{python3}
+    # plot of culmen length and culmen depth
+    cl_cd=figure(title='Penguin Data: culmen length vs. culmen depth')
+    cl_cd.scatter(x=data[:,0],y=data[:,1],color=penguin_colors)
+    show(cl_cd)
+
+    # plot of culmen length and flipper length
+    cl_fl=figure(title='Penguin Data: culmen length vs. flipper length')
+    cl_fl.scatter(x=data[:,0],y=data[:,2],color=penguin_colors)
+    show(cl_fl)
+
+    # plot of culmen length and body mass
+    cl_bm=figure(title='Penguin Data: culmen length vs. body mass')
+    cl_bm.scatter(x=data[:,0],y=data[:,3],color=penguin_colors)
+    show(cl_bm)
+
+    # plot of culmen depth and flipper length
+    cd_fl=figure(title='Penguin Data: culmen depth vs. flipper length')
+    cd_fl.scatter(x=data[:,1],y=data[:,2],color=penguin_colors)
+    show(cd_fl)
+
+    # plot of culmen depth and body mass
+    cd_bm=figure(title='Penguin Data: culmen depth vs. body mass')
+    cd_bm.scatter(x=data[:,1],y=data[:,3],color=penguin_colors)
+    show(cd_bm)
+
+    # plot of culmen depth and body mass
+    fl_bm=figure(title='Penguin Data: flipper length vs. body mass')
+    fl_bm.scatter(x=data[:,2],y=data[:,3],color=penguin_colors)
+    show(fl_bm)
+\end{minted}
+
+The associated plots are located in Figure ~\ref{fig_penguins_raw_data_plots}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1.5in]{Figures/penguins/cl_cd.png}
+    \includegraphics[width=1.5in]{Figures/penguins/cl_fl.png}
+    \includegraphics[width=1.5in]{Figures/penguins/cl_bm.png} \\
+    \includegraphics[width=1.5in]{Figures/penguins/cd_fl.png}
+    \includegraphics[width=1.5in]{Figures/penguins/cd_bm.png}
+    \includegraphics[width=1.5in]{Figures/penguins/fl_bm.png}
+    \caption{Raw Data Points of the Penguins Dataset}
+    \label{fig_penguins_raw_data_plots}
+\end{figure}
+
+We see the top three plots look the best in separating the three species. The bottom three graphs have some overlap between the red and blue points, or Adelie and Chinstrap, with the green points, the Gentoo, more clearly distinguishable from the others. We will perform four different classifications to see which performs the best. Three will be using the variables associated with the top three graphs - culmen length vs. culmen depth, culmen length vs. flipper length, and culmen length vs. body mass - and the last will be a classifier with all four predictors.
+
+\subsection{CULMEN LENGTH VS. CULMEN DEPTH}
+
+\begin{minted}[breaklines]{python3}
+    # selecting columns
+    data_cl_cd = data[:,[0,1]]
+
+    # fitting model
+    fit_cl_cd = SVC(kernel = 'rbf', C=1000, gamma='scale').fit(data_cl_cd,labels)
+
+    # prediction
+    fit_cl_cd.predict(data_cl_cd)
+    print('Classifier yields accuracy of {:2f}%'.format(fit_cl_cd.score(data_cl_cd,labels)))    
+\end{minted}
+
+\subsection{CULMEN LENGTH VS. FLIPPER LENGTH}
+
+\begin{minted}[breaklines]{python3}
+    # selecting columns
+    data_cl_fd = data[:,[0,2]]
+
+    # fitting model
+    fit_cl_fd = SVC(kernel = 'rbf', C=1000, gamma='scale').fit(data_cl_fd,labels)
+
+    # prediction
+    fit_cl_fd.predict(data_cl_fd)
+    print('Classifier yields accuracy of {:2f}%'.format(fit_cl_fd.score(data_cl_fd,labels)))  
+\end{minted}
+
+\subsection{CULMEN LENGTH VS. BODY MASS}
+
+\begin{minted}[breaklines]{python3}
+    # selecting columns
+    data_cl_bm = data[:,[0,3]]
+
+    # fitting model
+    fit_cl_bm = SVC(kernel = 'rbf', C=1000, gamma='scale').fit(data_cl_bm,labels)
+
+    # prediction
+    fit_cl_bm.predict(data_cl_bm)
+    print('Classifier yields accuracy of {:2f}%'.format(fit_cl_bm.score(data_cl_bm,labels)))
+\end{minted}
+
+\subsection{ALL 4 PREDICTORS}
+
+\begin{minted}[breaklines]{python3}
+    # fitting model
+    fit_all = SVC(kernel = 'rbf', C=1000, gamma='scale').fit(data,labels)
+
+    # prediction
+    fit_all.predict(data)
+    print('Classifier yields accuracy of {:2f}%'.format(fit_all.score(data,labels)))
+\end{minted}
+
+\subsection{RESULTS}
+
+We see the support vector machine using the culmen length and culmen depth as the only predictors had the highest accuracy of $97.6\%$. The next highest performing model contains the culmen length and flipper depth, followed by the model with all 4 predictors, and lastly the culmen length and body mas with respective accuracies of $95.5\%$, $87.1\%$, and $82.9\%$.
 
 \section{APPLICATIONS}
 
