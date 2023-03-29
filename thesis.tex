@@ -607,7 +607,7 @@ What happens if we change the cost for a non-linear dataset? We try below with d
 
 The code produces the graphs in Figure ~\ref{fig_svm_diff_costs}. Initially, with a low cost every point is a support vector. In a dataset with 600 observations, 600 support vectors is not ideal. This makes sense, as a smaller cost means a lower penalty for each misclassified data point. As we increase the cost parameter, the number of support vectors decreases because the cost of being misclassified is greater. At the highest cost of 10,000,000 there are only 35 support vectors. We see a trade-off between the number of observations that influence the support vector machine and the associated cost. Zooming in, the support vectors in ~\ref{fig_svm_diff_costs} are labeled with an "x".
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \begin{align*}
     & C=0.00001 & C=0.001 \\
@@ -642,7 +642,7 @@ What happens if we change the gamma value? We try below with different values an
 
 The code produces the graphs in Figure ~\ref{fig_svm_diff_gammas}. From \cite{scikit_rbf_parameters}, the "gamma parameter defines how far the influence of a single training example reaches, with low values meaning ‘far’ and high values meaning ‘close’." With the lowest gamma value of 0.01, the support vector machine mostly consists of straight lines as the influence of individual support vectors reaches farther out. As we increase the gamma value, the machine becomes more specialized to the dataset. We see the gamma value of 1000 yields a model with 600 out of the 600 points being support vectors. Each point has only a small radius of influence, leading to an extremely localized model with margins closely following the class boundaries. Choosing an appropriate gamma value helps protect against under- and over-fitting the model.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \begin{align*}
     & \gamma=0.01 & \gamma=0.1 \\
@@ -691,7 +691,7 @@ The output is a gamma value of 0.5 and a cost of 0.25. Using these values in the
 
 The final model using the best parameters determined by the \textbf{tune} function is presented in Figure ~\ref{fig_final_svm_model}.
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=5in]{Figures/svm_final_model.png}
     \caption{Final SVM Model with \(C=0.25\) and \(\gamma = 0.5\)}
@@ -758,14 +758,14 @@ We start with importing the necessary modules and functions, as well as some ini
     rstr(df)
 \end{minted}
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=5in]{Figures/penguins/df.head().png}
     \caption{df.head()}
     \label{fig_df.head()}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=3in]{Figures/penguins/df.info().png}
     \includegraphics[width=2in]{Figures/penguins/df.isna().sum().png}
@@ -773,14 +773,14 @@ We start with importing the necessary modules and functions, as well as some ini
     \label{fig_df.info()_df.isna().sum()}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=5in]{Figures/penguins/rstr(df).png}
     \caption{rstr(df)}
     \label{fig_rstr(df)}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=5in]{Figures/penguins/df.describe().png}
     \caption{df.describe()}
@@ -860,7 +860,7 @@ We are then going to plot the raw data points for each set of variables. This wi
 
 The associated plots are located in Figure ~\ref{fig_penguins_raw_data_plots}.
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=1.5in]{Figures/penguins/cl_cd.png}
     \includegraphics[width=1.5in]{Figures/penguins/cl_fl.png}
