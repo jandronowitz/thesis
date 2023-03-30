@@ -704,10 +704,10 @@ Let us now look at support vector machines in a real dataset. We will be using w
 
 \subsection{DATA EXPLORATION}
 
-We start with importing the necessary modules and functions, as well as some initial data exploration.
+We start with importing the necessary modules and functions. The code below sets up our file for later analysis.
 
 \begin{minted}[breaklines]{python3}
-    ### importing modules
+    # importing modules
     
     import numpy as np
     from numpy.random import default_rng
@@ -719,7 +719,7 @@ We start with importing the necessary modules and functions, as well as some ini
     output_notebook()
     import pandas as pd
 
-    ### importing functions
+    # importing functions
 
     def hyperplane(P,x,z=0):
         """Given an SVC object P and an array of vectors x, computes the hyperplane wx+b=z"""
@@ -741,22 +741,24 @@ We start with importing the necessary modules and functions, as well as some ini
         minuspt = np.sum(alphas[minus_indices]*svs[minus_indices],axis=0)/np.sum(alphas[minus_indices])
         return pluspt, minuspt
 
-    ### importing dataset
+\end{minted}
+
+We are now ready to do some initial data exploration. The following code imports the dataset and computes built-in functions associated with dataframes.
+
+\begin{minted}[breaklines]{python3}
+    # importing dataset
 
     df = pd.read_csv('/Users/juliaandronowitz/Desktop/thesis/thesis/ Data/penguins_size.csv')
 
-    ### initial exploration of data
+    # initial exploration of data
 
     df.head()
     df.info()
     df.isna().sum()
     df.describe()
-
-    ### a user-defined function to view unique values
-
-    def rstr(df): return df.shape, df.apply(lambda x: [x.unique()])
-    rstr(df)
 \end{minted}
+
+The output of these functions is located in Figures ~\ref{fig_df.head()}, ~\ref{fig_df.info()_df.isna().sum()}, and ~\ref{fig_df.describe()}. From Figure ~\ref{fig_df.head()}, we can see the general structure of the dataset. This includes column names and formatting. In Figure ~\ref{fig_df.info()_df.isna().sum()}, the \textbf{df.info()} function tells us the name, length, and type of each variable. We see there are 7 columns and 344 observations. The \textbf{df.isna().sum()} function tells us how many missing values are in each variable. Notice that the variable 'sex' has the most missing observations at a value of 10. Figure ~\ref{fig_df.describe()} describes the basic statistics for the numerical predictors. We see that the data looks clean with no outliers.
 
 \begin{figure}[H]
     \centering
@@ -775,23 +777,32 @@ We start with importing the necessary modules and functions, as well as some ini
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=5in]{Figures/penguins/rstr(df).png}
-    \caption{Output of rstr(df) Function}
-    \label{fig_rstr(df)}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
     \includegraphics[width=5in]{Figures/penguins/df.describe().png}
     \caption{Output of df.describe() Function}
     \label{fig_df.describe()}
 \end{figure}
 
-From Figure ~\ref{fig_df.head()}, we can see the general structure of the dataset. In Figure ~\ref{fig_df.info()_df.isna().sum()}, \textbf{df.info()} tells us the name, length, and type of each variable and \textbf{df.isna().sum()} tells us how many missing values are in each variable. Figure ~\ref{fig_rstr(df)} shows us the unique values for each variable, which is useful in finding the species names. They are Adelie, Chinstrap, and Gentoo. Figure ~\ref{fig_df.describe()} describes the basic statistics for the numerical predictors. We see that the data looks clean with no outliers.
+We now create a function that will tell us the unique values for each variable. This function returns the shape and description of the dataframe that computes the unique values of the predictor. The code is below.
+
+\begin{minted}[breaklines]{python3}
+    # a user-defined function to view unique values
+
+    def rstr(df): return df.shape, df.apply(lambda x: [x.unique()])
+    rstr(df)
+\end{minted}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=5in]{Figures/penguins/rstr(df).png}
+    \caption{Output of rstr(df) Function}
+    \label{fig_rstr(df)}
+\end{figure}
+
+The unique values in Figure ~\ref{fig_rstr(df)} are useful in determining the species names for the penguins. We see they are Adelie, Chinstrap, and Gentoo. These are important as they are used for the class labels and are what the support vector machine will be trying to predict.
 
 \subsection{CLEANING THE DATA}
 
-We first want to drop the missing values. This can be acheived with
+From our initial exploration, we notice there are some missing values in the dataset. We first want to drop the missing values. This can be acheived with
 
 \begin{minted}[breaklines]{python3}
     df = df.dropna()
@@ -822,59 +833,111 @@ We then want to create a \textbf{numpy} array of the desired variables which wil
     data = data.to_numpy()
 \end{minted}
 
+The final dataset we will be using for analysis is located in Figure. We are now ready to begin analysis.
+
+*** ADD FIGURE AND REFERENCE ***
+
 \subsection{DATA ANALYSIS}
 
-We are then going to plot the raw data points for each set of variables. This will help us determine which predictors will be the most useful in the support vector machine.
+We begin by plotting the raw data points for each set of variables. This will help us determine which predictors will be the most useful in the support vector machine.
 
-FIX THIS ***
+Below is the code for plotting culmen length and culmen depth. The graph is located in Figure ~\ref{fig_cl_cd}. Recall that the red points correspond to Adelie penguins, blue to Chinstrap, and green to Gentoo. We see that Adelie penguins have a lower culmen length on average than the other species. The Chinstrap penguins have a higher culmen length than the Adelie, but about the same culmen depth. The Gentoo penguins have a lower culmen depth than both the Adelie and Chinstrap. These species have some overlap, but are mostly well-defined. Culmen length and culmen depth may be sufficient predictors for penguin species.
 
 \begin{minted}[breaklines]{python3}
     # plot of culmen length and culmen depth
     cl_cd=figure(title='Penguin Data: culmen length vs. culmen depth')
     cl_cd.scatter(x=data[:,0],y=data[:,1],color=penguin_colors)
     show(cl_cd)
+\end{minted}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4in]{Figures/penguins/cl_cd.png}
+    \caption{Culmen Length vs. Culmen Depth}
+    \label{fig_cl_cd}
+\end{figure}
+
+Below is the code for plotting culmen length and flipper length. The graph is located in Figure ~\ref{fig_cl_fl}. We see that the Adelie penguins in red have the smallest culmen length and flipper length. Chinstrap penguins have a greater culmen length, while Gentoo penguins have a larger flipper length than the others. Since the three species are pretty well-distinguished, we should look at how these predictors perform in a support vector machine.
+
+\begin{minted}[breaklines]{python3}
     # plot of culmen length and flipper length
     cl_fl=figure(title='Penguin Data: culmen length vs. flipper length')
     cl_fl.scatter(x=data[:,0],y=data[:,2],color=penguin_colors)
     show(cl_fl)
+\end{minted}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4in]{Figures/penguins/cl_fl.png}
+    \caption{Culmen Length vs. Flipper Length}
+    \label{fig_cl_fl}
+\end{figure}
+
+Next we look at the culmen length and the body mass. The code is located below and the graph in Figure ~\ref{fig_cl_bm}. In this plot, we see a distinction between the three species with some overlap in the Adelie and Gentoo species. The Chinstrap penguins are more set apart with a higher culmen length and lower body mass than the other species. Like the first two graphs, we should see how these variables perform in the classification.
+
+\begin{minted}[breaklines]{python3}
     # plot of culmen length and body mass
     cl_bm=figure(title='Penguin Data: culmen length vs. body mass')
     cl_bm.scatter(x=data[:,0],y=data[:,3],color=penguin_colors)
     show(cl_bm)
+\end{minted}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4in]{Figures/penguins/cl_bm.png}
+    \caption{Culmen Length vs. Body Mass}
+    \label{fig_cl_bm}
+\end{figure}
+
+Below is the code for plotting culmen depth and flipper length. The graph is located in Figure ~\ref{fig_cd_fl}. We see there is a clear distinction between the Gentoo penguins and the other two species. However, there is much overlap between the Adelie and Chinstrap penguins. In fact if we didn't have the associated color labels, we would not be able to tell there are supposed to be two groups of penguins represented in that cluster! If we were specifically looking at Gentoo penguins vs. other species, this would be a good choice as there is a clear separating hyperplane. However, culmen depth and flipper length would not be good choices for determing the species of all three penguins. If we were to run a support vector machine with these predictors, we would get many misclassified points and hence a low accuracy.
+
+\begin{minted}[breaklines]{python3}
     # plot of culmen depth and flipper length
     cd_fl=figure(title='Penguin Data: culmen depth vs. flipper length')
     cd_fl.scatter(x=data[:,1],y=data[:,2],color=penguin_colors)
     show(cd_fl)
+\end{minted}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4in]{Figures/penguins/cd_fl.png}
+    \caption{Culmen Depth vs. Flipper Length}
+    \label{fig_cd_fl}
+\end{figure}
+
+Next, we code for the graph of culmen depth and body mass, located in Figure ~\ref{fig_cd_bm}. Much like the culmen depth and flipper length, there is an obvious separation between the Gentoo species and the other two, with Gentoo penguins having a lower culmen depth and higher body mass. These variables would not be a good choice for a multi-class support vector machine.
+
+\begin{minted}[breaklines]{python3}
     # plot of culmen depth and body mass
     cd_bm=figure(title='Penguin Data: culmen depth vs. body mass')
     cd_bm.scatter(x=data[:,1],y=data[:,3],color=penguin_colors)
     show(cd_bm)
+\end{minted}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4in]{Figures/penguins/cd_bm.png}
+    \caption{Culmen Depth vs. Body Mass}
+    \label{fig_cd_bm}
+\end{figure}
+
+The last pair of variables to plot is the graph of flipper length and body mass. The graph is located in Figure ~\ref{fig_fl_bm}. We see the Gentoo penguins have different body measurements than the other two species, with Gentoo penguins towards the top right of the graph. The Gentoo species have a higher flipper length and body mass. However, Adelie and Chinstrap penguins have similar flipper length and body mass measurements. These variables would not be a good choice for a support vector machine.
+
+\begin{minted}[breaklines]{python3}
     # plot of culmen depth and body mass
     fl_bm=figure(title='Penguin Data: flipper length vs. body mass')
     fl_bm.scatter(x=data[:,2],y=data[:,3],color=penguin_colors)
     show(fl_bm)
 \end{minted}
 
-The associated plots are located in Figure ~\ref{fig_penguins_raw_data_plots}.
-
 \begin{figure}[H]
     \centering
-    \includegraphics[width=2.5in]{Figures/penguins/cl_cd.png}
-    \includegraphics[width=2.5in]{Figures/penguins/cl_fl.png} \\
-    \includegraphics[width=2.5in]{Figures/penguins/cl_bm.png}
-    \includegraphics[width=2.5in]{Figures/penguins/cd_fl.png} \\
-    \includegraphics[width=2.5in]{Figures/penguins/cd_bm.png}
     \includegraphics[width=2.5in]{Figures/penguins/fl_bm.png}
-    \caption{Raw Data Points of the Penguins Dataset}
-    \label{fig_penguins_raw_data_plots}
+    \caption{Flipper Length vs. Body Mass}
+    \label{fig_fl_bm}
 \end{figure}
 
-We see the top three plots look the best in separating the three species. The bottom three graphs have some overlap between the red and blue points, or Adelie and Chinstrap, with the green points, the Gentoo, more clearly distinguishable from the others. We will perform four different classifications to see which performs the best. Three will be using the variables associated with the top three graphs - culmen length vs. culmen depth, culmen length vs. flipper length, and culmen length vs. body mass - and the last will be a classifier with all four predictors.
+We see the first three plots look the best in separating the three species. The last three graphs have some overlap between the red and blue points, or Adelie and Chinstrap, with the green points, the Gentoo, more clearly distinguishable from the others. Thus, we will perform four different classifications to see which performs the best. Three will be using the variables associated with the first three graphs - culmen length vs. culmen depth, culmen length vs. flipper length, and culmen length vs. body mass - and the last will be a classifier with all four predictors.
 
 \subsection{CULMEN LENGTH VS. CULMEN DEPTH}
 
