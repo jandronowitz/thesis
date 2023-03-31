@@ -826,20 +826,23 @@ Next, we are going to need labels for each of our penguin species. These labels 
     penguin_colors = np.array([colors[i] for i in labels])
 \end{minted}
 
-We then want to create a \textbf{numpy} array of the desired variables which will work with the SVM module. We will be removing the species (the class label), island, and sex predictors.
+We then want to create a \textbf{numpy} array of the desired variables which will work with the SVM module. We will be removing the species (the class label), island, and sex predictors. This will be the dataset we use in the support vector machine and is located in Figure ~\ref{fig_penguins_numpy}.
 
 \begin{minted}[breaklines]{python3}
     data = df.drop(columns=['species','island','sex'])
     data = data.to_numpy()
 \end{minted}
 
-The final dataset we will be using for analysis is located in Figure. We are now ready to begin analysis.
-
-*** ADD FIGURE AND REFERENCE ***
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=5in]{Figures/penguins/penguins_numpy_data.png}
+    \caption{Numpy Array of Penguins Data}
+    \label{fig_penguins_numpy}
+\end{figure}
 
 \subsection{DATA ANALYSIS}
 
-We begin by plotting the raw data points for each set of variables. This will help us determine which predictors will be the most useful in the support vector machine.
+Now that we have explored and cleaned the data, we can begin analysis. We start by plotting the raw data points for each set of variables. This will help us determine which predictors will be the most useful in the support vector machine.
 
 Below is the code for plotting culmen length and culmen depth. The graph is located in Figure ~\ref{fig_cl_cd}. Recall that the red points correspond to Adelie penguins, blue to Chinstrap, and green to Gentoo. We see that Adelie penguins have a lower culmen length on average than the other species. The Chinstrap penguins have a higher culmen length than the Adelie, but about the same culmen depth. The Gentoo penguins have a lower culmen depth than both the Adelie and Chinstrap. These species have some overlap, but are mostly well-defined. Culmen length and culmen depth may be sufficient predictors for penguin species.
 
