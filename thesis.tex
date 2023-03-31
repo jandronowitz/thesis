@@ -120,7 +120,7 @@ Now, we plot the function. The \textbf{abline} functions add lines at $x=0$ and 
 
 \begin{figure}[ht]
 \begin{center}
-\includegraphics[width=5.5in]{Figures/mmc_separating_hyperplane.png}
+\includegraphics[width=5.5in]{Figures/mmc/mmc_separating_hyperplane.png}
 \caption{Randomly Generated Clustered Data \\ with Separating Hyperplane in $\R^2$}
 \label{fig_mmc_separating_hyperplane}
 \end{center}
@@ -132,7 +132,7 @@ Notice that we can rotate the line slightly in either direction and still have s
 
 \begin{figure}[ht]
 \begin{center}
-\includegraphics[width=5.5in]{Figures/mmc_multiple_hyperplanes.png}
+\includegraphics[width=5.5in]{Figures/mmc/mmc_multiple_hyperplanes.png}
 \caption{Randomly Generated Clustered Data with Multiple \\ Hyperplanes in $R^2$}
 \label{fig_mmc_multiple_hyperplanes}
 \end{center}
@@ -203,7 +203,7 @@ In the above example, we can classify each set of points to determine what side 
 The fifth line assigns a vector of 200 negative ones followed by 200 positive ones to the variable $y$. Combined with the adjusted plot function containing the color option $(3-y)$, the first 200 points are plotted blue and the last 200 points are plotted red. This gives out two groups shown in Figure ~\ref{fig_mmc_hyperplane_w_labels}.
 \begin{figure}
     \centering
-    \includegraphics[width=5.5in]{Figures/mmc_hyperplane_w_labels.png}
+    \includegraphics[width=5.5in]{Figures/mmc/mmc_hyperplane_w_labels.png}
     \caption{Randomly Generated Data with Associated Class Label Coloring}
     \label{fig_mmc_hyperplane_w_labels}
 \end{figure}
@@ -289,7 +289,7 @@ Once downloading the package, we assign the $x$ and $y$ variables to one datafra
 
 \begin{figure}
     \centering
-    \includegraphics[width=5.5in]{Figures/mmc_module_output.png}
+    \includegraphics[width=5.5in]{Figures/mmc/mmc_module_output.png}
     \caption{Maximal Margin SVM Module Output in $R$}
     \label{fig_mmc_module_output}
 \end{figure}
@@ -303,7 +303,7 @@ As we see, the separating hyperplane is illustrated clearly albeit not pictured 
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=5in]{Figures/mmc_selected_output.png}
+    \includegraphics[width=5in]{Figures/mmc/mmc_selected_output.png}
     \caption{Selected Output of SVM Function}
     \label{fig_mmc_selected_output}
 \end{figure}
@@ -312,7 +312,7 @@ The \textbf{str} function tells us that \textbf{svmfit} is a list of 30 variable
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=5in]{Figures/mmc_graph.png}
+    \includegraphics[width=5in]{Figures/mmc/mmc_graph.png}
     \caption{Maximal Margin Classifier Output in $R$}
     \label{fig_mmc_graph}
 \end{figure}
@@ -381,7 +381,7 @@ The following code in $R$ can be used to plot non-linearly separable data with r
 
 \begin{figure}
     \centering
-    \includegraphics[width=5in]{Figures/svc_randomly_generated_points.png}
+    \includegraphics[width=5in]{Figures/svc/svc_randomly_generated_points.png}
     \caption{Randomly Generated Non-Linearly Separable Data}
     \label{fig_svc_randomly_generated_points}
 \end{figure}
@@ -394,7 +394,7 @@ We can add a line to visualize a possible hyperplane by running the following li
 
 \begin{figure}
     \centering
-    \includegraphics[width=5in]{Figures/svc_randomly_generated_w_line.png}
+    \includegraphics[width=5in]{Figures/svc/svc_randomly_generated_w_line.png}
     \caption{Randomly Generated Non-Linearly Separable Data With Line}
     \label{fig_svc_randomly_generated_w_line}
 \end{figure}
@@ -448,7 +448,7 @@ This produces the result in Figure ~\ref{fig_svc_data_w_hyperplanes}, graphicall
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=5in]{Figures/svc_data_w_hyperplanes.png}
+    \includegraphics[width=5in]{Figures/svc/svc_data_w_hyperplanes.png}
     \caption{Randomly Generated Non-Linearly Separable Data With Line}
     \label{fig_svc_data_w_hyperplanes}
 \end{figure}
@@ -521,7 +521,7 @@ Thus, we have produced the best support vector classifier for our data, illustra
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=5in]{Figures/svc_final_model.png}
+    \includegraphics[width=5in]{Figures/svc/svc_final_model.png}
     \caption{Final SVC Model with \(C = 0.25\)}
     \label{fig_svc_final_model}
 \end{figure}
@@ -580,7 +580,7 @@ Data can look like that in Figure ~\ref{fig_svm_randomly_generated_data}.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=5in]{Figures/svm_randomly_generated_data.png}
+    \includegraphics[width=5in]{Figures/svm/svm_randomly_generated_data.png}
     \caption{Randomly Generated Multi-Class Data}
     \label{fig_svm_randomly_generated_data}
 \end{figure}
@@ -611,14 +611,14 @@ The code produces the graphs in Figure ~\ref{fig_svm_diff_costs}. Initially, wit
     \centering
     \begin{align*}
     & C=0.00001 & C=0.001 \\
-    & \includegraphics[width=3in]{Figures/svm.00001.png} &
-    \includegraphics[width=3in]{Figures/svm.001.png} \\
+    & \includegraphics[width=3in]{Figures/svm/svm.00001.png} &
+    \includegraphics[width=3in]{Figures/svm/svm.001.png} \\
     & C=1 & C=1000 \\
-    & \includegraphics[width=3in]{Figures/svm1.png} &
-    \includegraphics[width=3in]{Figures/svm1000.png} \\
+    & \includegraphics[width=3in]{Figures/svm/svm1.png} &
+    \includegraphics[width=3in]{Figures/svm/svm1000.png} \\
     & C=100000 & C=10000000 \\
-    & \includegraphics[width=3in]{Figures/svm100000.png} &
-    \includegraphics[width=3in]{Figures/svm1000000.png}
+    & \includegraphics[width=3in]{Figures/svm/svm100000.png} &
+    \includegraphics[width=3in]{Figures/svm/svm1000000.png}
     \end{align*}
     \caption{Experimentation with Different Costs in Non-Linear Data}
     \label{fig_svm_diff_costs}
@@ -646,14 +646,14 @@ The code produces the graphs in Figure ~\ref{fig_svm_diff_gammas}. From \cite{sc
     \centering
     \begin{align*}
     & \gamma=0.01 & \gamma=0.1 \\
-    & \includegraphics[width=3in]{Figures/svmfit.01g.png} &
-    \includegraphics[width=3in]{Figures/svmfit.1g.png} \\
+    & \includegraphics[width=3in]{Figures/svm/svmfit.01g.png} &
+    \includegraphics[width=3in]{Figures/svm/svmfit.1g.png} \\
     & \gamma=1 & \gamma=10 \\
-    & \includegraphics[width=3in]{Figures/svmfit1g.png} &
-    \includegraphics[width=3in]{Figures/svmfit10g.png} \\
+    & \includegraphics[width=3in]{Figures/svm/svmfit1g.png} &
+    \includegraphics[width=3in]{Figures/svm/svmfit10g.png} \\
     & \gamma=100 & \gamma=1000 \\
-    & \includegraphics[width=3in]{Figures/svmfit100g.png} &
-    \includegraphics[width=3in]{Figures/svmfit1000g.png}
+    & \includegraphics[width=3in]{Figures/svm/svmfit100g.png} &
+    \includegraphics[width=3in]{Figures/svm/svmfit1000g.png}
     \end{align*}
     \caption{Experimentation with Different Gammas in Non-Linearly Separable Data}
     \label{fig_svm_diff_gammas}
@@ -693,7 +693,7 @@ The final model using the best parameters determined by the \textbf{tune} functi
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=5in]{Figures/svm_final_model.png}
+    \includegraphics[width=5in]{Figures/svm/svm_final_model.png}
     \caption{Final SVM Model with \(C=0.25\) and \(\gamma = 0.5\)}
     \label{fig_final_svm_model}
 \end{figure}
