@@ -956,6 +956,13 @@ We see the first three plots look the best in separating the three species. The 
     print('Classifier yields accuracy of {:2f}%'.format(fit_cl_cd.score(data_cl_cd,labels)))    
 \end{minted}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=5in]{Figures/penguins/fit_cl_cd.png}
+    \caption{Final SVM Module of Culmen Length vs. Culmen Depth}
+    \label{fig_fit_cl_cd}
+\end{figure}
+
 \subsection{CULMEN LENGTH VS. FLIPPER LENGTH}
 
 \begin{minted}[breaklines]{python3}
@@ -969,6 +976,13 @@ We see the first three plots look the best in separating the three species. The 
     fit_cl_fd.predict(data_cl_fd)
     print('Classifier yields accuracy of {:2f}%'.format(fit_cl_fd.score(data_cl_fd,labels)))  
 \end{minted}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=5in]{Figures/penguins/fit_cl_fl.png}
+    \caption{Final SVM Module of Culmen Length vs. Flipper Length}
+    \label{fig_fit_cl_fl}
+\end{figure}
 
 \subsection{CULMEN LENGTH VS. BODY MASS}
 
