@@ -700,7 +700,7 @@ The final model using the best parameters determined by the \textbf{tune} functi
 
 \section{EXAMPLE}
 
-Let us now look at support vector machines in a real dataset. We will be using what is widely known as the Penguin Dataset, collected by Dr. Kristen Gorman and The Palmer Station, Antarctica LTER. This dataset was originally published in 2014 and includes 7 variables, namely: species, culmen length (mm), culmen depth (mm), flipper length (mm), body mass (g), island, and sex. We transition now into the Python SVM modules from the scikit-learn package to anaylze the Penguin data.
+Let us now look at support vector machines in a real dataset. We will be using what is widely known as the Penguin Dataset, collected by Dr. Kristen Gorman and The Palmer Station, Antarctica LTER \cite{penguin_data}. This dataset was originally published in 2014 and includes 7 variables, namely: species, culmen length (mm), culmen depth (mm), flipper length (mm), body mass (g), island, and sex. We transition now into the Python SVM modules from the scikit-learn package to anaylze the Penguin data.
 
 \subsection{DATA EXPLORATION}
 
@@ -950,7 +950,7 @@ We then fit our model to specified cost and gamma values. We use the training se
     print('Classifier yields accuracy of {:2f}%'.format(fit_cl_cd.score(x_test,y_test)))   
 \end{minted}
 
-This gives us an output of 95.5\(\%\). Could we achieve a higher accuracy? The \textbf{GridSearch} function gives us a method to calculate the accuracies of many different cost and gamma combinations. The code below sets a list of cost and gamma values that the function fits to the training data. We can see the best parameters using the \textbf{best estimator} line.
+This gives us an output of 95.5\(\%\). Could we achieve a higher accuracy? The \textbf{GridSearch} function gives us a method to calculate the accuracies of many different cost and gamma combinations \cite{svm_python_tuning}. The code below sets a list of cost and gamma values that the function fits to the training data. We can see the best parameters using the \textbf{best estimator} line.
 
 \begin{minted}[breaklines]{python3}
     param_grid = {'C': [0.01, 0.1,1, 10, 100, 1000], 'gamma': [1,0.1,0.01,0.001,'auto','scale'],'kernel': ['rbf']}
@@ -969,7 +969,7 @@ We can now see that the model fit to these parameters yields an accuracy of 97.0
     print('Classifier yields accuracy of {:2f}%'.format(fit_cl_cd.score(x_test,y_test)))
 \end{minted}
 
-Using this model, we can create a graph of the support vector machine's decision boundary.
+Using this model, we can create a graph of the support vector machine's decision boundary, as described in \cite{scikit_svm_plotting}.
 
 \begin{minted}[breaklines]{python3}
     fig, ax = plt.subplots()
@@ -1193,12 +1193,13 @@ One such example, as presented in \textit{Intro to Statistical Learning with App
 
 \section{ANALYSIS OF R AND PYTHON SVM MODULES AND DOCUMENTATION}
 
-The $R$ and Python modules for support vector machines are quite similar in terms of the variables calculated. Table ~\ref{tab_r_python} provides a summary of the corresponding variables in each program. The $P$ refers to the model created by the \textbf{svm} module. 
+The $R$ and Python modules for support vector machines are quite similar in terms of the variables calculated. Table ~\ref{tab_r_python} provides a summary of the corresponding variables in each program. The $P$ refers to the model created by the \textbf{svm} function. 
 
 \begin{table}[H]
     \centering
+    \def\arraystretch{1.5}
     \begin{tabular}{c|c}
-        $R$ & Python \\
+        $R$'s \textit{e1071} & Python's \textit{scikitlearn} \\
         \hline
         -1$*$P\$coefs & P.dual\_coef\_ \\
         data[P\$index,] & P.support\_vectors\_ \\
