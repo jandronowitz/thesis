@@ -729,18 +729,6 @@ We start with importing the necessary modules and functions. The code below sets
         a = np.sum(alphas.T*svs,axis=0)[0]
         b = np.sum(alphas.T*svs,axis=0)[1]
         return (-c-a*x)/b
-
-    def pts(P):
-        """Given an SVC object P, returns the two closest points in the associated reduced convex hulls."""
-        alphas = P.dual_coef_[0]
-        svs = P.support_vectors_
-        plus_indices = np.where(alphas>0)
-        minus_indices = np.where(alphas<=0)
-        alphas = alphas.reshape(-1,1)
-        pluspt = np.sum(alphas[plus_indices]*svs[plus_indices],axis=0)/np.sum(alphas[plus_indices])
-        minuspt = np.sum(alphas[minus_indices]*svs[minus_indices],axis=0)/np.sum(alphas[minus_indices])
-        return pluspt, minuspt
-
 \end{minted}
 
 We are now ready to do some initial data exploration. The following code imports the dataset and computes built-in functions associated with dataframes.
@@ -944,17 +932,77 @@ We see the first three plots look the best in separating the three species. The 
 
 \subsection{CULMEN LENGTH VS. CULMEN DEPTH}
 
+We first begin by selecting the necessary columns. The culmen length and culmen depth correspond to the first and second columns in the dataframe. We then need to split our data into training and test datasets. The \textbf{random state} allows the data to be reproducible, much like that of the \textbf{set.seed()} function in \textit{R}.
+
 \begin{minted}[breaklines]{python3}
     # selecting columns
     data_cl_cd = data[:,[0,1]]
 
-    # fitting model
-    fit_cl_cd = SVC(kernel = 'rbf', C=1000, gamma='scale').fit(data_cl_cd,labels)
-
-    # prediction
-    fit_cl_cd.predict(data_cl_cd)
-    print('Classifier yields accuracy of {:2f}%'.format(fit_cl_cd.score(data_cl_cd,labels)))    
+    # splitting into training and test data
+    x_train, x_test, y_train, y_test = train_test_split(data_cl_cd, labels, test_size = 0.20, random_state=30)
 \end{minted}
+
+We then fit our model to specified cost and gamma values. We use the training sets to create the model, then use the model to predict the species based on the culmen depth and culmen length in the test set. We then print the accuracy of the model when used on the test set.
+
+\begin{minted}[breaklines]{python3}
+    fit_cl_cd = SVC(kernel = 'rbf', C=1, gamma=1).fit(x_train,y_train)
+    fit_cl_cd.predict(x_test)
+    print('Classifier yields accuracy of {:2f}%'.format(fit_cl_cd.score(x_test,y_test)))   
+\end{minted}
+
+This gives us an output of 95.5\(\%\). Could we achieve a higher accuracy? The \textbf{GridSearch} function gives us a method to calculate the accuracies of many different cost and gamma combinations. The code below sets a list of cost and gamma values that the function fits to the training data. We can see the best parameters using the \textbf{best estimator} line.
+
+\begin{minted}[breaklines]{python3}
+    param_grid = {'C': [0.01, 0.1,1, 10, 100, 1000], 'gamma': [1,0.1,0.01,0.001,'auto','scale'],'kernel': ['rbf']}
+    grid = GridSearchCV(fit_cl_cd,param_grid,refit=True,verbose=2)
+    grid.fit(x_train,y_train)
+
+    # best parameters
+    print(grid.best_estimator_)
+\end{minted}
+
+We can now see that the model fit to these parameters yields an accuracy of 97.0\%.
+
+\begin{minted}[breaklines]{python3}
+    fit_cl_cd = SVC(kernel = 'rbf', C=1000, gamma=0.01).fit(x_train,y_train)
+    fit_cl_cd.predict(x_test)
+    print('Classifier yields accuracy of {:2f}%'.format(fit_cl_cd.score(x_test,y_test)))
+\end{minted}
+
+Using this model, we can create a graph of the support vector machine's decision boundary.
+
+\begin{minted}[breaklines]{python3}
+    fig, ax = plt.subplots()
+
+    h = .02
+    
+    # create a mesh to plot in
+    x_min, x_max = data[:, 0].min() - 1, data[:, 0].max() + 1
+    y_min, y_max = data[:, 1].min() - 1, data[:, 1].max() + 1
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
+                         np.arange(y_min, y_max, h))
+    
+    Z = fit_cl_cd.predict(np.c_[xx.ravel(), yy.ravel()])
+    
+    # put the result into a color plot
+    Z = Z.reshape(xx.shape)
+    ax.contourf(xx, yy, Z, cmap=plt.cm.coolwarm, alpha=0.8)
+    
+    # create the scatterplot
+    scatter = ax.scatter(data[:, 0], data[:, 1], c=labels, cmap=plt.cm.coolwarm, edgecolors='black')
+    
+    # produce a legend with the unique colors from the scatter
+    legend1 = ax.legend(*scatter.legend_elements(), bbox_to_anchor=(1, 0.5), title="Classes")
+    ax.add_artist(legend1)
+    
+    # add axis labels
+    ax.set_xlabel("Culmen Length")
+    ax.set_ylabel("Culmen Depth")
+    
+    plt.show()    
+\end{minted}
+
+The output of the code is shown in Figure ~\ref{fig_fit_cl_cd}. Our first support vector machine has the potential for accurately determining a penguin's species based on the culmen length and culmen depth predictors.
 
 \begin{figure}[H]
     \centering
@@ -965,17 +1013,72 @@ We see the first three plots look the best in separating the three species. The 
 
 \subsection{CULMEN LENGTH VS. FLIPPER LENGTH}
 
+We now repeat the process for the culmen length and flipper length variables, selecting the required columns and splitting into training and test data.
+
 \begin{minted}[breaklines]{python3}
     # selecting columns
-    data_cl_fd = data[:,[0,2]]
+    data_cl_fl = data[:,[0,2]]
 
-    # fitting model
-    fit_cl_fd = SVC(kernel = 'rbf', C=1000, gamma='scale').fit(data_cl_fd,labels)
-
-    # prediction
-    fit_cl_fd.predict(data_cl_fd)
-    print('Classifier yields accuracy of {:2f}%'.format(fit_cl_fd.score(data_cl_fd,labels)))  
+    # splitting into training and test data
+    x_train, x_test, y_train, y_test = train_test_split(data_cl_fl, labels, test_size = 0.20, random_state=30)
 \end{minted}
+
+We now fit our model to specified cost and gamma values and print the accuracy of the model when used on the test set.
+
+\begin{minted}[breaklines]{python3}
+    fit_cl_fl = SVC(kernel = 'rbf', C=1, gamma=1).fit(x_train, y_train)
+    fit_cl_fl.predict(x_test)
+    print('Classifier yields accuracy of {:2f}%'.format(fit_cl_fl.score(x_test,y_test)))  
+\end{minted}
+
+This has an accuracy of 88.1\%. We again use the \textbf{GridSearch} function to determine the best parameters.
+
+\begin{minted}[breaklines]{python3}
+    # using the GridSearch function
+    param_grid = {'C': [0.01, 0.1,1, 10, 100, 1000], 'gamma': [1,0.1,0.01,0.001,'auto','scale'],'kernel': ['rbf']}
+    grid = GridSearchCV(fit_cl_fl,param_grid,refit=True,verbose=2)
+    grid.fit(x_train,y_train)
+    print(grid.best_estimator_)
+    
+    # fitting the model
+    fit_cl_fl = SVC(kernel = 'rbf', C=10, gamma=0.01).fit(x_train,y_train)
+    fit_cl_fl.predict(x_test)
+    print('Classifier yields accuracy of {:2f}%'.format(fit_cl_fl.score(x_test,y_test)))
+\end{minted}
+
+We can now see that the model fit to these parameters yields an accuracy of 97.0\%, which is much higher. Using this model, we can create a graph of the support vector machine's decision boundary.
+
+\begin{minted}[breaklines]{python3}
+    fig, ax = plt.subplots()
+
+    h = .02
+    
+    # create a mesh to plot in
+    x_min, x_max = data[:, 0].min() - 1, data[:, 0].max() + 1
+    y_min, y_max = data[:, 2].min() - 1, data[:, 2].max() + 1
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
+                         np.arange(y_min, y_max, h))
+    
+    Z = fit_cl_fl.predict(np.c_[xx.ravel(), yy.ravel()])
+    
+    # Put the result into a color plot
+    Z = Z.reshape(xx.shape)
+    ax.contourf(xx, yy, Z, cmap=plt.cm.coolwarm, alpha=0.8)
+    
+    scatter = ax.scatter(data[:, 0], data[:, 2], c=labels, cmap=plt.cm.coolwarm, edgecolors='black')
+    
+    # produce a legend with the unique colors from the scatter
+    legend1 = ax.legend(*scatter.legend_elements(), bbox_to_anchor=(1, 0.5), title="Classes")
+    ax.add_artist(legend1)
+    
+    # add axis labels
+    ax.set_xlabel("Culmen Length")
+    ax.set_ylabel("Flipper Length")
+    
+    plt.show()      
+\end{minted}
+
+The output of the code is shown in Figure ~\ref{fig_fit_cl_fl}. Adelie penguins have a class label of 0 with Chinstrap and Gentoo being 1 and 2, respectively. Overall, this seems like a good choice of predictors for a support vector machine that predicts a penguin's species.
 
 \begin{figure}[H]
     \centering
@@ -986,32 +1089,103 @@ We see the first three plots look the best in separating the three species. The 
 
 \subsection{CULMEN LENGTH VS. BODY MASS}
 
+The process for the model using culmen length and body mass closely follows that of the previous two.
+
 \begin{minted}[breaklines]{python3}
     # selecting columns
     data_cl_bm = data[:,[0,3]]
 
-    # fitting model
-    fit_cl_bm = SVC(kernel = 'rbf', C=1000, gamma='scale').fit(data_cl_bm,labels)
+    # split into training and test data
+    x_train, x_test, y_train, y_test = train_test_split(data_cl_bm, labels, test_size = 0.20, random_state=30)
 
-    # prediction
-    fit_cl_bm.predict(data_cl_bm)
-    print('Classifier yields accuracy of {:2f}%'.format(fit_cl_bm.score(data_cl_bm,labels)))
+    # fitting model to specified values
+    fit_cl_bm = SVC(kernel = 'rbf', C=1, gamma=1).fit(x_train,y_train)
+    fit_cl_bm.predict(x_test)
+    print('Classifier yields accuracy of {:2f}%'.format(fit_cl_bm.score(x_test,y_test)))
+\end{minted}
+
+The first model we create yields an accuracy of 74.6\%, which is not great! We now try to find better parameters to use.
+
+\begin{minted}[breaklines]{python3}
+    # using GridSearch
+    param_grid = {'C': [0.01, 0.1,1, 10, 100, 1000], 'gamma': [1,0.1,0.01,0.001,'auto','scale'],'kernel': ['rbf']}
+    grid = GridSearchCV(fit_cl_bm,param_grid,refit=True,verbose=2)
+    grid.fit(x_train,y_train)
+
+    print(grid.best_estimator_)
+
+    # fitting new model
+    fit_cl_bm = SVC(kernel = 'rbf', C=1000, gamma=0.001).fit(x_train,y_train)
+    fit_cl_bm.predict(x_test)
+    print('Classifier yields accuracy of {:2f}%'.format(fit_cl_bm.score(x_test,y_test)))
+\end{minted}
+
+The second model we create has an accuracy of 79.1\%. This is much lower than our other two models. The best tuned machine using culmen length and body mass has a lower accuracy than our initial attempts with culmen length and both culmen depth and flipper length. This is not the best choice for a support vector machine considering our last two models. The plot is located in Figure and the code is below.
+
+\begin{minted}[breaklines]{python3}
+    fig, ax = plt.subplots()
+
+    h = .02
+    
+    # create a mesh to plot in
+    x_min, x_max = data[:, 0].min() - 1, data[:, 0].max() + 1
+    y_min, y_max = data[:, 3].min() - 1, data[:, 3].max() + 1
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
+                         np.arange(y_min, y_max, h))
+    
+    Z = fit_cl_bm.predict(np.c_[xx.ravel(), yy.ravel()])
+    
+    # Put the result into a color plot
+    Z = Z.reshape(xx.shape)
+    ax.contourf(xx, yy, Z, cmap=plt.cm.coolwarm, alpha=0.8)
+    
+    scatter = ax.scatter(data[:, 0], data[:, 3], c=labels, cmap=plt.cm.coolwarm, edgecolors='black')
+    
+    # produce a legend with the unique colors from the scatter
+    legend1 = ax.legend(*scatter.legend_elements(), bbox_to_anchor=(1, 0.5), title="Classes")
+    ax.add_artist(legend1)
+    
+    # add axis labels
+    ax.set_xlabel("Culmen Length")
+    ax.set_ylabel("Body Mass")
+    
+    plt.show()    
 \end{minted}
 
 \subsection{ALL 4 PREDICTORS}
 
-\begin{minted}[breaklines]{python3}
-    # fitting model
-    fit_all = SVC(kernel = 'rbf', C=1000, gamma='scale').fit(data,labels)
+Support vector machines are known to perform well in high-dimensional spaces. We now try a support vector machine using all 4 predictors to investigate whether this model will perform better than those with only two predictors.
 
-    # prediction
-    fit_all.predict(data)
-    print('Classifier yields accuracy of {:2f}%'.format(fit_all.score(data,labels)))
+\begin{minted}[breaklines]{python3}
+    # splitting data
+    x_train, x_test, y_train, y_test = train_test_split(data, labels, test_size = 0.20, random_state=30)
+    
+    # fitting model
+    fit_all = SVC(kernel = 'rbf', C=1, gamma=1).fit(x_train,y_train)
+    fit_all.predict(x_test)
+    print('Classifier yields accuracy of {:2f}%'.format(fit_all.score(x_test,y_test)))
 \end{minted}
+
+The first attempt yields an accuracy of 55.2\%! This is by far the least-performing model. Let us see if tuning the model provides significant improvement.
+
+\begin{minted}[breaklines]{python3}
+    # tuning
+    param_grid = {'C': [0.01, 0.1,1, 10, 100, 1000], 'gamma': [1,0.1,0.01,0.001,'auto','scale'],'kernel': ['rbf']}
+    grid = GridSearchCV(fit_all,param_grid,refit=True,verbose=2)
+    grid.fit(x_train,y_train)
+    print(grid.best_estimator_)
+
+    # final fit
+    fit_all = SVC(kernel = 'rbf', C=10, gamma=0.001).fit(x_train,y_train)
+    fit_all.predict(x_test)
+    print('Classifier yields accuracy of {:2f}%'.format(fit_all.score(x_test,y_test)))
+\end{minted}
+
+This machine yields an accuracy of 79.1\%. While this is better than before, it does not outperform either of the first two models. This would not be a good choice for a support vector machine.
 
 \subsection{RESULTS}
 
-We see the support vector machine using the culmen length and culmen depth as the only predictors had the highest accuracy of $97.6\%$. The next highest performing model contains the culmen length and flipper depth, followed by the model with all 4 predictors, and lastly the culmen length and body mas with respective accuracies of $95.5\%$, $87.1\%$, and $82.9\%$.
+We see the support vector machine using the culmen length and culmen depth or the culmen length and flipper length as the predictors had the highest accuracy, both at $97.0\%$. The model with all 4 predictors and the culmen length and body mass as predictors performed the worst, with accuracies of 79.1\%. We should choose either of the first two models when attempting to predict penguin species.
 
 \section{APPLICATIONS}
 
