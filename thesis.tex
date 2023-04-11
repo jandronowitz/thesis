@@ -1193,11 +1193,20 @@ One such example, as presented in \textit{Intro to Statistical Learning with App
 
 \section{ANALYSIS OF R AND PYTHON SVM MODULES AND DOCUMENTATION}
 
-\begin{itemize}
-    \item supporting documentation for each
-    \item ease of use
-    \item notes on function parameters
-\end{itemize}
+The $R$ and Python modules for support vector machines are quite similar in terms of the variables calculated. Table ~\ref{tab_r_python} provides a summary of the corresponding variables in each program. The $P$ refers to the model created by the \textbf{svm} module. 
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c}
+        $R$ & Python \\
+        \hline
+        -1$*$P\$coefs & P.dual\_coef\_ \\
+        data[P\$index,] & P.support\_vectors\_ \\
+        P\$rho & P.intercept\_
+    \end{tabular}
+    \caption{Parameters in $R$ and Python}
+    \label{tab_r_python}
+\end{table}
 
 \newpage
 \thispagestyle{empty}
