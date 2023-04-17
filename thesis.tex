@@ -1089,7 +1089,7 @@ The output of the code is shown in Figure ~\ref{fig_fit_cl_fl}. Adelie penguins 
 
 \subsection{CULMEN LENGTH VS. BODY MASS}
 
-The process for the model using culmen length and body mass closely follows that of the previous two.
+The initial process for the model using culmen length and body mass closely follows that of the previous two.
 
 \begin{minted}[breaklines]{python3}
     # selecting columns
@@ -1120,12 +1120,12 @@ The first model we create yields an accuracy of 74.6\%, which is not great! We n
     print('Classifier yields accuracy of {:2f}%'.format(fit_cl_bm.score(x_test,y_test)))
 \end{minted}
 
-The second model we create has an accuracy of 79.1\%. This is much lower than our other two models. The best tuned machine using culmen length and body mass has a lower accuracy than our initial attempts with culmen length and both culmen depth and flipper length. This is not the best choice for a support vector machine considering our last two models. The plot is located in Figure and the code is below.
+The second model we create has an accuracy of 79.1\%. This is much lower than our other two models. Nevertheless, we try to plot the decision boundary to get a better idea of the support vector machine. When running the code similar to the graphs from the first two, the machine crashes. This presented us with an unusual problem, which we debugged to boil down to the step size. Where the other two models had y-axis that were in the hundreds, a step size $h$ of 0.02 was a good choice. However, the body mass of the penguins is measured in grams which ends up with a mean in the thousands. Thus, a step size of 0.02 with the scale of the y-axis in the third model is not feasible. While we can adjust the step size to a larger value and end up with the plot in Figure ~\ref{fig_fit_cl_bm} which is produced by the code below, it is better to rescale the data.
 
 \begin{minted}[breaklines]{python3}
     fig, ax = plt.subplots()
 
-    h = .02
+    h = 1
     
     # create a mesh to plot in
     x_min, x_max = data[:, 0].min() - 1, data[:, 0].max() + 1
@@ -1151,6 +1151,30 @@ The second model we create has an accuracy of 79.1\%. This is much lower than ou
     
     plt.show()    
 \end{minted}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=5in]{Figures/penguins/fit_cl_bm.png}
+    \caption{Initial SVM Module of Culmen Length vs. Body Mass}
+    \label{fig_fit_cl_bm}
+\end{figure}
+
+To scale the data, we divide the body mass by 10.
+
+\begin{minted}[breaklines]{python3}
+    data_cl_bm[:,[1]]=data_cl_bm[:,[1]]/10
+\end{minted}
+
+The steps to produce the classifier are now the same as those above. We see the initial model with a cost and gamma both of 1 yields an accuracy of 74.63\%. Once performing the grid search, we try with the cost parameter of 100 and gamma of 0.001. This yields 91.04\% which is remarkably better than the final model produced by the unscaled data! With a step size of 0.1, we see the class boundaries of the classifier much more clearly in Figure ~\ref{fig_fit_scaled_cl_bm}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=5in]{Figures/penguins/fit_scaled_cl_bm.png}
+    \caption{Scaled SVM Module of Culmen Length vs. Body Mass}
+    \label{fig_fit_scaled_cl_bm}
+\end{figure}
+
+While the classifier using the culmen depth and body mass improved greatly, the best tuned machine using culmen length and body mass has a lower accuracy than our attempts with culmen length and both culmen depth and flipper length.
 
 \subsection{ALL 4 PREDICTORS}
 
