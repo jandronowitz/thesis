@@ -33,13 +33,23 @@ mmcdatay <- c(rep(-1,n), rep(1,n))
 plot(mmcdatax, col=(3-mmcdatay),xlab="",ylab="",pch=16)
 
 # adding line to visualize a hyperplane
-abline(0,-1,col="gray",lty="dashed")
+abline(h=0,v=0,col="gray",lty="dotted")
+abline(a=0,b=-1,col="black",lty="dashed")
 
 # creating data frame 
 mmcdata <- data.frame (x = mmcdatax, y = factor(mmcdatay))
 
+# splitting into training and test data
+library(caTools)
+set.seed(100)
+
+# using 80% of the data in the training set and the other 20% in the test set
+sample <- sample.split(mmcdata$x.1, SplitRatio = 0.8)
+train  <- subset(mmcdata, sample == TRUE)
+test   <- subset(mmcdata, sample == FALSE)
+
 # computing svm function
-svmfit <- svm (y~., data = mmcdata , kernel="linear", cost = 1000, scale = FALSE)
+svmfit <- svm (y~., data = train , kernel="linear", cost = 1000, scale = FALSE)
 
 # looking at statistics
 summary(svmfit)
@@ -48,17 +58,34 @@ svmfit$rho
 svmfit$coefs
 
 # plotting svm function graph
-plot(svmfit,mmcdata)
+plot(svmfit,train)
+
+# predicting the test set
+y_pred <- predict(svmfit, newdata = test[-3])
+
+# viewing the confusion matrix; no misclassified points
+cm = table(test[,3], y_pred)
+cm
+
+# set x and y variables into separate dataframes
+trainx <- cbind(train[,1],train[,2])
+trainy <- as.numeric(unlist(train[3]))
+
+# convert the y-values back to -1 and 1
+trainy[trainy == 1] <- -1
+trainy[trainy == 2] <- 1
 
 # calculating the hyperplane and supporting hyperplanes
-plt0 <- hyperplane(svmfit,mmcdata,mmcdatax,0)
-plt1 <- hyperplane(svmfit,mmcdata,mmcdatax,1)
-plt2 <- hyperplane(svmfit,mmcdata,mmcdatax,-1)
+plt0 <- hyperplane(svmfit,train,trainx,0)
+plt1 <- hyperplane(svmfit,train,trainx,1)
+plt2 <- hyperplane(svmfit,train,trainx,-1)
 
 # plotting the data with hyperplanes
-plot(mmcdatax,col=(3-mmcdatay),xlab="",ylab="",pch=16)
-lines(mmcdatax,plt0,col='black')
-lines(mmcdatax,plt1,col='gray')
-lines(mmcdatax,plt2,col='gray')
+plot(trainx,col=(3-trainy),xlab="",ylab="",pch=16)
+lines(trainx,plt0,col='black')
+lines(trainx,plt1,col='gray',lty='dashed')
+lines(trainx,plt2,col='gray',lty='dashed')
+
+
 
 help(svm)

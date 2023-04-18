@@ -1,7 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-    \PYG{n+nf}{library}\PYG{p}{(}\PYG{n}{e1071}\PYG{p}{)}
-    \PYG{n}{dat} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{data.frame }\PYG{p}{(}\PYG{n}{x} \PYG{o}{=} \PYG{n}{x}\PYG{p}{,} \PYG{n}{y} \PYG{o}{=} \PYG{n+nf}{as.factor }\PYG{p}{(}\PYG{n}{y}\PYG{p}{))}
-    \PYG{n}{svmfit} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{svm }\PYG{p}{(} \PYG{n}{y}\PYG{o}{\PYGZti{}}\PYG{n}{.}\PYG{p}{,} \PYG{n}{data} \PYG{o}{=} \PYG{n}{dat} \PYG{p}{,} \PYG{n}{kernel}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}linear\PYGZdq{}}\PYG{p}{,} \PYG{n}{cost} \PYG{o}{=} \PYG{l+m}{1000}\PYG{p}{,}
-                \PYG{n}{scale} \PYG{o}{=} \PYG{k+kc}{FALSE}\PYG{p}{)}
-    \PYG{n+nf}{plot}\PYG{p}{(}\PYG{n}{svmfit}\PYG{p}{,}\PYG{n}{dat}\PYG{p}{)}
-\end{Verbatim}

@@ -187,20 +187,28 @@ The use of hyperplanes to distinguish between two classes is central to the maxi
 In the above example, we can classify each set of points to determine what side of the hyperplane they lie on. So, if $y_i=1$ then $0>\beta_0 + \beta \cdot x$ and if $y_i=-1$ then $0<\beta_0 + \beta \cdot x$. Each $y_i$ becomes the class label for that observation. Class labels are the identifiers for the data points and distinguish which class the observation belongs to. Introducing the following starred lines to our code produces colors in the graph according to the respective group:
 
 \begin{minted}[breaklines]{R}
+    # setting initial number of observations in each set
     n <- 200
-
-    x1 <- matrix(rnorm(n*2, 1,0.3), ncol=2)
-    x2 <- matrix(rnorm(n*2,-1,0.3), ncol=2)
-    x<- rbind(x1,x2)
-
-    y <- c(rep(1,n), rep(-1,n)) #**
-
-    plot(x,xlab="",ylab="",col=(3-y)) #**
+    
+    # calculating x-variable using two randomly generated sets with overlap
+    set.seed(100)
+    
+    mmcdatax1 <- matrix(rnorm(n*2, 1,0.3), ncol=2)
+    mmcdatax2 <- matrix(rnorm(n*2,-1,0.3), ncol=2)
+    mmcdatax <- rbind(mmcdatax1,mmcdatax2)
+    
+    # assigning labels to both classes
+    mmcdatay <- c(rep(-1,n), rep(1,n))
+    
+    # plotting the data
+    plot(mmcdatax, col=(3-mmcdatay),xlab="",ylab="",pch=16)
+    
+    # adding line to visualize a hyperplane
     abline(h=0,v=0,col="gray",lty="dotted")
-    abline(a=0,b=-1,col="black",lty="dashed")
+    abline(a=0,b=-1,col="black",lty="dashed")    
 \end{minted}
 
-The fifth line assigns a vector of 200 negative ones followed by 200 positive ones to the variable $y$. Combined with the adjusted plot function containing the color option $(3-y)$, the first 200 points are plotted blue and the last 200 points are plotted red. This gives out two groups shown in Figure ~\ref{fig_mmc_hyperplane_w_labels}.
+We assign a vector of 200 negative ones followed by 200 positive ones to the variable $y$. Combined with the adjusted plot function containing the color option $(3-y)$, the first 200 points are plotted blue and the last 200 points are plotted red. This gives out two groups shown in Figure ~\ref{fig_mmc_hyperplane_w_labels}.
 \begin{figure}
     \centering
     \includegraphics[width=5.5in]{Figures/mmc/mmc_hyperplane_w_labels.png}
@@ -278,14 +286,26 @@ provided that
 Though the maximal margin classifier is not a support vector machine quite yet, we may use the SVM module in the "e1071" library in $R$ to determine the equation of the line.
 
 \begin{minted}[breaklines]{R}
-    library(e1071)
-    dat <- data.frame (x = x, y = as.factor (y))
-    svmfit <- svm ( y~., data = dat , kernel="linear", cost = 1000, 
-                scale = FALSE)
-    plot(svmfit,dat)
+    # creating data frame 
+    mmcdata <- data.frame (x = mmcdatax, y = factor(mmcdatay))
+    
+    # splitting into training and test data
+    library(caTools)
+    set.seed(100)
+    
+    # using 80% of the data in the training set and the other 20% in the test set
+    sample <- sample.split(mmcdata$x.1, SplitRatio = 0.8)
+    train  <- subset(mmcdata, sample == TRUE)
+    test   <- subset(mmcdata, sample == FALSE)
+    
+    # computing svm function
+    svmfit <- svm (y~., data = train , kernel="linear", cost = 1000, scale = FALSE)
+    
+    # plotting svm function graph
+    plot(svmfit,train)
 \end{minted}
 
-Once downloading the package, we assign the $x$ and $y$ variables to one dataframe. We convert the $y$ variable into a factor since class label is a binary value. In the \textbf{svm} function, the dataframe we just defined is the basis of the calculations. We assign the kernel as linear with a cost of 1000, though other options exist for non-separable data and non-linear decision boundaries which we will get to in later pages. We plot the function and see the output in Figure ~\ref{fig_mmc_module_output}.
+Once downloading the package, we assign the $x$ and $y$ variables to one dataframe. We convert the $y$ variable into a factor since class label is a binary value. In the \textbf{svm} function, the dataframe we just defined is the basis of the calculations. Note that we split the dataset into a training and a test set. This allows us to train the model on 80\% of the data and use the remaining 20\% of the data as a method of validation. This is done with the "caTools" library. When computing the support vector machine, we assign the kernel as linear with a cost of 1000, though other options exist for non-separable data and non-linear decision boundaries (which we will get to in later pages). We plot the function and see the output in Figure ~\ref{fig_mmc_module_output}.
 
 \begin{figure}
     \centering
@@ -308,9 +328,9 @@ As we see, the separating hyperplane is illustrated clearly albeit not pictured 
     \label{fig_mmc_selected_output}
 \end{figure}
 
-The \textbf{str} function tells us that \textbf{svmfit} is a list of 30 variables, some of which we defined in the function and others that were calculated. Particularly of interest are the \textbf{index}, \textbf{rho}, and \textbf{coefs} variables, which give the output in Figure ~\ref{fig_mmc_selected_output}. The \textbf{rho} variable is the intercept of the separating hyperplane, and the \textbf{coefs} variable is an array of the coefficients of the supporting vectors. The \textbf{index} variable tells us the indices of the observations that the classifier depends on, or the support vectors. In this case, it is data points 92 and 309. If we were to rotate the hyperplane in any direction, the margin from these two points to the black line would inevitably become smaller. Visually, we can see these two points as those that the supporting hyperplanes pass through in Figure ~\ref{fig_mmc_graph}.
+The \textbf{str} function tells us that \textbf{svmfit} is a list of 30 variables, some of which we defined in the function and others that were calculated. Particularly of interest are the \textbf{index}, \textbf{rho}, and \textbf{coefs} variables, which give the output in Figure ~\ref{fig_mmc_selected_output}. The \textbf{rho} variable is the intercept of the separating hyperplane, and the \textbf{coefs} variable is an array of the coefficients of the supporting vectors. The \textbf{index} variable tells us the indices of the observations that the classifier depends on, or the support vectors. In this case, it is data points 66 and 285. If we were to rotate the hyperplane in any direction, the margin from these two points to the black line would inevitably become smaller. Visually, we can see these two points as those that the supporting hyperplanes pass through in Figure ~\ref{fig_mmc_graph}.
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \includegraphics[width=5in]{Figures/mmc/mmc_graph.png}
     \caption{Maximal Margin Classifier Output in $R$}
@@ -346,15 +366,48 @@ Inside the function, the \textbf{alphas} are assigned to the coefficients of the
 The $R$ code for the plot referenced in Figure ~\ref{fig_mmc_graph} is below and pulls information from the \textbf{hyperplane} function.
 
 \begin{minted}[breaklines]{R}
-    plt0 <- hyperplane(svmfit,dat,x,0)
-    plt1 <- hyperplane(svmfit,dat,x,1)
-    plt2 <- hyperplane(svmfit,dat,x,-1)
+    # set x and y variables into separate dataframes
+    trainx <- cbind(train[,1],train[,2])
+    trainy <- as.numeric(unlist(train[3]))
     
-    plot(x,xlab='',ylab='')
-    lines(x,plt0,col='black')
-    lines(x,plt1,col='gray',lty='dashed')
-    lines(x,plt2,col='gray',lty='dashed')
+    # convert the y-values back to -1 and 1
+    trainy[trainy == 1] <- -1
+    trainy[trainy == 2] <- 1
+    
+    # calculating the hyperplane and supporting hyperplanes
+    plt0 <- hyperplane(svmfit,train,trainx,0)
+    plt1 <- hyperplane(svmfit,train,trainx,1)
+    plt2 <- hyperplane(svmfit,train,trainx,-1)
+    
+    # plotting the data with hyperplanes
+    plot(trainx,col=(3-trainy),xlab="",ylab="",pch=16)
+    lines(trainx,plt0,col='black')
+    lines(trainx,plt1,col='gray',lty='dashed')
+    lines(trainx,plt2,col='gray',lty='dashed')
 \end{minted}
+
+Our discussion of the maximal margin classifier would not be complete without some sort of validation check. This is where the test set comes into play. We may now use our model to predict the class labels in the test set:
+
+\begin{minted}[breaklines]{R}
+    y_pred <- predict(svmfit, newdata = test[-3])
+\end{minted}
+
+The results can be viewed in a confusion matrix, which is a method of seeing true positives and negatives.
+
+\begin{minted}[breaklines]{R}
+    cm = table(test[,3], y_pred)
+\end{minted}
+
+The results are in Table ~\ref*{fig_mmc_cm}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1in]{Figures/mmc/mmc_cm.png}
+    \caption{Maximal Margin Classifier Confusion Matrix}
+    \label{fig_mmc_cm}
+\end{figure}
+
+From the zeroes along the diagonal in the top right and bottom left, we see there are no misclassified values. This is a good sign as our data is linearly separable!
 
 \section{SUPPORT VECTOR CLASSIFIER}
 
