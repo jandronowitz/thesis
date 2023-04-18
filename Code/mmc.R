@@ -2,6 +2,7 @@
 # Classification Methods Using Support Vector Machines
 # Support Vector Classifier
 
+
 # loading svm library (run first line if not installed)
 # install.packages("e1071")
 library(e1071)
@@ -85,7 +86,6 @@ plot(trainx,col=(3-trainy),xlab="",ylab="",pch=16)
 lines(trainx,plt0,col='black')
 lines(trainx,plt1,col='gray',lty='dashed')
 lines(trainx,plt2,col='gray',lty='dashed')
-
 
 
 help(svm)

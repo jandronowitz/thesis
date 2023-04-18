@@ -652,34 +652,50 @@ Data can look like that in Figure ~\ref{fig_svm_randomly_generated_data}.
     \label{fig_svm_randomly_generated_data}
 \end{figure}
 
-What happens if we change the cost for a non-linear dataset? We try below with different values and compare.
+We now create the dataframe and split into training and test sets.
+
+\begin{minted}[breaklines]{R}
+    # creating data frame 
+    svmdata <- data.frame (x = svmdatax, y = factor(svmdatay))
+    
+    # splitting into training and test data
+    library(caTools)
+    set.seed(100)
+    
+    # using 80% of the data in the training set and the other 20% in the test set
+    sample <- sample.split(svmdata$x.1, SplitRatio = 0.8)
+    train  <- subset(svmdata, sample == TRUE)
+    test   <- subset(svmdata, sample == FALSE)    
+\end{minted}
+
+Now we are ready to run the \textbf{svm} module on our data. We previously discussed the importance of choosing a cost in the support vector classifier. What happens if we change the cost for a non-linear dataset? We will compute the support vector machine below using different cost values and compare.
 
 \begin{minted}[breaklines]{R}
     # using different costs
-    svmfit.00001 <- svm (y~., data = svmdata , kernel="radial", cost = 0.00001, scale = FALSE)
-    svmfit.001 <- svm (y~., data = svmdata , kernel="radial", cost = 0.001, scale = FALSE)
-    svmfit1 <- svm (y~., data = svmdata , kernel="radial", cost = 1, scale = FALSE)
-    svmfit1000 <- svm (y~., data = svmdata , kernel="radial", cost = 1000, scale = FALSE)
-    svmfit100000 <- svm (y~., data = svmdata , kernel="radial", cost = 100000, scale = FALSE)
-    svmfit10000000 <- svm (y~., data = svmdata , kernel="radial", cost = 10000000, scale = FALSE)
+    svmfit.001 <- svm (y~., data = train , kernel="radial", cost = 0.001, scale = FALSE)
+    svmfit.1 <- svm (y~., data = train , kernel="radial", cost = 0.1, scale = FALSE)
+    svmfit1 <- svm (y~., data = train , kernel="radial", cost = 1, scale = FALSE)
+    svmfit1000 <- svm (y~., data = train , kernel="radial", cost = 1000, scale = FALSE)
+    svmfit100000 <- svm (y~., data = train , kernel="radial", cost = 100000, scale = FALSE)
+    svmfit10000000 <- svm (y~., data = train , kernel="radial", cost = 10000000, scale = FALSE)
     
     # plots of different costs
-    plot(svmfit.00001,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
     plot(svmfit.001,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
+    plot(svmfit.1,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
     plot(svmfit1,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
     plot(svmfit1000,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
     plot(svmfit100000,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
-    plot(svmfit10000000,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))    
+    plot(svmfit10000000,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
 \end{minted}
 
-The code produces the graphs in Figure ~\ref{fig_svm_diff_costs}. Initially, with a low cost every point is a support vector. In a dataset with 600 observations, 600 support vectors is not ideal. This makes sense, as a smaller cost means a lower penalty for each misclassified data point. As we increase the cost parameter, the number of support vectors decreases because the cost of being misclassified is greater. At the highest cost of 10,000,000 there are only 35 support vectors. We see a trade-off between the number of observations that influence the support vector machine and the associated cost. Zooming in, the support vectors in ~\ref{fig_svm_diff_costs} are labeled with an "x".
+The code produces the graphs in Figure ~\ref{fig_svm_diff_costs}. Initially, with a low cost every point is a support vector. In fact, the machine does not even distinguish between the various groups. In a dataset with 600 observations, 600 support vectors is not ideal. This makes sense, as a smaller cost means a lower penalty for each misclassified data point. As we increase the cost parameter, the number of support vectors decreases because the cost of being misclassified is greater. At the highest cost of 10,000,000 there are only 35 support vectors. We see a trade-off between the number of observations that influence the support vector machine and the associated cost. Zooming in, the support vectors in ~\ref{fig_svm_diff_costs} are labeled with an "x".
 
 \begin{figure}[H]
     \centering
     \begin{align*}
-    & C=0.00001 & C=0.001 \\
-    & \includegraphics[width=3in]{Figures/svm/svm.00001.png} &
-    \includegraphics[width=3in]{Figures/svm/svm.001.png} \\
+    & C=0.001 & C=0.1 \\
+    & \includegraphics[width=3in]{Figures/svm/svm.001.png} &
+    \includegraphics[width=3in]{Figures/svm/svm.1.png} \\
     & C=1 & C=1000 \\
     & \includegraphics[width=3in]{Figures/svm/svm1.png} &
     \includegraphics[width=3in]{Figures/svm/svm1000.png} \\
@@ -695,16 +711,20 @@ What happens if we change the gamma value? We try below with different values an
 
 \begin{minted}[breaklines]{R}
     # using different gammas
-    svmfit.00001g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 0.00001, scale = FALSE)
-    svmfit.001g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 0.001, scale = FALSE)
-    svmfit1g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 1, scale = FALSE)
-    svmfit1000g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 1000, scale = FALSE)
+    svmfit.01g <- svm (y~., data = train , kernel="radial", cost = 1, gamma = 0.01, scale = FALSE)
+    svmfit.1g <- svm (y~., data = train , kernel="radial", cost = 1, gamma = 0.1, scale = FALSE)
+    svmfit1g <- svm (y~., data = train , kernel="radial", cost = 1, gamma = 1, scale = FALSE)
+    svmfit10g <- svm (y~., data = train , kernel="radial", cost = 1, gamma = 10, scale = FALSE)
+    svmfit100g <- svm (y~., data = train , kernel="radial", cost = 1, gamma = 100, scale = FALSE)
+    svmfit1000g <- svm (y~., data = train , kernel="radial", cost = 1, gamma = 1000, scale = FALSE)
     
     # plots of different gammas
-    plot(svmfit.00001g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
-    plot(svmfit.001g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
+    plot(svmfit.01g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
+    plot(svmfit.1g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
     plot(svmfit1g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
-    plot(svmfit1000g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))    
+    plot(svmfit10g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
+    plot(svmfit100g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
+    plot(svmfit1000g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
 \end{minted}
 
 The code produces the graphs in Figure ~\ref{fig_svm_diff_gammas}. From \cite{scikit_rbf_parameters}, the "gamma parameter defines how far the influence of a single training example reaches, with low values meaning ‘far’ and high values meaning ‘close’." With the lowest gamma value of 0.01, the support vector machine mostly consists of straight lines as the influence of individual support vectors reaches farther out. As we increase the gamma value, the machine becomes more specialized to the dataset. We see the gamma value of 1000 yields a model with 600 out of the 600 points being support vectors. Each point has only a small radius of influence, leading to an extremely localized model with margins closely following the class boundaries. Choosing an appropriate gamma value helps protect against under- and over-fitting the model.
@@ -730,44 +750,52 @@ Using the tuning parameter, we can determine the best values for the cost and ga
 
 \begin{minted}[breaklines]{R}
     # using tune function to find the best model
-    tune <- tune(svm,y~.,data=svmdata, 
-        ranges = list(gamma = 2^(-2:10), cost = 2^(-2:10)), tunecontrol = tune.control(sampling = "fix"))
-
+    tune <- tune(svm, y~., data = train, 
+                 ranges = list(gamma = c(2^(-2:10),1^(-2:10)), cost = c(2^(-2:10),1^(-2:10))), tunecontrol = tune.control(sampling = "fix"))
+    
     tune$best.parameters
     tune$best.performance
 \end{minted}
 
-The output is a gamma value of 0.5 and a cost of 0.25. Using these values in the \textbf{svm} function, we have
+The output is a gamma value of 4 and a cost of 2. Using these values in the \textbf{svm} function, we have
 
 \begin{minted}[breaklines]{R}
-    # creating data frame 
-    svmdata <- data.frame (x = svmdatax, y = factor(svmdatay))
-
     # computing svm function
-    svmfit <- svm (y~., data = svmdata , kernel="radial", cost = 0.25, gamma=0.5, scale = FALSE)
-
-    # looking at statistics
-    summary(svmfit)
-    svmfit$index
-    svmfit$rho
-    svmfit$coefs
-
-    # plotting svm function graph
-    plot(svmfit,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
+    svmfit <- svm (y~., data = train , kernel = "radial", cost = 2, gamma = 4, scale = FALSE)
 \end{minted}
+
+We would now like to assess how accurate our model is. We do this by calculating the confusion matrix on the test set.
+
+\begin{minted}[breaklines]{R}
+    # predicting the test set
+    y_pred <- predict(svmfit, newdata = test[-3])
+    
+    # viewing the confusion matrix; 3 misclassified points
+    cm = table(test[,3], y_pred)
+    cm
+\end{minted}
+
+The output is located in Figure ~\ref{fig_svm_cm}. We see that one point in the first class is misclassified as the third class, and two points in the third class are misclassified as the first class. This is equivalent to an accuracy of 97.5\% for the test set.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1in]{Figures/svm/svm_cm.png}
+    \caption{Support Vector Machine Confusion Matrix}
+    \label{fig_svm_cm}
+\end{figure}
 
 The final model using the best parameters determined by the \textbf{tune} function is presented in Figure ~\ref{fig_final_svm_model}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=5in]{Figures/svm/svm_final_model.png}
-    \caption{Final SVM Model with \(C=0.25\) and \(\gamma = 0.5\)}
+    \caption{Final SVM Model with \(C = 2\) and \(\gamma = 4\)}
     \label{fig_final_svm_model}
 \end{figure}
 
 \section{EXAMPLE}
 
-Let us now look at support vector machines in a real dataset. We will be using what is widely known as the Penguin Dataset, collected by Dr. Kristen Gorman and The Palmer Station, Antarctica LTER \cite{penguin_data}. This dataset was originally published in 2014 and includes 7 variables, namely: species, culmen length (mm), culmen depth (mm), flipper length (mm), body mass (g), island, and sex. We transition now into the Python SVM modules from the scikit-learn package to anaylze the Penguin data.
+Let us now look at the use of support vector machines in a real dataset. We will be using what is widely known as the Penguin Dataset, collected by Dr. Kristen Gorman and The Palmer Station, Antarctica LTER \cite{penguin_data}. This dataset was originally published in 2014 and includes 7 variables, namely: species, culmen length (mm), culmen depth (mm), flipper length (mm), body mass (g), island, and sex. We transition now into the Python SVM modules from the scikit-learn package to anaylze the Penguin data.
 
 \subsection{DATA EXPLORATION}
 

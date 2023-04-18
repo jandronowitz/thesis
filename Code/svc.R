@@ -150,5 +150,5 @@ y_pred <- predict(svmfit, newdata = test[-3])
 cm = table(test[,3], y_pred)
 cm
 
-
+help(tune)
 help(svm)

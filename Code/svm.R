@@ -15,6 +15,16 @@ hyperplane <- function(P,data,x,z=0) {
   a <- sum(t(alphas)*data[P$index,][1])
   b <- sum(t(alphas)*data[P$index,][2])
   (-c-a*x)/b
+}
+
+# defining hyperplane function that returns a,b,c values
+hyperplane_vals <- function(P,data,x,z=0) {
+  alphas <- -1*P$coefs
+  svs <- data[P$index,]
+  c <- P$rho - z
+  a <- sum(t(alphas)*data[P$index,][1])
+  b <- sum(t(alphas)*data[P$index,][2])
+  (-c-a*x)/b
   cat(a,b,c)
 }
 
@@ -45,29 +55,38 @@ plot(svmdatax, col=(11-svmdatay),xlab="",ylab="",pch=16)
 # creating data frame 
 svmdata <- data.frame (x = svmdatax, y = factor(svmdatay))
 
+# splitting into training and test data
+library(caTools)
+set.seed(100)
+
+# using 80% of the data in the training set and the other 20% in the test set
+sample <- sample.split(svmdata$x.1, SplitRatio = 0.8)
+train  <- subset(svmdata, sample == TRUE)
+test   <- subset(svmdata, sample == FALSE)
+
 # using different costs
-svmfit.00001 <- svm (y~., data = svmdata , kernel="radial", cost = 0.00001, scale = FALSE)
-svmfit.001 <- svm (y~., data = svmdata , kernel="radial", cost = 0.001, scale = FALSE)
-svmfit1 <- svm (y~., data = svmdata , kernel="radial", cost = 1, scale = FALSE)
-svmfit1000 <- svm (y~., data = svmdata , kernel="radial", cost = 1000, scale = FALSE)
-svmfit100000 <- svm (y~., data = svmdata , kernel="radial", cost = 100000, scale = FALSE)
-svmfit10000000 <- svm (y~., data = svmdata , kernel="radial", cost = 10000000, scale = FALSE)
+svmfit.001 <- svm (y~., data = train , kernel="radial", cost = 0.001, scale = FALSE)
+svmfit.1 <- svm (y~., data = train , kernel="radial", cost = 0.1, scale = FALSE)
+svmfit1 <- svm (y~., data = train , kernel="radial", cost = 1, scale = FALSE)
+svmfit1000 <- svm (y~., data = train , kernel="radial", cost = 1000, scale = FALSE)
+svmfit100000 <- svm (y~., data = train , kernel="radial", cost = 100000, scale = FALSE)
+svmfit10000000 <- svm (y~., data = train , kernel="radial", cost = 10000000, scale = FALSE)
 
 # plots of different costs
-plot(svmfit.00001,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
 plot(svmfit.001,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
+plot(svmfit.1,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
 plot(svmfit1,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
 plot(svmfit1000,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
 plot(svmfit100000,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
 plot(svmfit10000000,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
 
 # using different gammas
-svmfit.01g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 0.01, scale = FALSE)
-svmfit.1g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 0.1, scale = FALSE)
-svmfit1g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 1, scale = FALSE)
-svmfit10g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 10, scale = FALSE)
-svmfit100g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 100, scale = FALSE)
-svmfit1000g <- svm (y~., data = svmdata , kernel="radial", cost = 1, gamma = 1000, scale = FALSE)
+svmfit.01g <- svm (y~., data = train , kernel="radial", cost = 1, gamma = 0.01, scale = FALSE)
+svmfit.1g <- svm (y~., data = train , kernel="radial", cost = 1, gamma = 0.1, scale = FALSE)
+svmfit1g <- svm (y~., data = train , kernel="radial", cost = 1, gamma = 1, scale = FALSE)
+svmfit10g <- svm (y~., data = train , kernel="radial", cost = 1, gamma = 10, scale = FALSE)
+svmfit100g <- svm (y~., data = train , kernel="radial", cost = 1, gamma = 100, scale = FALSE)
+svmfit1000g <- svm (y~., data = train , kernel="radial", cost = 1, gamma = 1000, scale = FALSE)
 
 # plots of different gammas
 plot(svmfit.01g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
@@ -78,16 +97,17 @@ plot(svmfit100g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","
 plot(svmfit1000g,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
 
 # using tune function to find the best model
-tune <- tune(svm,y~.,data=svmdata, 
-             ranges = list(gamma = 2^(-2:10), cost = 2^(-2:10)), tunecontrol = tune.control(sampling = "fix"))
+tune <- tune(svm, y~., data = train, 
+             ranges = list(gamma = c(2^(-2:10),1^(-2:10)), cost = c(2^(-2:10),1^(-2:10))), tunecontrol = tune.control(sampling = "fix"))
 
 tune$best.parameters
 tune$best.performance
- # tune$performances
+
+# tune$performances
     # run to see individual performances
 
 # computing svm function with best gamma and cost
-svmfit <- svm (y~., data = svmdata , kernel="radial", cost = 0.25, gamma=0.5, scale = FALSE)
+svmfit <- svm (y~., data = train , kernel = "radial", cost = 2, gamma = 4, scale = FALSE)
 
 # looking at statistics
 summary(svmfit)
@@ -95,10 +115,18 @@ svmfit$index
 svmfit$rho
 svmfit$coefs
 
+# predicting the test set
+y_pred <- predict(svmfit, newdata = test[-3])
+
+# viewing the confusion matrix; 3 misclassified points
+cm = table(test[,3], y_pred)
+cm
+
 # plotting svm function graph
 plot(svmfit,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
 
-# looking at how a,b,c values differ 
+
+# exploration; looking at how a,b,c values differ 
 hyperplane(svmfit,svmdata,svmdatax)
 hyperplane(svmfit1,svmdata,svmdatax)
 hyperplane(svmfit1000000,svmdata,svmdatax)
