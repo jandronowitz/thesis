@@ -466,14 +466,27 @@ Let us introduce the concept of inner products and their role in the support vec
 
 where \(S\) is the set of indices of the support vectors.
 
-We now implement a support vector classifier in $R$. Using the same \textbf{svm} module as in the maximal margin classifier, we can find the best hyperplane to classify the data given a specified cost, in this case a value of 1000.
+We now implement a support vector classifier in $R$. Using the same \textbf{svm} module as in the maximal margin classifier, we can find the best hyperplane to classify the data given a specified cost. We first create the dataframe and separate into a training and test set.
 
 \begin{minted}[breaklines]{R}
     # creating data frame 
     svcdata <- data.frame (x = svcdatax, y = factor(svcdatay))
     
+    # splitting into training and test data
+    library(caTools)
+    set.seed(100)
+    
+    # using 80% of the data in the training set and the other 20% in the test set
+    sample <- sample.split(svcdata$x.1, SplitRatio = 0.8)
+    train  <- subset(svcdata, sample == TRUE)
+    test   <- subset(svcdata, sample == FALSE)
+\end{minted}
+
+Once we have split the data, we can compute the function using the training data. To begin we have specified the cost as 1000, but we will later discuss a better way to determine the best cost.
+
+\begin{minted}[breaklines]{R}
     # computing svm function
-    svmfit <- svm (y~., data = svcdata , kernel="linear", cost = 1000, scale = FALSE)
+    svmfit <- svm (y~., data = train , kernel="linear", cost = 1000, scale = FALSE)
     
     # looking at statistics
     summary(svmfit)
@@ -482,18 +495,18 @@ We now implement a support vector classifier in $R$. Using the same \textbf{svm}
     svmfit$coefs
     
     # plotting svm function graph
-    plot(svmfit,svcdata)
+    plot(svmfit,train)
     
     # calculating the hyperplane and supporting hyperplanes
-    plt0 <- hyperplane(svmfit,svcdata,svcdatax,0)
-    plt1 <- hyperplane(svmfit,svcdata,svcdatax,1)
-    plt2 <- hyperplane(svmfit,svcdata,svcdatax,-1)
+    plt0 <- hyperplane(svmfit,train,trainx,0)
+    plt1 <- hyperplane(svmfit,train,trainx,1)
+    plt2 <- hyperplane(svmfit,train,trainx,-1)
     
     # plotting the data with hyperplanes
-    plot(svcdatax,col=(3-svcdatay),xlab="",ylab="",pch=16)
-    lines(svcdatax,plt0,col='black')
-    lines(svcdatax,plt1,col='gray')
-    lines(svcdatax,plt2,col='gray')
+    plot(trainx,col=(3-trainy),xlab="",ylab="",pch=16)
+    lines(trainx,plt0,col='black')
+    lines(trainx,plt1,col='gray')
+    lines(trainx,plt2,col='gray')
     
 \end{minted}
 
@@ -509,25 +522,25 @@ This produces the result in Figure ~\ref{fig_svc_data_w_hyperplanes}, graphicall
 Let us look at what happens with different values of the cost variable.
 
 \begin{minted}[breaklines]{R}
+    # using cost of 0.01
+    svmfit01 <- svm (y~., data = train , kernel="linear", cost = .01, scale = FALSE)
+    summary(svmfit01)
+      # results in 224 support vectors
+    
     # using cost of 1
-    svmfit1 <- svm (y~., data = svcdata , kernel="linear", cost = 1, scale = FALSE)
+    svmfit1 <- svm (y~., data = train , kernel="linear", cost = 1, scale = FALSE)
     summary(svmfit1)
-        # results in 36 support vectors
+      # results in 35 support vectors
     
     # using cost of 100
-    svmfit100 <- svm (y~., data = svcdata , kernel="linear", cost = 100, scale = FALSE)
+    svmfit100 <- svm (y~., data = train , kernel="linear", cost = 100, scale = FALSE)
     summary(svmfit100)
-        # results in 21 support vectors
-        
-    # using cost of 1000
-    svmfit1000 <- svm (y~., data = svcdata , kernel="linear", cost = 1000, scale = FALSE)
-    summary(svmfit1000)
-        # results in 20 support vectors
+      # results in 21 support vectors
     
-    # using cost of 10000
-    svmfit10000 <- svm (y~., data = svcdata , kernel="linear", cost = 10000, scale = FALSE)
-    summary(svmfit10000)
-            # results in 20 support vectors
+    # using cost of 1000
+    svmfit1000 <- svm (y~., data = train , kernel="linear", cost = 1000, scale = FALSE)
+    summary(svmfit1000)
+      # results in 21 support vectors
 \end{minted}
 
 We see that as the cost increases, there are fewer support vectors. That is, fewer observations are classified incorrectly. Shouldn't it be the opposite? We see in ~\ref{slackvariables} that the sum of the slack variables has to be less than or equal to the cost. A higher cost allows for greater slack variables, meaning more observations can lie outside the margin. This discrepancy lies in the underlying code. In both the R and Python modules for the support vector machine, the cost is inversely proportional to the \(C\) we defined in ~\ref{slackvariables}.
@@ -561,16 +574,17 @@ We saw that choosing different costs affects the number of support vectors. A sm
 
 \begin{minted}[breaklines]{R}
     # tune the function to find the best model with various costs
-    tune <- tune(svm,y~.,data=svcdata, 
+    tune <- tune(svm, y~., data = train, 
                  ranges = list(cost = 2^(-2:10)), tunecontrol = tune.control(sampling = "fix"))
     
+    # we see a cost of 0.25 gives the best model
     tune$best.parameters
-      # we see a cost of 0.25 gives the best model
+    
+    # calculating the model error
     tune$best.performance
-      # this is the model error
 \end{minted}
 
-Thus, we have produced the best support vector classifier for our data, illustrated in Figure ~\ref{fig_svc_final_model}.
+We can again validate our model using the test set. The same code as covered in the maximal margin classifier is used, and we see there are no misclassified points. Thus, we have produced the best support vector classifier for our data, illustrated in Figure ~\ref{fig_svc_final_model}.
 
 \begin{figure}[ht]
     \centering
@@ -1289,6 +1303,9 @@ We now compare the SVM modules for $R$ and Python. The supporting documentation 
 The SVM modules in both programming languages are similar. Python's \textit{scikitlearn} uses a one-vs-one approach in multi-class models.
 
 When it comes to plotting, Python offers much more flexible and intuitive tools. While the code can get quite long, the plots are aesthetic and accessible. While there are options for plotting in $R$, it is not as readily available.
+
+\section{Conclusion}
+In this paper, we first discussed the evolution of machine learning and artificial intelligence where types of supervised and unsupervised learning were covered. Then came the concept of hyperplanes, in which we established the mathematical formulation in various dimensions. This was crucial in the discussion of the maximal margin classifier, where linearly separable groups were classified using a hyperplane. 
 
 \newpage
 \thispagestyle{empty}
