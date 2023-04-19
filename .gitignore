@@ -14,3 +14,4 @@
 _minted-thesis/
 *.ipynb_checkpoints
 .DS_Store
+Code/.ipynb_checkpoints/
