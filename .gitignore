@@ -11,5 +11,5 @@
 *.synctex.gz
 *.dvi
 *.out
-_minted-thesis\
+_minted-thesis/
 *.ipynb_checkpoints
