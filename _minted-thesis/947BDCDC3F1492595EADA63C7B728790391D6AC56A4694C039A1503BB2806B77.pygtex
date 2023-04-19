@@ -1,7 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-    \PYG{c+c1}{\PYGZsh{} selecting columns}
-    \PYG{n}{data\PYGZus{}cl\PYGZus{}cd} \PYG{o}{=} \PYG{n}{data}\PYG{p}{[:,[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{]]}
-
-    \PYG{c+c1}{\PYGZsh{} splitting into training and test data}
-    \PYG{n}{x\PYGZus{}train}\PYG{p}{,} \PYG{n}{x\PYGZus{}test}\PYG{p}{,} \PYG{n}{y\PYGZus{}train}\PYG{p}{,} \PYG{n}{y\PYGZus{}test} \PYG{o}{=} \PYG{n}{train\PYGZus{}test\PYGZus{}split}\PYG{p}{(}\PYG{n}{data\PYGZus{}cl\PYGZus{}cd}\PYG{p}{,} \PYG{n}{labels}\PYG{p}{,} \PYG{n}{test\PYGZus{}size} \PYG{o}{=} \PYG{l+m+mf}{0.20}\PYG{p}{,} \PYG{n}{random\PYGZus{}state}\PYG{o}{=}\PYG{l+m+mi}{30}\PYG{p}{)}
-\end{Verbatim}
