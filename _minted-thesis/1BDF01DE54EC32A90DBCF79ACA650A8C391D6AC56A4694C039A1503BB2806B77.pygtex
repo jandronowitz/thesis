@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} plot of culmen length and flipper length}
+    \PYG{n}{cl\PYGZus{}fl}\PYG{o}{=}\PYG{n}{figure}\PYG{p}{(}\PYG{n}{title}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Penguin Data: culmen length vs. flipper length\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{cl\PYGZus{}fl}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{x}\PYG{o}{=}\PYG{n}{data}\PYG{p}{[:,}\PYG{l+m+mi}{0}\PYG{p}{],}\PYG{n}{y}\PYG{o}{=}\PYG{n}{data}\PYG{p}{[:,}\PYG{l+m+mi}{2}\PYG{p}{],}\PYG{n}{color}\PYG{o}{=}\PYG{n}{penguin\PYGZus{}colors}\PYG{p}{)}
+    \PYG{n}{show}\PYG{p}{(}\PYG{n}{cl\PYGZus{}fl}\PYG{p}{)}
+\end{Verbatim}

@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} a user\PYGZhy{}defined function to view unique values}
+
+    \PYG{k}{def} \PYG{n+nf}{rstr}\PYG{p}{(}\PYG{n}{df}\PYG{p}{):} \PYG{k}{return} \PYG{n}{df}\PYG{o}{.}\PYG{n}{shape}\PYG{p}{,} \PYG{n}{df}\PYG{o}{.}\PYG{n}{apply}\PYG{p}{(}\PYG{k}{lambda} \PYG{n}{x}\PYG{p}{:} \PYG{p}{[}\PYG{n}{x}\PYG{o}{.}\PYG{n}{unique}\PYG{p}{()])}
+    \PYG{n}{rstr}\PYG{p}{(}\PYG{n}{df}\PYG{p}{)}
+\end{Verbatim}

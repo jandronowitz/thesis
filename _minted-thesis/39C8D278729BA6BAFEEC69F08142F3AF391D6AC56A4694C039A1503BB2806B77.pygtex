@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} plot of culmen depth and body mass}
+    \PYG{n}{fl\PYGZus{}bm}\PYG{o}{=}\PYG{n}{figure}\PYG{p}{(}\PYG{n}{title}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Penguin Data: flipper length vs. body mass\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{fl\PYGZus{}bm}\PYG{o}{.}\PYG{n}{scatter}\PYG{p}{(}\PYG{n}{x}\PYG{o}{=}\PYG{n}{data}\PYG{p}{[:,}\PYG{l+m+mi}{2}\PYG{p}{],}\PYG{n}{y}\PYG{o}{=}\PYG{n}{data}\PYG{p}{[:,}\PYG{l+m+mi}{3}\PYG{p}{],}\PYG{n}{color}\PYG{o}{=}\PYG{n}{penguin\PYGZus{}colors}\PYG{p}{)}
+    \PYG{n}{show}\PYG{p}{(}\PYG{n}{fl\PYGZus{}bm}\PYG{p}{)}
+\end{Verbatim}

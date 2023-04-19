@@ -1,0 +1,19 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} creating data frame}
+    \PYG{n}{mmcdata} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{data.frame }\PYG{p}{(}\PYG{n}{x} \PYG{o}{=} \PYG{n}{mmcdatax}\PYG{p}{,} \PYG{n}{y} \PYG{o}{=} \PYG{n+nf}{factor}\PYG{p}{(}\PYG{n}{mmcdatay}\PYG{p}{))}
+
+    \PYG{c+c1}{\PYGZsh{} splitting into training and test data}
+    \PYG{n+nf}{library}\PYG{p}{(}\PYG{n}{caTools}\PYG{p}{)}
+    \PYG{n+nf}{set.seed}\PYG{p}{(}\PYG{l+m}{100}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} using 80\PYGZpc{} of the data in the training set and the other 20\PYGZpc{} in the test set}
+    \PYG{n}{sample} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{sample.split}\PYG{p}{(}\PYG{n}{mmcdata}\PYG{o}{\PYGZdl{}}\PYG{n}{x.1}\PYG{p}{,} \PYG{n}{SplitRatio} \PYG{o}{=} \PYG{l+m}{0.8}\PYG{p}{)}
+    \PYG{n}{train}  \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{subset}\PYG{p}{(}\PYG{n}{mmcdata}\PYG{p}{,} \PYG{n}{sample} \PYG{o}{==} \PYG{k+kc}{TRUE}\PYG{p}{)}
+    \PYG{n}{test}   \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{subset}\PYG{p}{(}\PYG{n}{mmcdata}\PYG{p}{,} \PYG{n}{sample} \PYG{o}{==} \PYG{k+kc}{FALSE}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} computing svm function}
+    \PYG{n}{svmfit} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{svm }\PYG{p}{(}\PYG{n}{y}\PYG{o}{\PYGZti{}}\PYG{n}{.}\PYG{p}{,} \PYG{n}{data} \PYG{o}{=} \PYG{n}{train} \PYG{p}{,} \PYG{n}{kernel}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}linear\PYGZdq{}}\PYG{p}{,} \PYG{n}{cost} \PYG{o}{=} \PYG{l+m}{1000}\PYG{p}{,} \PYG{n}{scale} \PYG{o}{=} \PYG{k+kc}{FALSE}\PYG{p}{)}
+
+    \PYG{c+c1}{\PYGZsh{} plotting svm function graph}
+    \PYG{n+nf}{plot}\PYG{p}{(}\PYG{n}{svmfit}\PYG{p}{,}\PYG{n}{train}\PYG{p}{)}
+\end{Verbatim}

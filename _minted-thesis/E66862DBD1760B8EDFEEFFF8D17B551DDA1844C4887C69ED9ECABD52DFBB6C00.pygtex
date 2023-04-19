@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{c+c1}{\PYGZsh{} computing svm function}
+    \PYG{n}{svmfit} \PYG{o}{\PYGZlt{}\PYGZhy{}} \PYG{n+nf}{svm }\PYG{p}{(}\PYG{n}{y}\PYG{o}{\PYGZti{}}\PYG{n}{.}\PYG{p}{,} \PYG{n}{data} \PYG{o}{=} \PYG{n}{train} \PYG{p}{,} \PYG{n}{kernel} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}radial\PYGZdq{}}\PYG{p}{,} \PYG{n}{cost} \PYG{o}{=} \PYG{l+m}{2}\PYG{p}{,} \PYG{n}{gamma} \PYG{o}{=} \PYG{l+m}{4}\PYG{p}{,} \PYG{n}{scale} \PYG{o}{=} \PYG{k+kc}{FALSE}\PYG{p}{)}
+\end{Verbatim}

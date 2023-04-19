@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n}{labels} \PYG{o}{=} \PYG{p}{[]}
+    \PYG{n}{x} \PYG{o}{=} \PYG{l+m+mi}{0}
+    \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{df}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}species\PYGZsq{}}\PYG{p}{]:}
+        \PYG{k}{if} \PYG{n}{i} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}Adelie\PYGZsq{}}\PYG{p}{:}
+            \PYG{n}{x} \PYG{o}{=} \PYG{l+m+mi}{0}
+        \PYG{k}{elif} \PYG{n}{i} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}Chinstrap\PYGZsq{}}\PYG{p}{:}
+            \PYG{n}{x} \PYG{o}{=} \PYG{l+m+mi}{1}
+        \PYG{k}{elif} \PYG{n}{i} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}Gentoo\PYGZsq{}}\PYG{p}{:}
+            \PYG{n}{x} \PYG{o}{=} \PYG{l+m+mi}{2}
+        \PYG{n}{labels}\PYG{o}{.}\PYG{n}{append}\PYG{p}{(}\PYG{n}{x}\PYG{p}{)}
+
+    \PYG{n}{colors} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}red\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}blue\PYGZsq{}}\PYG{p}{,}\PYG{l+s+s1}{\PYGZsq{}green\PYGZsq{}}\PYG{p}{]}
+    \PYG{n}{penguin\PYGZus{}colors} \PYG{o}{=} \PYG{n}{np}\PYG{o}{.}\PYG{n}{array}\PYG{p}{([}\PYG{n}{colors}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{k}{for} \PYG{n}{i} \PYG{o+ow}{in} \PYG{n}{labels}\PYG{p}{])}
+\end{Verbatim}
