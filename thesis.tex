@@ -1312,7 +1312,7 @@ One such example, as presented in \textit{Intro to Statistical Learning with App
 
 \section{ANALYSIS OF R AND PYTHON SVM MODULES AND DOCUMENTATION}
 
-We now compare the SVM modules for $R$ and Python. The supporting documentation for the \textit{scikitlearn} module can be found in \cite{scikit_svm}. The mathematical formulation for the classifier can be accessed through this page. The $R$ and Python modules for support vector machines are quite similar in terms of the variables calculated. Table ~\ref{tab_r_python} provides a summary of the corresponding variables in each program. The $P$ refers to the model created by the \textbf{svm} function. 
+We now compare the SVM modules for $R$ and Python. The supporting documentation for the \textit{scikitlearn} module can be found in \cite{scikit_svm} and \textit{e1071} in \cite{e1071}. The $R$ and Python modules for support vector machines are quite similar in terms of the variables calculated. Table ~\ref{tab_r_python} provides a summary of the corresponding variables in each program. The $P$ refers to the model created by the \textbf{svm} function. 
 
 \begin{table}[H]
     \centering
@@ -1328,12 +1328,15 @@ We now compare the SVM modules for $R$ and Python. The supporting documentation 
     \label{tab_r_python}
 \end{table}
 
-The SVM modules in both programming languages are similar. Python's \textit{scikitlearn} uses a one-vs-one approach in multi-class models.
+The SVM modules in both programming languages are similar. Python's \textit{scikitlearn} and $R$'s \textit{e1071} both use a one-vs-one approach in multi-class models. The mathematical formulation for the Python classifier can be accessed through \cite{scikit_svm}. On the other hand, the $R$ module was based on $C/C++$ code. Thus, the mathematical formulation is said to follow that of Chih-Chung Chang and Chih-Jen Lin in
+LIBSVM: a library for Support Vector Machines, found in https://www.csie.ntu.edu.tw/~cjlin/papers/libsvm.ps.gz. This file proved cumbersome to open and is not as accessible as that of \textit{scikitlearn}.
 
-When it comes to plotting, Python offers much more flexible and intuitive tools. While the code can get quite long, the plots are aesthetic and accessible. While there are options for plotting in $R$, it is not as readily available.
+When it comes to plotting, Python offers much more flexible and intuitive tools. While the code can get quite long, the plots are aesthetic and customizable. While there are options for plotting in $R$, it is not as readily available and felt more rigid and elementary.
+
+From my experience, Python's documentation was much easier to find, follow, and consult than $R$'s. While both $R$ and Python have similar mathematical capabilities regarding the \textbf{svm} module, the more accessible documentation as well as the superior graphics and adjustability of the language make Python the preferable choice in future analyses.
 
 \section{Conclusion}
-In this paper, we first discussed the evolution of machine learning and artificial intelligence where types of supervised and unsupervised learning were covered. Then came the concept of hyperplanes, in which we established the mathematical formulation in various dimensions. This was crucial in the discussion of the maximal margin classifier, where linearly separable groups were classified using a hyperplane. 
+In this paper, we first discussed the evolution of machine learning and artificial intelligence where types of supervised and unsupervised learning were covered. Then came the concept of hyperplanes, in which we established the mathematical formulas in various dimensions with visualizations. This was crucial in the discussion of the maximal margin classifier, where linearly separable groups were classified using a hyperplane. Non-linearly separable groups were the focus of the support vector classifier, in which the cost played a large part in determining the number of support vectors. The gamma variable was introduced in the support vector machine, as it provided a measure of 'curviness' in the use of kernels with non-linear data. Finally, a support vector machine was used to classify penguin species based on certain predictors. Various models were calculated, validated, and graphed in this real dataset. The documentation for the $R$ and Python \textbf{svm} modules were compared as a means to determine the differences between each when going forth with further projects. Overall, this paper gave an introduction to the concept of support vector machines and the various associated classification methods.
 
 \newpage
 \thispagestyle{empty}
