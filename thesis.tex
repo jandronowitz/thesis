@@ -53,9 +53,11 @@
 
 \section{INTRODUCTION}
 
-The first discoveries regarding machine learning date back to the 1950s. Known as the "Turing Test", mathematician Alan Turing attempted to discern if a computer could fool a human into thinking it is also a human \cite{mlhistory}. In the years to follow, computer codes turned into learning programs that evolved the more times the code was run. In 1957, the first neural network was created which simulated a human brain's thought process. Ten years later, a basic pattern recognition algorithm was created, now known as the nearest neighbor algorithm. Come the 1990's, accessibility to computers expanded and technological advances exponentially increased. Scientists began using a data-driven approach as large amounts of data were available, which allowed computer algorithms to analyze data and learn from their results. Fast forward a few decades and we now have college majors, careers, and magazines revolving around machine learning.
+\subsection{A SHORT HISTORY}
 
-Machine learning algorithms fall into one of two categories: supervised or unsupervised learning. Essentially, unsupervised learning arises when each observation does not have an associated response. This allows the machine to find certain patterns among the data and draw conclusions. Types of unsupervised learning include clustering and association. Clustering problems involve grouping the data based on the features. It is unknown how many groups are present in the data set when we begin, and so we rely on the machine to distinguish between groups. For example, we may want to group different animals based on their hunting/gathering methods and what they consume. Perhaps some animals tend to graze, others tend to scavenge, and others hunt. The algorithm would try to split the data into these three groups. In contrast, association rule learning problems focus on generalized trends between the groups. These types of trends are widely applicable to large portions of the data. For example, if one animal tends to graze on grass and other plants, the machine might suggest that another animal who grazes on grass will also eat other plants. Another common example is that people who buy one product are likely to buy another product \cite{supvunsup}.
+The first discoveries regarding machine learning date back to the 1950s. Known as the Turing Test, mathematician Alan Turing attempted to discern if a computer could fool a human into thinking it is also a human. In the years to follow, computer codes turned into learning programs that evolved the more times the code was run. In 1957, the first neural network was created which simulated a human brain's thought process. Ten years later, a basic pattern recognition algorithm was created, now known as the nearest neighbor algorithm. Come the 1990's, accessibility to computers expanded and technological advances exponentially increased. Scientists began using a data-driven approach as large amounts of data were available, which allowed computer algorithms to analyze data and learn from their results. Fast forward a few decades and we have college majors, careers, and magazines revolving around machine learning \cite{mlhistory}. Now, machine learning algorithms fall into one of two categories: supervised or unsupervised learning. 
+
+\subsection{UNSUPERVISED LEARNING} Unsupervised learning arises when each observation does not have an associated response. This allows the machine to find certain patterns among the data and draw conclusions. Types of unsupervised learning include clustering and association. Clustering problems involve grouping the data based on the features. It is unknown how many groups are present in the data set when we begin, and so we rely on the machine to distinguish between groups. For example, we may want to group different animals based on their hunting/gathering methods and what they consume. Perhaps some animals tend to graze, others tend to scavenge, and others hunt. The algorithm would try to split the data into these three groups. In contrast, association rule learning problems focus on generalized trends between the groups. These types of trends are widely applicable to large portions of the data. For example, if one animal tends to graze on grass and other plants, the machine might suggest that another animal who grazes on grass will also eat other plants. Another common example is that people who buy one product are likely to buy another product \cite{supvunsup}.
 
 \begin{figure}[ht]
     \centering
@@ -63,39 +65,44 @@ Machine learning algorithms fall into one of two categories: supervised or unsup
     \captionsetup[subfigure]{labelformat=empty}
     \begin{subfigure}[]{0.5\textwidth}
          \centering
-         \caption{Source: Data Driven Investor}
+         \caption{Source: Data Driven Investor \cite{clusteringvassociation}}
      \end{subfigure}
     \label{fig1}
 \end{figure}
 
-In contrast, supervised learning uses data that is well-labeled to teach our model and either infer or predict. Inference problems aim for a better understanding of the relationship between the response variable and the features. On the other hand, prediction problems relate to developing a model that accurately fits the response variable to the predictors. Each observation in a data set has associated predictors and a response variable. Predictors are the input variables and can go by a variety of names such as variables, independent variables or features \cite{introstatlearning}. Predictors usually correspond to the variables $x_1,x_2,...,x_n$ where each $x_n$ is an input variable. The response variable is the dependent variable or what we are trying to measure, usually denoted as $y$. Let's take a look at some penguin data, shown in Table ~\ref{table_penguin_data}.
+\subsection{SUPERVISED LEARNING}
+\subsubsection{INFERENCE VS. PREDICTION}
+
+In contrast, supervised learning uses data that is well-labeled to teach our model and either infer or predict a result. Inference problems aim for a better understanding of the relationship between the features and the response variable. On the other hand, prediction problems relate to developing a model that accurately fits the response variable to the predictors. Each observation in a data set has associated predictors and a response variable. Predictors are the input variables and can go by a variety of names such as variables, independent variables, or features \cite{introstatlearning}. Predictors usually correspond to the variables $x_1,x_2,...,x_n$ where each $x_n$ is an input variable. The response variable is the dependent variable or what we are trying to measure, usually denoted as $y$. Let's take a look at some penguin data, shown in Table ~\ref{table_penguin_data}.
 
 \begin{table}[ht]
     \centering
-    \begin{tabular}{p{1.5cm}p{1.5cm}p{1.5cm}p{1.2cm}p{1.9cm}p{1.9cm}p{1.9cm}}
-         Culmen Length & Culmen Depth & Flipper Length & Body Mass & Delta 15 N & Delta 13 C & Species \\
-         (mm) & (mm) & (mm) & (g) & (o/oo) & (o/oo) \\
+    \begin{tabular}{c c c c c}
+         Culmen Length & Culmen Depth & Flipper Length & Body Mass & Species \\
+         (mm) & (mm) & (mm) & (g) \\
          \hline
-         50.2 & 18.7 & 198 & 3775 & 9.39305 & -24.25255 & Gentoo \\
-         39.5 & 17.4 & 186 & 3800 & 8.94956 & -24.69454 & Adelie \\
-         44.9 & 13.8 & 212 & 4750 & 8.11238 & -26.20372 & Chinstrap \\
-         52.2 & 17.1 & 228 & 5400 & 8.36701 & -25.89834 & Chinstrap \\
-         50.8 & 19 & 210 & 4100 & 9.98044 & -24.68741 & Gentoo \\
-         42.5 & 20.7 & 197 & 4500 & 8.67538 & -25.13993 & Adelie
+         50.2 & 18.7 & 198 & 3775 & Gentoo \\
+         39.5 & 17.4 & 186 & 3800  & Adelie \\
+         44.9 & 13.8 & 212 & 4750 & Chinstrap \\
+         52.2 & 17.1 & 228 & 5400 & Chinstrap \\
+         50.8 & 19 & 210 & 4100 & Gentoo \\
+         42.5 & 20.7 & 197 & 4500 & Adelie
     \end{tabular}
     \caption{Penguin Data}
     \label{table_penguin_data}
 \end{table}
 
-In this example, the culmen length, culmen depth, flipper length, body mass, Delta 15 N and Delta 13 C are the predictors. Based on these variables, we want the model to predict which species the penguin is. So, each body measurement is a predictor and the species is the response variable. In supervised learning, we often have training and testing groups for our data. Training and test groups are a common practice in machine learning to both classify existing data points and assess the underlying accuracy of the model on known data. Training data is data used to teach our model how to estimate the response variable. Once the model is trained, we can apply the algorithm to the testing data which the model has not previously seen. Since we already have the response variable for this set in the original data, we can compare the model's predicted $y$-values, denoted $\hat y$, with the actual $y$-values. In machine learning, it is common to see the data split into about 80\% training and 20\% testing data, but these values can be manually specified in the code \cite{trainingvtest}. Suppose we collect the data for the ten students at the end of the year. Then, we have all their test scores for the year. We take 8 students and train the model based on these observations. Then, we use the remaining two students as the test set. 
+In this example, the culmen length, culmen depth, flipper length, and body mass are the predictors. Based on these variables, we want the model to predict which species the penguin is. So, each body measurement is a predictor and the species is the response variable. In supervised learning, we often have training and testing groups for our data. Training and test groups are a common practice in machine learning to both classify existing data points and assess the underlying accuracy of the model on known data. Training data is data used to teach our model how to estimate the response variable. Once the model is trained, we can apply the algorithm to the testing data which the model has not previously seen. Since we already have the response variable for this set in the original data, we can compare the model's predicted $y$-values, denoted $\hat y$, with the actual $y$-values. In machine learning, it is common to see the data split into about 80\% training and 20\% testing data, but these values can be manually specified in the code \cite{trainingvtest}. Suppose we collect data for 100 students at the end of the school year. We take 80 students and train the model based on these observations. Then, we use the remaining 20 students as the test set to see how well our model performs. Splitting the data into training and test sets is an important tool in model validation.
 
-Supervised learning can be categorized into either regression or classification problems. Generally, this has to do with the fact that data is either qualitative (categorical) or quantitative (numerical). Regression typically uses a quantitative response variable. In regression, we aim to create a model that uses features to accurately predict the response variable. We may want to see how a population's access to clean drinking water impacts their average life expectancy. Linear regression can be used in this case to see whether a correlation between the two variables exist and how strong that correlation is. We can also look at how accurate the model is at predicting the response variable as well as investigate whether the relationship is linear or non-linear. On the other hand, classification is common with a quantitative response variable. In these types of problems, the data is grouped into specific categories based on the given features. The model then is able to predict the category of an unknown data point. Similarly, we can also use tools to predict the accuracy of the model and determine if the relationship is linear or non-linear.
+\subsubsection{REGRESSION VS. CLASSIFICATION}
 
-Developed in the 1990s, support vector machines are an approach to classification problems now widely used among data scientists. In the following paper, we will discuss what a support vector machine is, how one can be implemented among a data set and practical applications of SVMs.
+Supervised learning can be categorized into either regression or classification problems. Generally, this has to do with the fact that data is either qualitative (categorical) or quantitative (numerical). Regression typically uses a quantitative response variable. In regression, we aim to create a model that uses features to accurately predict the response variable. We may want to see how a population's access to clean drinking water impacts their average life expectancy. Linear regression can be used in this case to see whether a correlation between the two variables exist and how strong that correlation is. We can look at certain statistics that assess how accurate the model is at predicting the response variable as well as investigate whether the relationship is linear or non-linear. On the other hand, classification is common with a quantitative response variable. In these types of problems, the data is grouped into specific categories based on the given features. The model is then able to predict the category of an unknown data point. Similar to regression, we can use various tools to validate the model and adjust parameters to increase accuracy.
+
+We have now discussed a short history of machine learning, the difference between supervised and unsupervised learning, and the two approaches to supervised learning, namely regression and classification. Under the umbrella of classification problems in supervised learning fall support vector machines (SVMs). Developed in the 1990s, support vector machines are an approach to classification problems now widely used among data scientists. In the following paper we will cover SVMs, including two classification methods that are the basis of support vector machines, how one can be implemented among a data set, practical applications of SVMs, and the surrounding documentation.
 
 \section{HYPERPLANES}
 
-We first begin by defining a hyperplane. Specifically, a hyperplane is "a flat affine subspace of dimension $p-1$" in a $p$-dimensional space \cite{introstatlearning}. In the two-dimensional space, a hyperplane looks like a straight line bisecting the data points into two distinct groups. We call this data linearly separable, as the data can be separated into two distinct groups by the hyperplane. In three dimensions, we see the formation of a plane. In higher dimensions, it can be hard to visualize the hyperplane, but the concept still applies.
+We first begin by defining a hyperplane. Specifically, a hyperplane is a flat affine subspace of dimension $p-1$ in a $p$-dimensional space \cite{introstatlearning}. In the two-dimensional space, a hyperplane looks like a straight line bisecting the data points into two distinct groups. We call this data linearly separable, as the data can be separated into two distinct groups by the hyperplane. In three dimensions, we see the formation of a plane. In higher dimensions, it can be hard to visualize the hyperplane, but the concept still applies.
 
 Mathematically, a hyperplane in $\R^2$ is the equation $0=\beta_0+\beta_1x_1+\beta_2x_2$. Note that this is the equation of a one-degree polynomial, or a straight line. In higher dimensional spaces, a hyperplane has the form $$0=\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdot \cdot \cdot + \beta_p x_p$$ We can generalize the equation of a hyperplane to be $$f(x)=\beta_0 + \beta \cdot x$$ where $f(x)=0$ and $\beta$ is a non-zero vector $\beta=(\beta_1,\beta_2,...,\beta_p)$ in $\R^p$ in which the dot product of $\beta$ and $x$ is computed. For any $x=(x_1,x_2)^T$ where the equation holds, we say the point is on the hyperplane. However, points that do not lie on the hyperplane will have $$0 \ne \beta_0 + \beta \cdot x$$ Moreover, the points that have $0>\beta_0 + \beta \cdot x$ will lie on one side of the hyperplane while the points $0<\beta_0 + \beta \cdot x$ will lie on the other. In this, we can see the concept of linearly separability. In a data set that is linearly separable and each observation is in one of two distinct groups, the hyperplane will bisect the data points in such a way that every point in one group is greater than zero while every point in the alternate group is less than zero.
 
@@ -184,7 +191,7 @@ In this example, we see one set of points is to the left of the hyperplane while
 
 The use of hyperplanes to distinguish between two classes is central to the maximal margin classifier. Also called the optimal margin classifier, this method aims to find the separating hyperplane that maximizes the distance between the two sets of points. That is, if the plane were to rotate slightly in either direction, it would be closer to the set of data points. Our depiction of the maximal margin classifier draws upon those presented in \cite{introstatlearning} and \cite{teitelbaum2021svmnotes}.
 
-In the above example, we can classify each set of points to determine what side of the hyperplane they lie on. So, if $y_i=1$ then $0>\beta_0 + \beta \cdot x$ and if $y_i=-1$ then $0<\beta_0 + \beta \cdot x$. Each $y_i$ becomes the class label for that observation. Class labels are the identifiers for the data points and distinguish which class the observation belongs to. Introducing the following starred lines to our code produces colors in the graph according to the respective group:
+In the above example, we can classify each set of points to determine what side of the hyperplane they lie on. So, if $y_i=1$ then $0>\beta_0 + \beta \cdot x$ and if $y_i=-1$ then $0<\beta_0 + \beta \cdot x$. Each $y_i$ becomes the class label for that observation. Class labels are the identifiers for the data points and distinguish which class the observation belongs to. Introducing the following lines to our code produces colors in the graph according to the respective group:
 
 \begin{minted}[breaklines]{R}
     # setting initial number of observations in each set
@@ -215,7 +222,7 @@ We assign a vector of 200 negative ones followed by 200 positive ones to the var
     \caption{Randomly Generated Data with Associated Class Label Coloring}
     \label{fig_mmc_hyperplane_w_labels}
 \end{figure}
-We need to find the closest blue and red points such that shifting the hyperplane in any such way results in a smaller margin for either group. These points are known as the support vectors, as they are the only points that end up formulating the hyperplane. At this point, we know that points with $0>\beta_0 + \beta \cdot x$ will lie on one side of the hyperplane and have a class label $y_i$ of 1, while the points $0<\beta_0 + \beta \cdot x$ lie on the other and have a class label $y_i=-1$. Combining these two constraints, we can produce one inequality that correctly classifies each point
+We need to find the closest blue and red points such that shifting the hyperplane in any such way results in a smaller margin. These points are known as the support vectors, as they are the only points that end up formulating the hyperplane (we are beginning to see where the support vector machine gets its name!). At this point, we know that points with $0>\beta_0 + \beta \cdot x$ will lie on one side of the hyperplane and have a class label $y_i$ of 1, while the points $0<\beta_0 + \beta \cdot x$ lie on the other and have a class label $y_i=-1$. Combining these two constraints, we can produce one inequality that correctly classifies each point
 $$y_i(\beta_0+\beta_1x_{i1}+...+\beta_px_{ip})>0$$
 \begin{figure}[ht]
     \centering
@@ -250,7 +257,7 @@ $$y_i(\beta_0+\beta_1x_{i1}+...+\beta_px_{ip})>0$$
     \label{supportvectors}
 \end{figure}
 
-Suppose we look at a few points with a separating hyperplane of $0=f(x_1,x_2)=\beta_0+\beta_1x_1+\beta_2x_2$, pictured in Figure ~\ref{supportvectors}. We assume the point $(a_1,a_2)$ in the set of the positive class labels is the closest point to the set of points with a negative class label. Then, to compute the perpendicular distance $d$ from the point $(a_1,a_2)$ to $f(x_1,x_2)=0$, we first find a normal vector to $f$. Through calculus, the gradient of the hyperplane calculated by $(dx_1,dx_2)$ gives the normal vector $\vec{n}=\expval{\beta_1, \beta_2}$ to $f$. Let $(b_1,b_2)$ be any point on the hyperplane. Then $\vec{v}=(a_1-b_1,a_2-b_2)$. The distance $d$ equals $||\vec{v}|| \cos{\theta}$ through trigonometry. Then we have
+Suppose we look at a few points with a separating hyperplane of $0=f(x_1,x_2)=\beta_0+\beta_1x_1+\beta_2x_2$, pictured in Figure ~\ref{supportvectors}. We assume the point $(a_1,a_2)$ in the set of the positive class labels is the closest point to the set of points with a negative class label. To compute the perpendicular distance $d$ from the point $(a_1,a_2)$ to $f(x_1,x_2)=0$, we first find a normal vector to $f$. Through concepts in calculus, we find the gradient of the hyperplane calculated by $(dx_1,dx_2)$ gives the normal vector $\vec{n}=\expval{\beta_1, \beta_2}$ to $f$. Let $(b_1,b_2)$ be any point on the hyperplane. Then $\vec{v}=(a_1-b_1,a_2-b_2)$. Through trigonometry, the distance $d$ is equivalent to $||\vec{v}|| \cos{\theta}$. Then we have
 \begin{align*}
     \vec{v} \cdot \vec{n}&=||\vec{v}|| ||\vec{n}|| \cos{\theta} \\
     \vec{v} \cdot \vec{n}&= d \cdot ||\vec{n}|| \\
@@ -283,7 +290,7 @@ provided that
 \sum_{j=1}^{p} \beta^2_j=1
 \end{equation}
 
-Though the maximal margin classifier is not a support vector machine quite yet, we may use the SVM module in the "e1071" library in $R$ to determine the equation of the line.
+Though the maximal margin classifier is not a support vector machine quite yet, we may use the SVM module in the "e1071" library in $R$ to determine the equation of the line \cite{e1071}.
 
 \begin{minted}[breaklines]{R}
     # creating data frame 
@@ -337,7 +344,7 @@ The \textbf{str} function tells us that \textbf{svmfit} is a list of 30 variable
     \label{fig_mmc_graph}
 \end{figure}
 
-To find the equation of the line, we use the hyperplane function as outlined in \cite{teitelbaum2021svm}:
+To find the equation of the line, we use the hyperplane function as outlined in \cite{teitelbaum2021svm} and translated into $R$:
 \begin{minted}[breaklines]{R}
     hyperplane <- function(P,data,x,z=0) {
       alphas <- -1*P$coefs
@@ -411,7 +418,7 @@ From the zeroes along the diagonal in the top right and bottom left, we see ther
 
 \section{SUPPORT VECTOR CLASSIFIER}
 
-What happens when data is not linearly separable? This occurs when the two groups of data have overlapping points. In this case, we cannot form a separating hyperplane as some points will be classified on the wrong side of the line. For non-linearly separable data, we introduce the support vector classifier. Much like the maximal margin classifier, we form a hyperplane between the groups of points in a data set. This classification method is also known as the soft-margin classifier since some points will not be classified on the correct side of the hyperplane unlike the maximal margin classifier. We will introduce the topic of costs, which essentially allow a certain number of observations to be classified incorrectly, then discuss the code in $R$ and Python.
+What happens when data is not linearly separable? This occurs when the two groups of data have overlapping points. In this case, we cannot form a separating hyperplane as some points will be classified on the wrong side of the line. For non-linearly separable data, we introduce the support vector classifier. Much like the maximal margin classifier, we form a hyperplane between the groups of points in a data set. This classification method is also known as the soft-margin classifier since some points will not be classified on the correct side of the hyperplane unlike the maximal margin classifier. We will introduce the topic of costs, which essentially allow a certain number of observations to be classified incorrectly, and discuss the code in $R$.
 
 The following code in $R$ can be used to plot non-linearly separable data with randomly generated points, shown in Figure ~\ref{fig_svc_randomly_generated_points}. We use the \textbf{set.seed()} function to replicate the randomly generated data. The process is the same as with linearly separable data, except we now narrow the gap between the means of the two groups which allows some overlap. Notice that we can no longer draw a straight line bisecting the two groups.
 
@@ -432,14 +439,14 @@ The following code in $R$ can be used to plot non-linearly separable data with r
     plot(svcdatax, col=(3-svcdatay),xlab="",ylab="",pch=16)
 \end{minted}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=5in]{Figures/svc/svc_randomly_generated_points.png}
     \caption{Randomly Generated Non-Linearly Separable Data}
     \label{fig_svc_randomly_generated_points}
 \end{figure}
 
-We can add a line to visualize a possible hyperplane by running the following line of code after we have constructed the graph.
+We can add a line to visualize a possible hyperplane by running the following line of code after we have constructed the graph, shown in Figure ~\ref{fig_svc_randomly_generated_w_line}.
 
 \begin{minted}[breaklines]{R}
     abline(0,-1,col="gray",lty="dashed")
@@ -452,9 +459,9 @@ We can add a line to visualize a possible hyperplane by running the following li
     \label{fig_svc_randomly_generated_w_line}
 \end{figure}
 
-As we can see, there is no possible linear hyperplane that separates the data. Some blue points are intermingled with the red and vice versa. To still construct a machine that attempts to classify the data, we introduce the topic of costs. In the maximal margin classifier, we aimed to find the greatest distance (margin) between the closest points of the two sets. Since there is no concrete margin in non-linearly separable data, we must introduce what is called a slack variable, denoted as $\epsilon_i$ for each observation $x_i$. For variables that are correctly classified, the corresponding observation's slack variable is 0. For points that are incorrectly classified, the slack variable takes on a value greater than 0 and incurs some cost for the maximization function. Since the slack variable is essentially a measure of how far a point lies on the wrong side of the margin, we constrict the sum of all slack variables to be less than a specified cost $C$. As we will see later, a user-defined cost can result in over- or under-fitting of the model. For a support vector classifier, the maximization of \(M\) is subject to \[ \sum_{j=1}^{p} \beta^2_j=1 \] \[ \sum_{i=1}^{n} \epsilon_i \le C, \epsilon_i \ge 0 \]
+As we can see, there is no possible linear hyperplane that separates the data. Some blue points are intermingled with the red and vice versa. To construct a machine that attempts to classify the data, we introduce the topic of costs. In the maximal margin classifier, we aimed to find the greatest distance (margin) between the closest points of the two sets. Since there is no concrete margin in non-linearly separable data, we must introduce what is called a slack variable, denoted as $\epsilon_i$ for each observation $x_i$. For variables that are correctly classified, the corresponding observation's slack variable is 0. For points that are incorrectly classified, the slack variable takes on a value greater than 0 and incurs some cost for the maximization function. Since the slack variable is essentially a measure of how far a point lies on the wrong side of the margin, we constrict the sum of all slack variables to be less than a specified cost $C$. As we will see later, a user-defined cost can result in over- or under-fitting of the model. For a support vector classifier, the maximization of \(M\) is subject to \[ \sum_{j=1}^{p} \beta^2_j=1 \] \[ \sum_{i=1}^{n} \epsilon_i \le C, \epsilon_i \ge 0 \]
 
-Let us introduce the concept of inner products and their role in the support vector classifier as outlined in \citep{introstatlearning} and \citep{esl2}. The inner products of two vectors is defined as \[ \langle a,b \rangle=\sum_{i=1}^{r}a_ib_i \] for two \(r\)-vectors \(a\) and \(b\). Following the work produced in \citep{introstatlearning}, the support vector classifier can be rewritten as \[f(x) = \beta_0 + \sum_{i=1}^n \alpha_i \langle x,x_i \rangle \] and the solution revolves around the inner products. Futhermore, it is known that each \(\alpha_i\) is non-zero only for the support vectors. The support vector classifier is simplified even more, as we can ignore points that are not support vectors. The solution then becomes \[f(x) = \beta_0 + \sum_{i \in S} \alpha_i \langle x,x_i \rangle \] provided that
+Let us introduce the concept of inner products and their role in the support vector classifier as outlined in \citep{introstatlearning} and \citep{esl2}. The inner products of two vectors is defined as \[ \langle a,b \rangle=\sum_{i=1}^{r}a_ib_i \] for two \(r\)-vectors \(a\) and \(b\). Following the work produced in \citep{introstatlearning}, the support vector classifier can be rewritten as \[f(x) = \beta_0 + \sum_{i=1}^n \alpha_i \langle x,x_i \rangle \] and the solution revolves around the inner products. Futhermore, it is known that each \(\alpha_i\) is non-zero only for the support vectors, as points that lie on the correct side of the hyperplane have slack variables equal to zero. The support vector classifier is simplified even more, as we can ignore points that are not support vectors. The solution then becomes \[f(x) = \beta_0 + \sum_{i \in S} \alpha_i \langle x,x_i \rangle \] provided that
 
 \begin{equation}
 \sum_{j=1}^{p} \beta^2_j=1
@@ -545,10 +552,10 @@ Let us look at what happens with different values of the cost variable.
 
 We see that as the cost increases, there are fewer support vectors. That is, fewer observations are classified incorrectly. Shouldn't it be the opposite? We see in ~\ref{slackvariables} that the sum of the slack variables has to be less than or equal to the cost. A higher cost allows for greater slack variables, meaning more observations can lie outside the margin. This discrepancy lies in the underlying code. In both the R and Python modules for the support vector machine, the cost is inversely proportional to the \(C\) we defined in ~\ref{slackvariables}.
 
-The difference is a reference to the "dual problem", as there are two approaches to solving this problem. One approach, which we have previously outlined, fixes the variable \(C\) and the sum of \(\beta_j^2\) in order to minimize the margin. We are left with solving \[
+The difference is a reference to the "dual problem", as there are two approaches to solving this problem. One approach, which we have previously outlined, fixes the variable \(C\) and the sum of \(\beta_j^2\) in order to maximize the margin. We are left with solving \[
     y_i(\beta_0+\beta_1x_{i1}+...+\beta_px_{ip}) \ge M(1-\epsilon_i)
     \]
-subject to the conditions on \(\beta\) and \(\epsilon\). We could also solve this problem by switching our conditions and minimization as outlined in \cite{esl2}. If we fix the margin to be 1, we aim to minimize \(||\beta||\). The new problem becomes 
+subject to the conditions on \(\beta\) and \(\epsilon\). We could also solve this problem by switching our conditions as outlined in \cite{esl2}. If we fix the margin to be 1, we aim to minimize \(||\beta||\). The new problem becomes 
 
 \begin{equation} 
     \min ||\beta|| \text{ subject to }
@@ -568,7 +575,7 @@ which is equivalent to
     \label{eq_svc_final}
 \end{equation}
 
-The constant defined in ~\ref{eq_svc_initial} is replaced with the cost parameter of the Lagrange function in ~\ref{eq_svc_final}. This cost parameter is the same as the variable defined in both the $R$ and Python $\textbf{svm}$ modules.
+The constant defined in Equation ~\ref{eq_svc_initial} is replaced with the cost parameter of the Lagrange function in Equation ~\ref{eq_svc_final}. This cost parameter is the same as the cost variable defined in both the $R$ and Python $\textbf{svm}$ modules.
 
 We saw that choosing different costs affects the number of support vectors. A smaller cost results in a lower penalty for each misclassified data point. As such, the resulting margin is large. When the cost is larger, misclassified data points have a bigger impact on the model, so the resulting margin is smaller to minimize these points \citep{cost_parameter}. How does one go about determining the correct cost though? Luckily, the $\textbf{svm}$ function can be used in a $\textbf{tuning}$ function that tests various costs for the correlating model accuracy. We use the following code to determine the best model:
 
@@ -584,7 +591,7 @@ We saw that choosing different costs affects the number of support vectors. A sm
     tune$best.performance
 \end{minted}
 
-We can again validate our model using the test set. The same code as covered in the maximal margin classifier is used, and we see there are no misclassified points. Thus, we have produced the best support vector classifier for our data, illustrated in Figure ~\ref{fig_svc_final_model}.
+We can again validate our model using the test set. The same code as covered in the maximal margin classifier is used, and we again see there are no misclassified points. Thus, we have produced the best support vector classifier for our data, illustrated in Figure ~\ref{fig_svc_final_model}.
 
 \begin{figure}[ht]
     \centering
@@ -688,7 +695,7 @@ Now we are ready to run the \textbf{svm} module on our data. We previously discu
     plot(svmfit10000000,svmdata,color.palette = terrain.colors,symbolPalette = c("red","black","darkgray"))
 \end{minted}
 
-The code produces the graphs in Figure ~\ref{fig_svm_diff_costs}. Initially, with a low cost every point is a support vector. In fact, the machine does not even distinguish between the various groups. In a dataset with 600 observations, 600 support vectors is not ideal. This makes sense, as a smaller cost means a lower penalty for each misclassified data point. As we increase the cost parameter, the number of support vectors decreases because the cost of being misclassified is greater. At the highest cost of 10,000,000 there are only 35 support vectors. We see a trade-off between the number of observations that influence the support vector machine and the associated cost. Zooming in, the support vectors in ~\ref{fig_svm_diff_costs} are labeled with an "x".
+The code produces the graphs in Figure ~\ref{fig_svm_diff_costs}. Initially, with a low cost every point is a support vector. In fact, the machine does not even distinguish between the various groups. In a dataset with 600 observations, 600 support vectors is not ideal. This makes sense, as a smaller cost means a lower penalty for each misclassified data point. As we increase the cost parameter, the number of support vectors decreases because the cost of being misclassified is greater. At the highest cost of 10,000,000 there are only 35 support vectors. We see a trade-off between the number of observations that influence the support vector machine and the associated cost.
 
 \begin{figure}[H]
     \centering
@@ -909,7 +916,7 @@ Next, we are going to need labels for each of our penguin species. These labels 
     penguin_colors = np.array([colors[i] for i in labels])
 \end{minted}
 
-We then want to create a \textbf{numpy} array of the desired variables which will work with the SVM module. We will be removing the species (the class label), island, and sex predictors. This will be the dataset we use in the support vector machine and is located in Figure ~\ref{fig_penguins_numpy}.
+We then want to create a \textbf{numpy} array of the desired variables which will work with the SVM module. We will be removing the species (class label), island, and sex predictors. This will be the dataset we use in the support vector machine and is located in Figure ~\ref{fig_penguins_numpy}.
 
 \begin{minted}[breaklines]{python3}
     data = df.drop(columns=['species','island','sex'])
@@ -927,7 +934,7 @@ We then want to create a \textbf{numpy} array of the desired variables which wil
 
 Now that we have explored and cleaned the data, we can begin analysis. We start by plotting the raw data points for each set of variables. This will help us determine which predictors will be the most useful in the support vector machine.
 
-Below is the code for plotting culmen length and culmen depth. The graph is located in Figure ~\ref{fig_cl_cd}. Recall that the red points correspond to Adelie penguins, blue to Chinstrap, and green to Gentoo. We see that Adelie penguins have a lower culmen length on average than the other species. The Chinstrap penguins have a higher culmen length than the Adelie, but about the same culmen depth. The Gentoo penguins have a lower culmen depth than both the Adelie and Chinstrap. These species have some overlap, but are mostly well-defined. Culmen length and culmen depth may be sufficient predictors for penguin species.
+Below is the code for plotting culmen length and culmen depth. The graph is located in Figure ~\ref{fig_cl_cd}. Recall that the red points correspond to Adelie penguins, blue to Chinstrap, and green to Gentoo. We see that Adelie penguins have a lower culmen length on average than the other species. The Chinstrap penguins have a higher culmen length than the Adelie, but about the same culmen depth. The Gentoo penguins have a lower culmen depth than both the Adelie and Chinstrap. These species have some overlap but are mostly well-defined. Culmen length and culmen depth may be sufficient predictors for penguin species.
 
 \begin{minted}[breaklines]{python3}
     # plot of culmen length and culmen depth
@@ -975,7 +982,7 @@ Next we look at the culmen length and the body mass. The code is located below a
     \label{fig_cl_bm}
 \end{figure}
 
-Below is the code for plotting culmen depth and flipper length. The graph is located in Figure ~\ref{fig_cd_fl}. We see there is a clear distinction between the Gentoo penguins and the other two species. However, there is much overlap between the Adelie and Chinstrap penguins. In fact if we didn't have the associated color labels, we would not be able to tell there are supposed to be two groups of penguins represented in that cluster! If we were specifically looking at Gentoo penguins vs. other species, this would be a good choice as there is a clear separating hyperplane. However, culmen depth and flipper length would not be good choices for determing the species of all three penguins. If we were to run a support vector machine with these predictors, we would get many misclassified points and hence a low accuracy.
+Below is the code for plotting culmen depth and flipper length. The graph is located in Figure ~\ref{fig_cd_fl}. We see there is a clear distinction between the Gentoo penguins and the other two species. However, there is much overlap between the Adelie and Chinstrap penguins. In fact, if we didn't have the associated color labels we would not be able to tell there are supposed to be two groups of penguins represented in that cluster! If we were specifically looking at Gentoo penguins vs. other species, this would be a good choice as there is a clear separating hyperplane. However, culmen depth and flipper length would not be good choices for determing the species of all three penguins. If we were to run a support vector machine with these predictors, we would get many misclassified points and hence a low accuracy.
 
 \begin{minted}[breaklines]{python3}
     # plot of culmen depth and flipper length
@@ -991,7 +998,7 @@ Below is the code for plotting culmen depth and flipper length. The graph is loc
     \label{fig_cd_fl}
 \end{figure}
 
-Next, we code for the graph of culmen depth and body mass, located in Figure ~\ref{fig_cd_bm}. Much like the culmen depth and flipper length, there is an obvious separation between the Gentoo species and the other two, with Gentoo penguins having a lower culmen depth and higher body mass. These variables would not be a good choice for a multi-class support vector machine.
+Next, we code for the graph of culmen depth and body mass located in Figure ~\ref{fig_cd_bm}. Much like the culmen depth and flipper length, there is an obvious separation between the Gentoo species and the other two, with Gentoo penguins having a lower culmen depth and higher body mass. These variables would not be a good choice for a multi-class support vector machine.
 
 \begin{minted}[breaklines]{python3}
     # plot of culmen depth and body mass
@@ -1037,7 +1044,7 @@ We first begin by selecting the necessary columns. The culmen length and culmen 
     x_train, x_test, y_train, y_test = train_test_split(data_cl_cd, labels, test_size = 0.20, random_state=30)
 \end{minted}
 
-We then fit our model to specified cost and gamma values. We use the training sets to create the model, then use the model to predict the species based on the culmen depth and culmen length in the test set. We then print the accuracy of the model when used on the test set.
+We then fit our model to specified cost and gamma values. We use the training sets to create the model then use the model to predict the species based on the culmen depth and culmen length in the test set. Finally, we print the accuracy of the model when used on the test set.
 
 \begin{minted}[breaklines]{python3}
     fit_cl_cd = SVC(kernel = 'rbf', C=1, gamma=1).fit(x_train,y_train)
@@ -1045,7 +1052,7 @@ We then fit our model to specified cost and gamma values. We use the training se
     print('Classifier yields accuracy of {:2f}%'.format(fit_cl_cd.score(x_test,y_test)))   
 \end{minted}
 
-This gives us an output of 95.5\(\%\). Could we achieve a higher accuracy? The \textbf{GridSearch} function gives us a method to calculate the accuracies of many different cost and gamma combinations \cite{svm_python_tuning}. The code below sets a list of cost and gamma values that the function fits to the training data. We can see the best parameters using the \textbf{best estimator} line.
+This gives us an output of 95.5\(\%\). Could we achieve a higher accuracy? The \textbf{GridSearch} function gives us a method to calculate the accuracies of many different cost and gamma combinations, much like the tuning function in $R$ \cite{svm_python_tuning}. The code below sets a list of cost and gamma values that the function fits to the training data. We can see the best parameters using the \textbf{best estimator} variable of the grid function.
 
 \begin{minted}[breaklines]{python3}
     param_grid = {'C': [0.01, 0.1,1, 10, 100, 1000], 'gamma': [1,0.1,0.01,0.001,'auto','scale'],'kernel': ['rbf']}
@@ -1097,7 +1104,7 @@ Using this model, we can create a graph of the support vector machine's decision
     plt.show()    
 \end{minted}
 
-The output of the code is shown in Figure ~\ref{fig_fit_cl_cd}. Our first support vector machine has the potential for accurately determining a penguin's species based on the culmen length and culmen depth predictors.
+The output of the code is shown in Figure ~\ref{fig_fit_cl_cd}. Recall that Adelie penguins have a class label of 0, Chinstrap of 1, and Gentoo of 2. The underlying color background shows the decision boundary of the classifier. For example, points that lie within the blue area would be classified as Adelie penguins. From the plot, we can see several outliers - a white point in the blue area, blue and red points in the white area, and a white point in the red area. Though there are some misclassified points, our first support vector machine has the potential for accurately determining a penguin's species based on the culmen length and culmen depth predictors due to the high model accuracy.
 
 \begin{figure}[H]
     \centering
@@ -1173,7 +1180,7 @@ We can now see that the model fit to these parameters yields an accuracy of 97.0
     plt.show()      
 \end{minted}
 
-The output of the code is shown in Figure ~\ref{fig_fit_cl_fl}. Adelie penguins have a class label of 0 with Chinstrap and Gentoo being 1 and 2, respectively. Overall, this seems like a good choice of predictors for a support vector machine that predicts a penguin's species.
+The output of the code is shown in Figure ~\ref{fig_fit_cl_fl}. Adelie penguins have a class label of 0 with Chinstrap and Gentoo being 1 and 2, respectively. We see most points are classified correctly. Due to the high model accuracy, this seems like a good choice of predictors for a support vector machine that predicts a penguin's species.
 
 \begin{figure}[H]
     \centering
@@ -1215,7 +1222,7 @@ The first model we create yields an accuracy of 74.6\%, which is not great! We n
     print('Classifier yields accuracy of {:2f}%'.format(fit_cl_bm.score(x_test,y_test)))
 \end{minted}
 
-The second model we create has an accuracy of 79.1\%. This is much lower than our other two models. Nevertheless, we try to plot the decision boundary to get a better idea of the support vector machine. When running the code similar to the graphs from the first two, the machine crashes. This presented us with an unusual problem, which we debugged to boil down to the step size. Where the other two models had y-axis that were in the hundreds, a step size $h$ of 0.02 was a good choice. However, the body mass of the penguins is measured in grams which ends up with a mean in the thousands. Thus, a step size of 0.02 with the scale of the y-axis in the third model is not feasible. While we can adjust the step size to a larger value and end up with the plot in Figure ~\ref{fig_fit_cl_bm} which is produced by the code below, it is better to rescale the data.
+The second model we create has an accuracy of 79.1\%. This is much lower than our other two models. Nevertheless, we try to plot the decision boundary to get a better idea of the support vector machine. When running the code similar to the graphs from the first two, the machine crashes. This presents us with an unusual problem, which we debug to boil down to the step size. Where the other two models had y-axis values that were in the hundreds, a step size $h$ of 0.02 is a good choice. However, the body mass of the penguins is measured in grams which ends up with a mean in the thousands. Thus, a step size of 0.02 with the scale of the y-axis in the third model is not feasible. While we can adjust the step size to a larger value and end up with the plot in Figure ~\ref{fig_fit_cl_bm} which is produced by the code below, it is better to rescale the data.
 
 \begin{minted}[breaklines]{python3}
     fig, ax = plt.subplots()
@@ -1269,7 +1276,7 @@ The steps to produce the classifier are now the same as those above. We see the 
     \label{fig_fit_scaled_cl_bm}
 \end{figure}
 
-While the classifier using the culmen depth and body mass improved greatly, the best tuned machine using culmen length and body mass has a lower accuracy than our attempts with culmen length and both culmen depth and flipper length.
+While the classifier using the culmen depth and body mass improved greatly, the best tuned machine using culmen length and body mass has a lower accuracy than our attempts with culmen length and both culmen depth and flipper length. As such, we will probably not use this model going forward.
 
 \subsection{ALL 4 PREDICTORS}
 
@@ -1304,11 +1311,11 @@ This machine yields an accuracy of 79.1\%. While this is better than before, it 
 
 \subsection{RESULTS}
 
-We see the support vector machine using the culmen length and culmen depth or the culmen length and flipper length as the predictors had the highest accuracy, both at $97.0\%$. The model with all 4 predictors and the culmen length and body mass as predictors performed the worst, with accuracies of 79.1\%. We should choose either of the first two models when attempting to predict penguin species.
+We see the support vector machine using the culmen length and culmen depth or the culmen length and flipper length as the predictors had the highest accuracy, both at $97.0\%$. The model with all 4 predictors and the culmen length and body mass as predictors performed the worst, with accuracies of 79.1\% and 91.0\%, respectively. We should choose either of the first two models when attempting to predict penguin species using support vector machines.
 
 \section{APPLICATIONS}
 
-One such example, as presented in \textit{Intro to Statistical Learning with Applications in R} \citep{introstatlearning} is the use of support vector machines in genetic expression data. The \textit{Khan} dataset in the $ISLR2$ package of $R$ contains expression measurements for 2,308 genes from tissue samples of patients with one of four types of small round blue cell tumors. The data is then split up into training and test groups. There are 63 observations in the training set and 20 observations in the test set. It is not feasible to visually plot the data on a graph, as there is a very large number of features relative to the number of observations. However, due to the large number of features, it is easy to find a linearly separating hyperplane that predicts the type of cell tumor. As such, the SVM approach outlined in the textbook yields no data points that are misclassified in the training set and two test set errors. In this case, a support vector machine was used to classify and predict cancer types based on gene expression data. In fact, SVMs are a popular choice in machine learning approaches to detecting cancer. Several studies have shown SVMs perform with great accuracy. Among those include the prediction of breast cancer using SVM and an extremely randomized trees classifier \cite{breastcancer}. Support vector machines have also been used in multi-class lung cancer classification \cite{lungcancer}.
+Now that we have looked at the maximal margin classifier, support vector classifier, and support vector machine using both example data and real data, we explore different areas support vector machines are used in real life. One such example, as presented in \textit{Intro to Statistical Learning with Applications in R} \citep{introstatlearning} is the use of support vector machines in genetic expression data. The \textit{Khan} dataset in the $ISLR2$ package of $R$ contains expression measurements for 2,308 genes from tissue samples of patients with one of four types of small round blue cell tumors. The data is then split up into training and test groups. There are 63 observations in the training set and 20 observations in the test set. It is not feasible to visually plot the data on a graph, as there is a very large number of features relative to the number of observations. However, due to the large number of features, it is easy to find a linearly separating hyperplane that predicts the type of cell tumor. As such, the SVM approach outlined in the textbook yields no data points that are misclassified in the training set and two test set errors. In this case, a support vector machine was used to classify and predict cancer types based on gene expression data. In fact, SVMs are a popular choice in machine learning approaches to detecting cancer. Several studies have shown SVMs perform with great accuracy. Among those include the prediction of breast cancer using SVMs and an extremely randomized trees classifier \cite{breastcancer} as well as classification of multi-class lung cancer \cite{lungcancer}.
 
 \section{ANALYSIS OF R AND PYTHON SVM MODULES AND DOCUMENTATION}
 
@@ -1328,15 +1335,14 @@ We now compare the SVM modules for $R$ and Python. The supporting documentation 
     \label{tab_r_python}
 \end{table}
 
-The SVM modules in both programming languages are similar. Python's \textit{scikitlearn} and $R$'s \textit{e1071} both use a one-vs-one approach in multi-class models. The mathematical formulation for the Python classifier can be accessed through \cite{scikit_svm}. On the other hand, the $R$ module was based on $C/C++$ code. Thus, the mathematical formulation is said to follow that of Chih-Chung Chang and Chih-Jen Lin in
-LIBSVM: a library for Support Vector Machines, found in https://www.csie.ntu.edu.tw/~cjlin/papers/libsvm.ps.gz. This file proved cumbersome to open and is not as accessible as that of \textit{scikitlearn}.
+The SVM modules in both programming languages are similar. Python's \textit{scikitlearn} and $R$'s \textit{e1071} both use a one-vs-one approach in multi-class models. The mathematical formulation for the Python classifier can be accessed through \cite{scikit_svm}. On the other hand, the $R$ module was based on $C/C++$ code. Thus, the mathematical formulation is said to follow that of Chih-Chung Chang and Chih-Jen Lin in \href{https://www.csie.ntu.edu.tw/~cjlin/papers/libsvm.ps.gz}{LIBSVM: a library for Support Vector Machines}. This file proved cumbersome to open and is not as accessible as that of \textit{scikitlearn}.
 
-When it comes to plotting, Python offers much more flexible and intuitive tools. While the code can get quite long, the plots are aesthetic and customizable. While there are options for plotting in $R$, it is not as readily available and felt more rigid and elementary.
+When it comes to plotting, Python offers flexible and intuitive tools. While the code can get quite long, the plots are aesthetic and customizable due to the versatile nature of Python programmers. There are options for plotting in $R$ such as \textit{ggplot2} that go beyond the elementary base plotting code but was not covered in this paper.
 
 From my experience, Python's documentation was much easier to find, follow, and consult than $R$'s. While both $R$ and Python have similar mathematical capabilities regarding the \textbf{svm} module, the more accessible documentation as well as the superior graphics and adjustability of the language make Python the preferable choice in future analyses.
 
 \section{Conclusion}
-In this paper, we first discussed the evolution of machine learning and artificial intelligence where types of supervised and unsupervised learning were covered. Then came the concept of hyperplanes, in which we established the mathematical formulas in various dimensions with visualizations. This was crucial in the discussion of the maximal margin classifier, where linearly separable groups were classified using a hyperplane. Non-linearly separable groups were the focus of the support vector classifier, in which the cost played a large part in determining the number of support vectors. The gamma variable was introduced in the support vector machine, as it provided a measure of 'curviness' in the use of kernels with non-linear data. Finally, a support vector machine was used to classify penguin species based on certain predictors. Various models were calculated, validated, and graphed in this real dataset. The documentation for the $R$ and Python \textbf{svm} modules were compared as a means to determine the differences between each when going forth with further projects. Overall, this paper gave an introduction to the concept of support vector machines and the various associated classification methods.
+In this paper, we first discussed the evolution of machine learning and artificial intelligence where types of supervised and unsupervised learning were covered. Then came the concept of hyperplanes, in which we established the mathematical formulas in various dimensions with visualizations. This was crucial in the discussion of the maximal margin classifier, where linearly separable groups were classified using a hyperplane. Non-linearly separable groups were the focus of the support vector classifier, in which the cost played a large part in determining the number of support vectors. The gamma variable was introduced in the section on support vector machines, as it provided a measure of 'curviness' in the use of kernels with non-linear data. Finally, a support vector machine was used to classify penguin species based on certain predictors like culmen depth and culmen length. Various models were calculated, validated, and graphed in an effort to find a highly accurate support vector machine for the penguin data. The documentation for the $R$ and Python \textbf{svm} modules were compared as a means to determine the differences between each when going forth with further projects. Overall, this paper gave an introduction to the concept of support vector machines and the various associated classification methods.
 
 \newpage
 \thispagestyle{empty}
